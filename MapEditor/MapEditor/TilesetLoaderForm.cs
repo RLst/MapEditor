@@ -64,6 +64,7 @@ namespace MapEditor
 			Close();
 
 			//Reactivate EditorForm 
+			
 		}
 
 

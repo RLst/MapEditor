@@ -53,6 +53,7 @@
 			// 
 			// tslOKButton
 			// 
+			this.tslOKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
 			this.tslOKButton.Location = new System.Drawing.Point(884, 584);
 			this.tslOKButton.Name = "tslOKButton";
 			this.tslOKButton.Size = new System.Drawing.Size(100, 43);
@@ -141,6 +142,7 @@
 			// 
 			// tslCancelButton
 			// 
+			this.tslCancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
 			this.tslCancelButton.Location = new System.Drawing.Point(990, 584);
 			this.tslCancelButton.Name = "tslCancelButton";
 			this.tslCancelButton.Size = new System.Drawing.Size(100, 43);
