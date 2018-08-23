@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
-    public partial class Form1 : Form
+    public partial class tilesetLoader : Form
     {
-        public Form1()
+        public tilesetLoader()
         {
             InitializeComponent();
         }
