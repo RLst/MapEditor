@@ -8,6 +8,9 @@ namespace MapEditor
 {
     static class Program
     {
+		static private Map map;							//The one and only map
+		static private List<Tileset> tilesets;			//Can hold many tilesets
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -16,7 +19,7 @@ namespace MapEditor
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new MapEditor());       //Run the main editor
+            Application.Run(new EditorForm());       //Run the main editor
         }
     }
 }

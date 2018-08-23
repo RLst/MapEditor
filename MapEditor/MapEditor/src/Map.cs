@@ -8,5 +8,27 @@ namespace MapEditor
 {
     class Map
     {
-    }
+		//This class can be created with nothing in it
+
+		
+		private List<Tile> tiles;
+		private uint width;
+		private uint height;
+
+		public Map(uint width, uint height)
+		{
+			this.width = width;
+			this.height = height;
+		}
+
+		public void AddTile(Tile tile)
+		{
+
+		}
+
+		public void RemoveTile(int tileIDX)
+		{
+
+		}
+	}
 }

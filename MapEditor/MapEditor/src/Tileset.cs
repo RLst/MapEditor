@@ -14,15 +14,47 @@ namespace MapEditor
         private string filePath;
 
 		//Properties
-        public float TileWidth { get; set; }
-        public float TileHeight { get; set; }
-        public int Columns
+        public int TileWidth
+		{
+			get
+			{
+				return TileWidth;
+			}
+			set
+			{
+				//Also set the num of columns accordingly
+				TileWidth = value;
+				if (image != null)
+				{
+					Columns = image.Size.Width / TileWidth;
+				}
+			}
+		}
+        public int TileHeight
+		{
+			get
+			{
+				return TileHeight;
+			}
+			set
+			{
+				TileHeight = value;
+				if (image != null)
+				{
+					Rows = image.Size.Height / TileHeight;
+				}
+			}
+		}
+		public int Columns
         {
             get
             {
-                //Columns = int(imagewidth / tilewidth)
-                //Returns the number of columns based on the current tile width
-                return Convert.ToUInt16(image.Size.Width / TileWidth);
+				//Columns = int(imagewidth / tilewidth)
+				//Returns the number of columns based on the current tile width
+				if (image != null)
+					return Convert.ToUInt16(image.Size.Width / TileWidth);
+				else
+					return 0;
             }
             set
             {
@@ -45,7 +77,10 @@ namespace MapEditor
         {
             get
             {
-                return Convert.ToUInt16(image.Size.Height / TileHeight);
+				if (image != null)
+					return Convert.ToUInt16(image.Size.Height / TileHeight);
+				else
+					return 0;
             }
             set
             {
@@ -61,6 +96,7 @@ namespace MapEditor
 				
             }
         }
+		public Image Image { get; }
 
 		public Tileset(string filePath, int rows = 10, int columns = 10)
 		//Loads tileset from image and sets rows/cols
