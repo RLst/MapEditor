@@ -107,7 +107,7 @@ namespace MapEditor
 
 		private void tsLoadButton_Click(object sender, EventArgs e)
 		{
-			PopupForm popup = new TilesetLoaderForm();
+			//PopupForm popup = new TilesetLoaderForm();
 
 
 			TilesetLoaderForm newForm = new TilesetLoaderForm();

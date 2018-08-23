@@ -9,7 +9,11 @@ namespace MapEditor
     static class Program
     {
 		static private Map map;							//The one and only map
+
 		static private List<Tileset> tilesets;			//Can hold many tilesets
+        //OR...
+        static private List<Tile> tiles;                //All the tiles in the list box 
+
 
         /// <summary>
         /// The main entry point for the application.

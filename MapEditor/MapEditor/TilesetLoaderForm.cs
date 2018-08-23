@@ -63,7 +63,7 @@ namespace MapEditor
 			//Close this form
 			Close();
 
-			//Reactivate EditorForm 
+			//Set to focus EditorForm 
 			
 		}
 
@@ -76,15 +76,18 @@ namespace MapEditor
 
 		private void textBoxRows_TextChanged(object sender, EventArgs e)
 		{
-
+            //Update this.gridWidth
+            //Update tileset.TileWidth accordingly
 		}
 		private void textBoxColumns_TextChanged(object sender, EventArgs e)
 		{
+            //Update this.gridHeight
+            //Update tileset.TileHeight accordingly
+        }
 
-		}
-
-		private void textBoxTileWidth_TextChanged(object sender, EventArgs e)
+        private void textBoxTileWidth_TextChanged(object sender, EventArgs e)
 		{
+            //Update tileWidth and gridWidth accordinly
 			if (int.TryParse(textBoxTileWidth.Text, out gridWidth) == true)
 			{
 				DrawDisplay();
@@ -94,6 +97,7 @@ namespace MapEditor
 
 		private void textBoxTileHeight_TextChanged(object sender, EventArgs e)
 		{
+            //Update tileHeight and gridHeight accordingly
 			if (int.TryParse(textBoxTileHeight.Text, out gridHeight) == true)
 			{
 				DrawDisplay();
@@ -103,6 +107,8 @@ namespace MapEditor
 
 		private void DrawDisplay()
 		{
+            //Update the display box
+
 			tslDisplayBox.DrawToBitmap(display, tslDisplayBox.Bounds);
 
 			//Create graphics from image?
@@ -135,7 +141,5 @@ namespace MapEditor
 			//Update the display box
 			tslDisplayBox.Image = display;
 		}
-
-
-	}
+    }
 }
