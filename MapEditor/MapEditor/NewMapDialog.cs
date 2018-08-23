@@ -21,5 +21,10 @@ namespace MapEditor
 		{
 
 		}
+
+		private void newmapOKButton_Click(object sender, EventArgs e)
+		{
+
+		}
 	}
 }

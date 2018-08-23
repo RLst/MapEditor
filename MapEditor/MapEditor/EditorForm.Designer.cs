@@ -1,6 +1,6 @@
 ﻿namespace MapEditor
 {
-    partial class Editor
+    partial class EditorForm
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
 			this.components = new System.ComponentModel.Container();
-			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Editor));
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(EditorForm));
 			this.menuStrip = new System.Windows.Forms.MenuStrip();
 			this.fileMenu = new System.Windows.Forms.ToolStripMenuItem();
 			this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -72,6 +72,9 @@
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
 			this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStrip = new System.Windows.Forms.ToolStrip();
+			this.newToolStripButton = new System.Windows.Forms.ToolStripSplitButton();
+			this.newMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+			this.newTilesetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
 			this.openToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -79,16 +82,13 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.listView1 = new System.Windows.Forms.ListView();
-			this.listBox1 = new System.Windows.Forms.ListBox();
+			this.TileSelector = new System.Windows.Forms.ListView();
+			this.PropertiesListBox = new System.Windows.Forms.ListBox();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
-			this.newMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.newTilesetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-			this.newToolStripButton = new System.Windows.Forms.ToolStripSplitButton();
-			this.TSLoadButton = new System.Windows.Forms.Button();
-			this.TSSaveButton = new System.Windows.Forms.Button();
-			this.TSEditButton = new System.Windows.Forms.Button();
-			this.button4 = new System.Windows.Forms.Button();
+			this.tsLoadButton = new System.Windows.Forms.Button();
+			this.tsSaveButton = new System.Windows.Forms.Button();
+			this.tsEditButton = new System.Windows.Forms.Button();
+			this.tsRemoveButton = new System.Windows.Forms.Button();
 			this.menuStrip.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
@@ -458,6 +458,31 @@
 			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "ToolStrip";
 			// 
+			// newToolStripButton
+			// 
+			this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.newToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.newMapToolStripMenuItem,
+            this.newTilesetToolStripMenuItem});
+			this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
+			this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
+			this.newToolStripButton.Name = "newToolStripButton";
+			this.newToolStripButton.Size = new System.Drawing.Size(32, 22);
+			this.newToolStripButton.Text = "New";
+			this.newToolStripButton.Click += new System.EventHandler(this.ShowNewForm);
+			// 
+			// newMapToolStripMenuItem
+			// 
+			this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
+			this.newMapToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.newMapToolStripMenuItem.Text = "New &Map";
+			// 
+			// newTilesetToolStripMenuItem
+			// 
+			this.newTilesetToolStripMenuItem.Name = "newTilesetToolStripMenuItem";
+			this.newTilesetToolStripMenuItem.Size = new System.Drawing.Size(135, 22);
+			this.newTilesetToolStripMenuItem.Text = "New &Tileset";
+			// 
 			// openToolStripButton
 			// 
 			this.openToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
@@ -507,23 +532,23 @@
 			this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabel.Text = "Status";
 			// 
-			// listView1
+			// TileSelector
 			// 
-			this.listView1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.listView1.Location = new System.Drawing.Point(762, 322);
-			this.listView1.Name = "listView1";
-			this.listView1.Size = new System.Drawing.Size(284, 351);
-			this.listView1.TabIndex = 4;
-			this.listView1.UseCompatibleStateImageBehavior = false;
+			this.TileSelector.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.TileSelector.Location = new System.Drawing.Point(762, 322);
+			this.TileSelector.Name = "TileSelector";
+			this.TileSelector.Size = new System.Drawing.Size(284, 351);
+			this.TileSelector.TabIndex = 4;
+			this.TileSelector.UseCompatibleStateImageBehavior = false;
 			// 
-			// listBox1
+			// PropertiesListBox
 			// 
-			this.listBox1.Anchor = System.Windows.Forms.AnchorStyles.Right;
-			this.listBox1.FormattingEnabled = true;
-			this.listBox1.Location = new System.Drawing.Point(762, 52);
-			this.listBox1.Name = "listBox1";
-			this.listBox1.Size = new System.Drawing.Size(284, 264);
-			this.listBox1.TabIndex = 5;
+			this.PropertiesListBox.Anchor = System.Windows.Forms.AnchorStyles.Right;
+			this.PropertiesListBox.FormattingEnabled = true;
+			this.PropertiesListBox.Location = new System.Drawing.Point(762, 52);
+			this.PropertiesListBox.Name = "PropertiesListBox";
+			this.PropertiesListBox.Size = new System.Drawing.Size(284, 264);
+			this.PropertiesListBox.TabIndex = 5;
 			// 
 			// pictureBox1
 			// 
@@ -535,85 +560,61 @@
 			this.pictureBox1.TabIndex = 3;
 			this.pictureBox1.TabStop = false;
 			// 
-			// newMapToolStripMenuItem
+			// tsLoadButton
 			// 
-			this.newMapToolStripMenuItem.Name = "newMapToolStripMenuItem";
-			this.newMapToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.newMapToolStripMenuItem.Text = "New &Map";
+			this.tsLoadButton.Location = new System.Drawing.Point(762, 677);
+			this.tsLoadButton.Name = "tsLoadButton";
+			this.tsLoadButton.Size = new System.Drawing.Size(43, 23);
+			this.tsLoadButton.TabIndex = 6;
+			this.tsLoadButton.Text = "Load";
+			this.tsLoadButton.UseVisualStyleBackColor = true;
+			this.tsLoadButton.Click += new System.EventHandler(this.tsLoadButton_Click);
 			// 
-			// newTilesetToolStripMenuItem
+			// tsSaveButton
 			// 
-			this.newTilesetToolStripMenuItem.Name = "newTilesetToolStripMenuItem";
-			this.newTilesetToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-			this.newTilesetToolStripMenuItem.Text = "New &Tileset";
+			this.tsSaveButton.Location = new System.Drawing.Point(811, 677);
+			this.tsSaveButton.Name = "tsSaveButton";
+			this.tsSaveButton.Size = new System.Drawing.Size(43, 23);
+			this.tsSaveButton.TabIndex = 6;
+			this.tsSaveButton.Text = "Save";
+			this.tsSaveButton.UseVisualStyleBackColor = true;
 			// 
-			// newToolStripButton
+			// tsEditButton
 			// 
-			this.newToolStripButton.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.newToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newMapToolStripMenuItem,
-            this.newTilesetToolStripMenuItem});
-			this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
-			this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
-			this.newToolStripButton.Name = "newToolStripButton";
-			this.newToolStripButton.Size = new System.Drawing.Size(32, 22);
-			this.newToolStripButton.Text = "New";
-			this.newToolStripButton.Click += new System.EventHandler(this.ShowNewForm);
+			this.tsEditButton.Location = new System.Drawing.Point(860, 677);
+			this.tsEditButton.Name = "tsEditButton";
+			this.tsEditButton.Size = new System.Drawing.Size(43, 23);
+			this.tsEditButton.TabIndex = 6;
+			this.tsEditButton.Text = "Edit";
+			this.tsEditButton.UseVisualStyleBackColor = true;
 			// 
-			// TSLoadButton
+			// tsRemoveButton
 			// 
-			this.TSLoadButton.Location = new System.Drawing.Point(762, 677);
-			this.TSLoadButton.Name = "TSLoadButton";
-			this.TSLoadButton.Size = new System.Drawing.Size(43, 23);
-			this.TSLoadButton.TabIndex = 6;
-			this.TSLoadButton.Text = "Load";
-			this.TSLoadButton.UseVisualStyleBackColor = true;
+			this.tsRemoveButton.Location = new System.Drawing.Point(989, 677);
+			this.tsRemoveButton.Name = "tsRemoveButton";
+			this.tsRemoveButton.Size = new System.Drawing.Size(57, 23);
+			this.tsRemoveButton.TabIndex = 6;
+			this.tsRemoveButton.Text = "Remove";
+			this.tsRemoveButton.UseVisualStyleBackColor = true;
 			// 
-			// TSSaveButton
-			// 
-			this.TSSaveButton.Location = new System.Drawing.Point(811, 677);
-			this.TSSaveButton.Name = "TSSaveButton";
-			this.TSSaveButton.Size = new System.Drawing.Size(43, 23);
-			this.TSSaveButton.TabIndex = 6;
-			this.TSSaveButton.Text = "Save";
-			this.TSSaveButton.UseVisualStyleBackColor = true;
-			// 
-			// TSEditButton
-			// 
-			this.TSEditButton.Location = new System.Drawing.Point(860, 677);
-			this.TSEditButton.Name = "TSEditButton";
-			this.TSEditButton.Size = new System.Drawing.Size(43, 23);
-			this.TSEditButton.TabIndex = 6;
-			this.TSEditButton.Text = "Edit";
-			this.TSEditButton.UseVisualStyleBackColor = true;
-			// 
-			// button4
-			// 
-			this.button4.Location = new System.Drawing.Point(989, 677);
-			this.button4.Name = "button4";
-			this.button4.Size = new System.Drawing.Size(57, 23);
-			this.button4.TabIndex = 6;
-			this.button4.Text = "Remove";
-			this.button4.UseVisualStyleBackColor = true;
-			// 
-			// Editor
+			// EditorForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
 			this.ClientSize = new System.Drawing.Size(1046, 725);
-			this.Controls.Add(this.button4);
-			this.Controls.Add(this.TSEditButton);
-			this.Controls.Add(this.TSSaveButton);
-			this.Controls.Add(this.TSLoadButton);
-			this.Controls.Add(this.listBox1);
-			this.Controls.Add(this.listView1);
+			this.Controls.Add(this.tsRemoveButton);
+			this.Controls.Add(this.tsEditButton);
+			this.Controls.Add(this.tsSaveButton);
+			this.Controls.Add(this.tsLoadButton);
+			this.Controls.Add(this.PropertiesListBox);
+			this.Controls.Add(this.TileSelector);
 			this.Controls.Add(this.pictureBox1);
 			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.toolStrip);
 			this.Controls.Add(this.menuStrip);
 			this.MainMenuStrip = this.menuStrip;
-			this.Name = "Editor";
+			this.Name = "EditorForm";
 			this.Text = "pkr Map Editor";
 			this.menuStrip.ResumeLayout(false);
 			this.menuStrip.PerformLayout();
@@ -678,16 +679,16 @@
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ListView listView1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.ListView TileSelector;
+        private System.Windows.Forms.ListBox PropertiesListBox;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.ToolStripSplitButton newToolStripButton;
         private System.Windows.Forms.ToolStripMenuItem newMapToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newTilesetToolStripMenuItem;
-		private System.Windows.Forms.Button TSLoadButton;
-		private System.Windows.Forms.Button TSSaveButton;
-		private System.Windows.Forms.Button TSEditButton;
-		private System.Windows.Forms.Button button4;
+		private System.Windows.Forms.Button tsLoadButton;
+		private System.Windows.Forms.Button tsSaveButton;
+		private System.Windows.Forms.Button tsEditButton;
+		private System.Windows.Forms.Button tsRemoveButton;
 	}
 }
 

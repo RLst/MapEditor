@@ -10,22 +10,22 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
-    public partial class Editor : Form
+    public partial class EditorForm : Form
     {
         private int childFormNumber = 0;
 
-        public Editor()
+        public EditorForm()
         {
             InitializeComponent();
         }
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            TilesetLoader childForm = new TilesetLoader();
-            //Form childForm = new Form();
-            childForm.MdiParent = this;
-            childForm.Text = "Window " + childFormNumber++;
-            childForm.Show();
+            //Form childForm = new TilesetLoaderForm();
+            ////Form childForm = new Form();
+            //childForm.MdiParent = this;
+            //childForm.Text = "Window " + childFormNumber++;
+            //childForm.Show();
         }
 
         private void OpenFile(object sender, EventArgs e)
@@ -104,5 +104,17 @@ namespace MapEditor
                 childForm.Close();
             }
         }
+
+		private void tsLoadButton_Click(object sender, EventArgs e)
+		{
+			PopupForm popup = new TilesetLoaderForm();
+
+
+			TilesetLoaderForm newForm = new TilesetLoaderForm();
+			newForm.Show();
+
+			//Deactivate this form so the user can't interact with it
+			this.Enabled = false;
+		}
 	}
 }
