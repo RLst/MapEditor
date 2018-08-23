@@ -10,18 +10,18 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
-    public partial class MapEditor : Form
+    public partial class Editor : Form
     {
         private int childFormNumber = 0;
 
-        public MapEditor()
+        public Editor()
         {
             InitializeComponent();
         }
 
         private void ShowNewForm(object sender, EventArgs e)
         {
-            tilesetLoader childForm = new tilesetLoader();
+            TilesetLoader childForm = new TilesetLoader();
             //Form childForm = new Form();
             childForm.MdiParent = this;
             childForm.Text = "Window " + childFormNumber++;
@@ -104,5 +104,5 @@ namespace MapEditor
                 childForm.Close();
             }
         }
-    }
+	}
 }
