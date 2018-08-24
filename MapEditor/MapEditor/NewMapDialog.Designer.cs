@@ -34,13 +34,18 @@
 			this.textBoxRows = new System.Windows.Forms.TextBox();
 			this.textBoxColumns = new System.Windows.Forms.TextBox();
 			this.panel = new System.Windows.Forms.Panel();
+			this.textBoxTileHeight = new System.Windows.Forms.TextBox();
+			this.textBoxTileWidth = new System.Windows.Forms.TextBox();
+			this.label2 = new System.Windows.Forms.Label();
+			this.lblMapSize = new System.Windows.Forms.Label();
+			this.label1 = new System.Windows.Forms.Label();
 			this.lblSize = new System.Windows.Forms.Label();
 			this.panel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// nmOKButton
 			// 
-			this.nmOKButton.Location = new System.Drawing.Point(54, 75);
+			this.nmOKButton.Location = new System.Drawing.Point(58, 198);
 			this.nmOKButton.Name = "nmOKButton";
 			this.nmOKButton.Size = new System.Drawing.Size(75, 23);
 			this.nmOKButton.TabIndex = 0;
@@ -72,6 +77,7 @@
 			this.textBoxRows.Name = "textBoxRows";
 			this.textBoxRows.Size = new System.Drawing.Size(100, 20);
 			this.textBoxRows.TabIndex = 2;
+			this.textBoxRows.TextChanged += new System.EventHandler(this.textBoxRows_TextChanged);
 			// 
 			// textBoxColumns
 			// 
@@ -79,18 +85,68 @@
 			this.textBoxColumns.Name = "textBoxColumns";
 			this.textBoxColumns.Size = new System.Drawing.Size(100, 20);
 			this.textBoxColumns.TabIndex = 2;
+			this.textBoxColumns.TextChanged += new System.EventHandler(this.textBoxColumns_TextChanged);
 			// 
 			// panel
 			// 
+			this.panel.Controls.Add(this.textBoxTileHeight);
 			this.panel.Controls.Add(this.textBoxColumns);
 			this.panel.Controls.Add(this.nmOKButton);
+			this.panel.Controls.Add(this.textBoxTileWidth);
+			this.panel.Controls.Add(this.label2);
 			this.panel.Controls.Add(this.textBoxRows);
+			this.panel.Controls.Add(this.lblMapSize);
+			this.panel.Controls.Add(this.label1);
 			this.panel.Controls.Add(this.lblRows);
 			this.panel.Controls.Add(this.lblColumns);
 			this.panel.Location = new System.Drawing.Point(12, 28);
 			this.panel.Name = "panel";
-			this.panel.Size = new System.Drawing.Size(187, 110);
+			this.panel.Size = new System.Drawing.Size(187, 234);
 			this.panel.TabIndex = 3;
+			// 
+			// textBoxTileHeight
+			// 
+			this.textBoxTileHeight.Location = new System.Drawing.Point(70, 99);
+			this.textBoxTileHeight.Name = "textBoxTileHeight";
+			this.textBoxTileHeight.Size = new System.Drawing.Size(100, 20);
+			this.textBoxTileHeight.TabIndex = 2;
+			this.textBoxTileHeight.TextChanged += new System.EventHandler(this.textBoxColumns_TextChanged);
+			// 
+			// textBoxTileWidth
+			// 
+			this.textBoxTileWidth.Location = new System.Drawing.Point(70, 71);
+			this.textBoxTileWidth.Name = "textBoxTileWidth";
+			this.textBoxTileWidth.Size = new System.Drawing.Size(100, 20);
+			this.textBoxTileWidth.TabIndex = 2;
+			this.textBoxTileWidth.TextChanged += new System.EventHandler(this.textBoxRows_TextChanged);
+			// 
+			// label2
+			// 
+			this.label2.AutoSize = true;
+			this.label2.Location = new System.Drawing.Point(27, 74);
+			this.label2.Name = "label2";
+			this.label2.Size = new System.Drawing.Size(37, 13);
+			this.label2.TabIndex = 1;
+			this.label2.Text = "Rows:";
+			// 
+			// lblMapSize
+			// 
+			this.lblMapSize.AutoSize = true;
+			this.lblMapSize.Location = new System.Drawing.Point(55, 131);
+			this.lblMapSize.Name = "lblMapSize";
+			this.lblMapSize.Size = new System.Drawing.Size(91, 13);
+			this.lblMapSize.TabIndex = 1;
+			this.lblMapSize.Text = "[showMapSizePx]";
+			this.lblMapSize.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+			// 
+			// label1
+			// 
+			this.label1.AutoSize = true;
+			this.label1.Location = new System.Drawing.Point(14, 102);
+			this.label1.Name = "label1";
+			this.label1.Size = new System.Drawing.Size(50, 13);
+			this.label1.TabIndex = 1;
+			this.label1.Text = "Columns:";
 			// 
 			// lblSize
 			// 
@@ -105,7 +161,7 @@
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(212, 151);
+			this.ClientSize = new System.Drawing.Size(212, 322);
 			this.Controls.Add(this.lblSize);
 			this.Controls.Add(this.panel);
 			this.Name = "NewMapDialog";
@@ -127,5 +183,10 @@
 		private System.Windows.Forms.TextBox textBoxColumns;
 		private System.Windows.Forms.Panel panel;
 		private System.Windows.Forms.Label lblSize;
+		private System.Windows.Forms.TextBox textBoxTileHeight;
+		private System.Windows.Forms.TextBox textBoxTileWidth;
+		private System.Windows.Forms.Label label2;
+		private System.Windows.Forms.Label lblMapSize;
+		private System.Windows.Forms.Label label1;
 	}
 }
