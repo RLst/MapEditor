@@ -96,15 +96,15 @@ namespace MapEditor
 				
             }
         }
-		public Image Image { get; }
+
 
 		public Tileset(string filePath, int rows = 10, int columns = 10)
 		//Loads tileset from image and sets rows/cols
 		{
-			Rows = rows;
-			Columns = columns;
 			this.filePath = filePath;
 			Load();
+			Columns = columns;
+			Rows = rows;
 		}
 
 		public void Load()
