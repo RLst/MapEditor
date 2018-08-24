@@ -10,8 +10,20 @@ namespace MapEditor
     class Tileset
     {
         private Image image = null;
+		public Image Image
+		{
+			get
+			{
+				return image;
+			}
+			set
+			{
+				//Validity check?
+				image = value;
+			}
+		}
 
-        private string filePath;
+		private string filePath;
 
 		//Properties
         public int TileWidth
