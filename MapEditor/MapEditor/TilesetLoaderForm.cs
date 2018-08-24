@@ -12,23 +12,25 @@ namespace MapEditor
 {
     public partial class TilesetLoaderForm : Form
     {
-
 		Tileset tileset = null;
 		Bitmap display;
 
 		//These are just for this form only
-		int gridWidth = 10;			
-		int gridHeight = 10;
+		static int gridWidth = 10;			
+		static int gridHeight = 10;
 
 		public TilesetLoaderForm()	
         {
             InitializeComponent();      //This literally loads all the components up and sets and positions them etc
 
 			//Allocate the display
-			display = new Bitmap(tslDisplayBox.Width, tslDisplayBox.Height);
+			display = new Bitmap(DisplayBox.Width, DisplayBox.Height);
+
+			textBoxTileWidth.Text = gridWidth.ToString();
+			textBoxTileHeight.Text = gridHeight.ToString();
         }
 
-		private void tslLoadButton_Click(object sender, EventArgs e)
+		private void LoadButton_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog dlg = new OpenFileDialog();
 
@@ -37,14 +39,14 @@ namespace MapEditor
 				tileset = new Tileset(dlg.FileName);
 
 				//Also set the tileset's tile sizes?
-				tileset.TileWidth = gridWidth;
-				tileset.TileHeight = gridHeight;
+				//tileset.TileWidth = gridWidth;
+				//tileset.TileHeight = gridHeight;
 
 				DrawDisplay();
 			}
 		}
 
-		private void tslOKButton_Click(object sender, EventArgs e)
+		private void OKButton_Click(object sender, EventArgs e)
 		{
 			//If an image for the tileset has been loaded... (And the rows/cols/width/height settings are good)
 
@@ -55,37 +57,37 @@ namespace MapEditor
 				//Close the form
 
 			//Otherwise just close the form
-
+			//Set focus back to editor form
 		}
 
-		private void tslCancelButton_Click(object sender, EventArgs e)
+		private void CancelButton_Click(object sender, EventArgs e)
 		{
 			//Close this form
 			Close();
 
-			//Set to focus EditorForm 
-			
+			//Set focus back to EditorForm...
+			//Nope just use ShowDialog() instead of Show() and the focus issues will take care of itself
 		}
-
 
 
 		private void TilesetLoaderForm_Load(object sender, EventArgs e)
 		{
-
+			//What does load do?
+				//First function that runs when this form is created?
 		}
 
-		private void textBoxRows_TextChanged(object sender, EventArgs e)
+		private void TextBoxRows_TextChanged(object sender, EventArgs e)
 		{
             //Update this.gridWidth
             //Update tileset.TileWidth accordingly
 		}
-		private void textBoxColumns_TextChanged(object sender, EventArgs e)
+		private void TextBoxColumns_TextChanged(object sender, EventArgs e)
 		{
             //Update this.gridHeight
             //Update tileset.TileHeight accordingly
         }
 
-        private void textBoxTileWidth_TextChanged(object sender, EventArgs e)
+        private void TextBoxTileWidth_TextChanged(object sender, EventArgs e)
 		{
             //Update tileWidth and gridWidth accordinly
 			if (int.TryParse(textBoxTileWidth.Text, out gridWidth) == true)
@@ -95,7 +97,7 @@ namespace MapEditor
 			textBoxColumns.Text = gridWidth.ToString();
 		}
 
-		private void textBoxTileHeight_TextChanged(object sender, EventArgs e)
+		private void TextBoxTileHeight_TextChanged(object sender, EventArgs e)
 		{
             //Update tileHeight and gridHeight accordingly
 			if (int.TryParse(textBoxTileHeight.Text, out gridHeight) == true)
@@ -108,38 +110,41 @@ namespace MapEditor
 		private void DrawDisplay()
 		{
             //Update the display box
-
-			tslDisplayBox.DrawToBitmap(display, tslDisplayBox.Bounds);
-
-			//Create graphics from image?
-			Graphics g;
+			DisplayBox.DrawToBitmap(display, DisplayBox.Bounds);
+			
+			Graphics g;		//?
 			g = Graphics.FromImage(display);
 
-			//
-			g.Clear(Color.White);
+			g.Clear(Color.White);	//?
 
+			//Only draw if an image is available
 			if (tileset != null)
 			{
 				g.DrawImage(tileset.Image, 0, 0);
 			}
 
-			//Draw the grid
+			//// Draw the grid ////
 			Pen pen = new Pen(Brushes.Black);
 
 			int height = display.Height;
 			int width = display.Width;
 
-			//Draw vertical grid?
+			//Verticals
 			for (int y = 0; y < height; y += gridHeight)
 			{
 				g.DrawLine(pen, 0, y, width, y);
 			}
 
+			//Horizontals
+			for (int x = 0; x < width; x += gridWidth)
+			{
+				g.DrawLine(pen, x, 0, x, height);
+			}
 
 			g.Dispose();
 
 			//Update the display box
-			tslDisplayBox.Image = display;
+			DisplayBox.Image = display;
 		}
     }
 }
