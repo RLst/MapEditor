@@ -24,11 +24,10 @@ namespace MapEditor
         {
             InitializeComponent();      //This literally loads all the components up and sets and positions them etc
 
-			//Set the parent
-			//var parentForm = ???
-
 			//Allocate the display
 			display = new Bitmap(DisplayBox.Width, DisplayBox.Height);
+			DrawDisplay();
+		}
 
 		private void TilesetLoaderForm_Load(object sender, EventArgs e)
 		{
@@ -161,12 +160,10 @@ namespace MapEditor
             //Update the display box
 			DisplayBox.DrawToBitmap(display, DisplayBox.Bounds);
 			
-			Graphics g;		//?
+			Graphics g;
 			g = Graphics.FromImage(display);
-
-			g.Clear(Color.White);	//?
-
-
+			g.Clear(Color.LightSlateGray);
+			
 			//// if Image available ////
 			if (tileset != null)
 			{
