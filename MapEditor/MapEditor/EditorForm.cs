@@ -14,30 +14,47 @@ namespace MapEditor
     {
         private int childFormNumber = 0;
 
+		private string currentDocumentPath = null;
+		private bool currentDocumentNotPreviouslySaved = true;
+
+		private int childFormNumber = 0;
+
         public EditorForm()
         {
             InitializeComponent();
         }
 
-        private void ShowNewForm(object sender, EventArgs e)
+		/// <summary>
+		/// NEW
+		/// </summary>
+        private void ShowNewDialog(object sender, EventArgs e)
         {
-            //If a current document is open, prompt user to save first
+			//Get  
+			NewMapDialog newMapDialog = new NewMapDialog();
+			//Show the new map dialog and check if OK clicked
+			if (newMapDialog.ShowDialog(this) == DialogResult.OK)
+			{
+				//Clear/reset current document
+				
+			}
+
+			//If a current document is open, prompt user to save first
 
 			//Otherwise clear Program.map and create a new map
-			
-			//Form childForm = new TilesetLoaderForm();
-            ////Form childForm = new Form();
-            //childForm.MdiParent = this;
-            //childForm.Text = "Window " + childFormNumber++;
-            //childForm.Show();
-        }
+
+			/*
+			Form childForm = new TilesetLoaderForm();
+            //Form childForm = new Form();
+            childForm.MdiParent = this;
+            childForm.Text = "Window " + childFormNumber++;
+            childForm.Show();
+			*/
+		}
 
 		/// <summary>
-		/// OPEN related methods
+		/// OPEN
 		/// </summary>
-		/// <param name="sender"></param>
-		/// <param name="e"></param>
-        private void OpenFile(object sender, EventArgs e)
+		private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
@@ -49,7 +66,7 @@ namespace MapEditor
         }
 
 		/// <summary>
-		/// SAVE related methods
+		/// SAVE
 		/// ////////////////////
 		/// pkr Map Editor Project files:
 		/// - Saved as .mep files (map editor project)
@@ -57,17 +74,16 @@ namespace MapEditor
 		///		Any tilesets/tiles in the tile palette
 		///		Other settings
 		/// - Export to .map files
-		///		These are the actual files that will be used by the game app 
-		///		
+		///		These are the actual files that will be used by the game app
 		/// </summary>
 		private void Save()
 		{
-			//If a document has previously been saved then save as normal
-			if (false);
-
-			//Otherwise call SaveAs()
-			else
+			if (currentDocumentNotPreviouslySaved)
+			{
 				SaveAs();
+			}
+			//Add Save logic here
+			Console.WriteLine("Saving...");
 		}
 		private void SaveAs()
 		{
@@ -80,29 +96,48 @@ namespace MapEditor
                 string FileName = saveFileDialog.FileName;
             }
 		}
-        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
 
-			SaveAs();
-        }
+		/// <summary>
+		/// Handle Menu Items and Buttons
+		/// </summary>
+		//New
+		private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			var NewMapDialog = new NewMapDialog();
+
+			NewMapDialog.ShowDialog();
+
+
+
+		}
+
+		private void newToolStripButton_Click(object sender, EventArgs e)
+		{
+			//Open create new map dialog
+			ShowNewDialog(sender, e);
+
+			//var newMapDlg = new NewMapDialog();
+			//newMapDlg.ShowDialog();
+		}
+
+
+		//Save
 		private void SaveToolStripButton_Click(object sender, EventArgs e)
 		{
 			//Calls THE save function
+			Save();
 		}
 		private void SaveToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//Calls THE save function
+			Save();
 		}
-
-
-
-		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
+        private void SaveAsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-			//If there are changes then ask to save changes (utilise dirty flag pattern)
-
-            Close();
+			SaveAs();
         }
 
+		//Cut copy and paste
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
@@ -115,7 +150,17 @@ namespace MapEditor
         {
         }
 
-        private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
+		//Other
+		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//If there are changes then ask to save changes (utilise dirty flag pattern)
+			if (currentDocumentNotPreviouslySaved)
+			{
+				Save();
+			}
+			Close();
+		}
+		private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStrip.Visible = toolBarToolStripMenuItem.Checked;
         }
@@ -147,16 +192,17 @@ namespace MapEditor
 
         private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            foreach (Form childForm in MdiChildren)
-            {
-                childForm.Close();
-            }
+            //foreach (Form childForm in MdiChildren)
+            //{
+            //    childForm.Close();
+            //}
         }
 
 		private void AddTilesButton_Click(object sender, EventArgs e)
 		{
 			TilesetLoaderForm tileSetLoadForm = new TilesetLoaderForm();
-			tileSetLoadForm.ShowDialog();
+			tileSetLoadForm.ShowDialog(this);
+			tileSetLoadForm.Dispose();
 
 			//Deactivate this form so the user can't interact with it...
 			//NOPE... just use ShowDialog() instead of Show()
@@ -180,5 +226,7 @@ namespace MapEditor
 		{
 			//Open user manual
 		}
+
+
 	}
 }
