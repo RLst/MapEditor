@@ -45,20 +45,21 @@
 			// 
 			// DisplayBox
 			// 
-			this.DisplayBox.Location = new System.Drawing.Point(16, 15);
-			this.DisplayBox.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.DisplayBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.DisplayBox.Location = new System.Drawing.Point(12, 12);
 			this.DisplayBox.Name = "DisplayBox";
-			this.DisplayBox.Size = new System.Drawing.Size(1013, 556);
+			this.DisplayBox.Size = new System.Drawing.Size(760, 452);
 			this.DisplayBox.TabIndex = 0;
 			this.DisplayBox.TabStop = false;
 			// 
 			// OKButton
 			// 
 			this.OKButton.DialogResult = System.Windows.Forms.DialogResult.OK;
-			this.OKButton.Location = new System.Drawing.Point(808, 578);
-			this.OKButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.OKButton.Location = new System.Drawing.Point(606, 470);
 			this.OKButton.Name = "OKButton";
-			this.OKButton.Size = new System.Drawing.Size(107, 53);
+			this.OKButton.Size = new System.Drawing.Size(80, 43);
 			this.OKButton.TabIndex = 1;
 			this.OKButton.Text = "OK";
 			this.OKButton.UseVisualStyleBackColor = true;
@@ -66,10 +67,9 @@
 			// 
 			// tslLoadButton
 			// 
-			this.tslLoadButton.Location = new System.Drawing.Point(693, 578);
-			this.tslLoadButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.tslLoadButton.Location = new System.Drawing.Point(520, 470);
 			this.tslLoadButton.Name = "tslLoadButton";
-			this.tslLoadButton.Size = new System.Drawing.Size(107, 53);
+			this.tslLoadButton.Size = new System.Drawing.Size(80, 43);
 			this.tslLoadButton.TabIndex = 1;
 			this.tslLoadButton.Text = "Load tileset...";
 			this.tslLoadButton.UseVisualStyleBackColor = true;
@@ -78,49 +78,44 @@
 			// lblRows
 			// 
 			this.lblRows.AutoSize = true;
-			this.lblRows.Location = new System.Drawing.Point(23, 597);
-			this.lblRows.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.lblRows.Location = new System.Drawing.Point(17, 485);
 			this.lblRows.Name = "lblRows";
-			this.lblRows.Size = new System.Drawing.Size(46, 17);
+			this.lblRows.Size = new System.Drawing.Size(37, 13);
 			this.lblRows.TabIndex = 2;
 			this.lblRows.Text = "Rows:";
 			// 
 			// lblTilewidth
 			// 
 			this.lblTilewidth.AutoSize = true;
-			this.lblTilewidth.Location = new System.Drawing.Point(329, 597);
-			this.lblTilewidth.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.lblTilewidth.Location = new System.Drawing.Point(247, 485);
 			this.lblTilewidth.Name = "lblTilewidth";
-			this.lblTilewidth.Size = new System.Drawing.Size(75, 17);
+			this.lblTilewidth.Size = new System.Drawing.Size(58, 13);
 			this.lblTilewidth.TabIndex = 2;
 			this.lblTilewidth.Text = "Tile Width:";
 			// 
 			// lblTileheight
 			// 
 			this.lblTileheight.AutoSize = true;
-			this.lblTileheight.Location = new System.Drawing.Point(503, 597);
-			this.lblTileheight.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.lblTileheight.Location = new System.Drawing.Point(377, 485);
 			this.lblTileheight.Name = "lblTileheight";
-			this.lblTileheight.Size = new System.Drawing.Size(80, 17);
+			this.lblTileheight.Size = new System.Drawing.Size(61, 13);
 			this.lblTileheight.TabIndex = 2;
 			this.lblTileheight.Text = "Tile Height:";
 			// 
 			// textBoxRows
 			// 
-			this.textBoxRows.Location = new System.Drawing.Point(79, 593);
-			this.textBoxRows.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBoxRows.Location = new System.Drawing.Point(59, 482);
 			this.textBoxRows.Name = "textBoxRows";
-			this.textBoxRows.Size = new System.Drawing.Size(79, 22);
+			this.textBoxRows.Size = new System.Drawing.Size(60, 20);
 			this.textBoxRows.TabIndex = 3;
 			this.textBoxRows.TextChanged += new System.EventHandler(this.TextBoxRows_TextChanged);
 			// 
 			// cancelButton
 			// 
 			this.cancelButton.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-			this.cancelButton.Location = new System.Drawing.Point(923, 578);
-			this.cancelButton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.cancelButton.Location = new System.Drawing.Point(692, 470);
 			this.cancelButton.Name = "cancelButton";
-			this.cancelButton.Size = new System.Drawing.Size(107, 53);
+			this.cancelButton.Size = new System.Drawing.Size(80, 43);
 			this.cancelButton.TabIndex = 1;
 			this.cancelButton.Text = "Cancel";
 			this.cancelButton.UseVisualStyleBackColor = true;
@@ -129,45 +124,41 @@
 			// lblCols
 			// 
 			this.lblCols.AutoSize = true;
-			this.lblCols.Location = new System.Drawing.Point(167, 597);
-			this.lblCols.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+			this.lblCols.Location = new System.Drawing.Point(125, 485);
 			this.lblCols.Name = "lblCols";
-			this.lblCols.Size = new System.Drawing.Size(66, 17);
+			this.lblCols.Size = new System.Drawing.Size(50, 13);
 			this.lblCols.TabIndex = 2;
 			this.lblCols.Text = "Columns:";
 			// 
 			// textBoxColumns
 			// 
-			this.textBoxColumns.Location = new System.Drawing.Point(241, 593);
-			this.textBoxColumns.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBoxColumns.Location = new System.Drawing.Point(181, 482);
 			this.textBoxColumns.Name = "textBoxColumns";
-			this.textBoxColumns.Size = new System.Drawing.Size(79, 22);
+			this.textBoxColumns.Size = new System.Drawing.Size(60, 20);
 			this.textBoxColumns.TabIndex = 4;
 			this.textBoxColumns.TextChanged += new System.EventHandler(this.TextBoxColumns_TextChanged);
 			// 
 			// textBoxTileWidth
 			// 
-			this.textBoxTileWidth.Location = new System.Drawing.Point(415, 593);
-			this.textBoxTileWidth.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBoxTileWidth.Location = new System.Drawing.Point(311, 482);
 			this.textBoxTileWidth.Name = "textBoxTileWidth";
-			this.textBoxTileWidth.Size = new System.Drawing.Size(79, 22);
+			this.textBoxTileWidth.Size = new System.Drawing.Size(60, 20);
 			this.textBoxTileWidth.TabIndex = 4;
 			this.textBoxTileWidth.TextChanged += new System.EventHandler(this.TextBoxTileWidth_TextChanged);
 			// 
 			// textBoxTileHeight
 			// 
-			this.textBoxTileHeight.Location = new System.Drawing.Point(592, 593);
-			this.textBoxTileHeight.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.textBoxTileHeight.Location = new System.Drawing.Point(444, 482);
 			this.textBoxTileHeight.Name = "textBoxTileHeight";
-			this.textBoxTileHeight.Size = new System.Drawing.Size(79, 22);
+			this.textBoxTileHeight.Size = new System.Drawing.Size(60, 20);
 			this.textBoxTileHeight.TabIndex = 4;
 			this.textBoxTileHeight.TextChanged += new System.EventHandler(this.TextBoxTileHeight_TextChanged);
 			// 
 			// TilesetLoaderForm
 			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(1039, 640);
+			this.ClientSize = new System.Drawing.Size(779, 520);
 			this.Controls.Add(this.textBoxTileHeight);
 			this.Controls.Add(this.textBoxTileWidth);
 			this.Controls.Add(this.textBoxColumns);
@@ -180,7 +171,6 @@
 			this.Controls.Add(this.cancelButton);
 			this.Controls.Add(this.OKButton);
 			this.Controls.Add(this.DisplayBox);
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
 			this.Name = "TilesetLoaderForm";
 			this.Text = "Tileset Loader";
 			this.Load += new System.EventHandler(this.TilesetLoaderForm_Load);

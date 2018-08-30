@@ -64,18 +64,16 @@ namespace MapEditor
 
 				for (int row = 0; row < rows; ++row) {
 					for (int col = 0; col < cols; ++col) {
-						//Get section of bitmap
-						var bmpTile = display.Clone(new Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight), System.Drawing.Imaging.PixelFormat.DontCare);
+						//Get a single tile
+						var singleTile = display.Clone(new Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight), System.Drawing.Imaging.PixelFormat.DontCare);
 
 						//Make a new tile
-						var newTile = new Tile(bmpTile);
-						//newTile.Texture = imgTile;
+						//var newTile = new Tile(bmpTile);
 
 						//Add to EditorForm.Tiles
-						EditorForm.availableTiles.Add(newTile);
+						EditorForm.availableTiles.Add(new Tile(singleTile));
 						//Update the editorform.tilepalette?
 						//OR run procedures for the listview to update?
-
 					}
 				}
 
