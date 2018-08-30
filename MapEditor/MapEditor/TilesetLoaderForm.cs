@@ -80,6 +80,7 @@ namespace MapEditor
 				//Return OK
 				this.DialogResult = DialogResult.OK;
 				this.Close();
+				return;
 			}
 			//Return Cancel
 			this.DialogResult = DialogResult.Cancel;
