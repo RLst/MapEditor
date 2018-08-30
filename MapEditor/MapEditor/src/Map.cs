@@ -30,5 +30,11 @@ namespace MapEditor
 		{
 
 		}
+
+		public void ResetMap(uint width, uint height)
+		{
+
+		}
+
 	}
 }
