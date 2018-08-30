@@ -44,7 +44,7 @@ namespace MapEditor
 				//Also set the num of columns accordingly
 				if (image != null)
 				{
-					Columns = image.Size.Width / TileWidth;
+					Columns = image.Width / TileWidth;
 				}
 			}
 		}
@@ -57,7 +57,7 @@ namespace MapEditor
 				TileHeight = value;
 				if (image != null)
 				{
-					Rows = image.Size.Height / TileHeight;
+					Rows = image.Height / TileHeight;
 				}
 			}
 		}
@@ -67,7 +67,7 @@ namespace MapEditor
 				//Columns = int(imagewidth / tilewidth)
 				//Returns the number of columns based on the current tile width
 				if (image != null)
-					return Convert.ToUInt16(image.Size.Width / TileWidth);
+					return Convert.ToUInt16(image.Width / TileWidth);
 				else
 					return 0;
             }
@@ -76,11 +76,11 @@ namespace MapEditor
                 if (value > 0)
                 {
                     //Must be greater or equal to the image width
-                    if (value >= image.Size.Width)
+                    if (value >= image.Width)
                     {
                         Columns = value;
                         //Auto adjust the tile width based on what the user sets
-                        TileWidth = image.Size.Width / Columns;
+                        TileWidth = image.Width / Columns;
                     }
                 }
                 //Otherwise error or do nothing?
@@ -92,7 +92,7 @@ namespace MapEditor
             get
             {
 				if (image != null)
-					return Convert.ToUInt16(image.Size.Height / TileHeight);
+					return Convert.ToUInt16(image.Height / TileHeight);
 				else
 					return 0;
             }
@@ -100,10 +100,10 @@ namespace MapEditor
             {
                 if (value > 0)
                 {
-                    if (value >= image.Size.Height)
+                    if (value >= image.Height)
                     {
                         Rows = value;
-                        TileHeight = image.Size.Height / Rows;
+                        TileHeight = image.Height / Rows;
                     }
                 }
                 //Otherwise error or do nothing?

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace MapEditor
 {
-    class Tile
+    public class Tile
     {
         private Tileset tileset;            //The tileset this tile is using
         private Point tilesetIDX;           //The tileset index/coord this tile is referring to
@@ -45,12 +45,6 @@ namespace MapEditor
 				}
 				//Otherwise return null
 				return null;
-			}
-			set
-			{
-				//Should be set during startup when tileset and index are passed in?
-
-				//Otherwise, derive a texture from passed in tileset and index/coord 
 			}
 		}
 
