@@ -71,33 +71,30 @@ namespace MapEditor
 						var newTile = new Tile(bmpTile);
 						//newTile.Texture = imgTile;
 
-						//Add to EditorForm::Tiles
+						//Add to EditorForm.Tiles
+						EditorForm.availableTiles.Add(newTile);
+						//Update the editorform.tilepalette?
+						//OR run procedures for the listview to update?
 
 					}
 				}
 
-				//Push them into editorform::tiles ?
-				var parentForm = sender.GetType();
-
-				//Close the form
-
+				//Return OK
+				this.DialogResult = DialogResult.OK;
+				this.Close();
 			}
-			//Otherwise just close the form
-			//Set focus back to editor form
+			//Return Cancel
+			this.DialogResult = DialogResult.Cancel;
 			this.Close();
 		}
 
 		private void CancelButton_Click(object sender, EventArgs e)
 		{
 			//Close this form
-			Close();
-
-			//Set focus back to EditorForm...
-			//Nope just use ShowDialog() instead of Show() and the focus issues will take care of itself
+			///DialogResult = DialogResult.Cancel;
+			this.Close();
 		}
-
-
-
+		
 
 		private void TextBoxRows_TextChanged(object sender, EventArgs e)
 		{
