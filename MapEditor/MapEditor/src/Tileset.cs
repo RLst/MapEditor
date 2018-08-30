@@ -9,33 +9,39 @@ namespace MapEditor
 {
     class Tileset
     {
+
+		//Properties
+		private string filePath;
+		public string FilePath
+		{
+			get {
+				return filePath;
+			}
+			set {
+				filePath = value;
+			}
+		}
+
         private Image image = null;
 		public Image Image
 		{
-			get
-			{
+			get {
 				return image;
 			}
-			set
-			{
+			set {
 				//Validity check?
 				image = value;
 			}
 		}
-
-		private string filePath;
-
-		//Properties
+		
         public int TileWidth
 		{
-			get
-			{
+			get {
 				return TileWidth;
 			}
-			set
-			{
-				//Also set the num of columns accordingly
+			set {
 				TileWidth = value;
+				//Also set the num of columns accordingly
 				if (image != null)
 				{
 					Columns = image.Size.Width / TileWidth;
@@ -44,12 +50,10 @@ namespace MapEditor
 		}
         public int TileHeight
 		{
-			get
-			{
+			get	{
 				return TileHeight;
 			}
-			set
-			{
+			set {
 				TileHeight = value;
 				if (image != null)
 				{
@@ -59,8 +63,7 @@ namespace MapEditor
 		}
 		public int Columns
         {
-            get
-            {
+            get {
 				//Columns = int(imagewidth / tilewidth)
 				//Returns the number of columns based on the current tile width
 				if (image != null)
@@ -68,8 +71,7 @@ namespace MapEditor
 				else
 					return 0;
             }
-            set
-            {
+            set {
                 //Must be positive
                 if (value > 0)
                 {
