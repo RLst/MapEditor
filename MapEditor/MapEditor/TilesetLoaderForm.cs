@@ -12,52 +12,84 @@ namespace MapEditor
 {
     public partial class TilesetLoaderForm : Form
     {
+		//These are just for this form only
 		Tileset tileset = null;
 		Bitmap display;
-
-		//These are just for this form only
-		static int gridWidth = 10;			
-		static int gridHeight = 10;
+		static int rows;
+		static int cols;
+		static int tileWidth = 10;			
+		static int tileHeight = 10;
 
 		public TilesetLoaderForm()	
         {
             InitializeComponent();      //This literally loads all the components up and sets and positions them etc
 
+			//Set the parent
+			//var parentForm = ???
+
 			//Allocate the display
 			display = new Bitmap(DisplayBox.Width, DisplayBox.Height);
 
-			textBoxTileWidth.Text = gridWidth.ToString();
-			textBoxTileHeight.Text = gridHeight.ToString();
+			//
+			textBoxTileWidth.Text = tileWidth.ToString();
+			textBoxTileHeight.Text = tileHeight.ToString();
         }
+
+		private void TilesetLoaderForm_Load(object sender, EventArgs e)
+		{
+			//What does load do?
+			//First function that runs when this form is created?
+		}
 
 		private void LoadButton_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog dlg = new OpenFileDialog();
+			OpenFileDialog openDlg = new OpenFileDialog();
 
-			if (dlg.ShowDialog() == DialogResult.OK)
+			if (openDlg.ShowDialog() == DialogResult.OK)
 			{
-				tileset = new Tileset(dlg.FileName);
+				if (openDlg.CheckFileExists == true) {
+					tileset = new Tileset(openDlg.FileName);
+					DrawDisplay();
+				}
 
 				//Also set the tileset's tile sizes?
 				//tileset.TileWidth = gridWidth;
 				//tileset.TileHeight = gridHeight;
-
-				DrawDisplay();
 			}
+			openDlg.Dispose();
 		}
 
 		private void OKButton_Click(object sender, EventArgs e)
 		{
 			//If an image for the tileset has been loaded... (And the rows/cols/width/height settings are good)
+			if (tileset != null) 
+			{
+				//Split the tileset into individual tiles according to width and height settings
+				var tilesForEditor = new List<Tile>();
 
-				//Split the tileset into individual tiles
+				for (int row = 0; row < rows; ++row) {
+					for (int col = 0; col < cols; ++col) {
+						//Get section of bitmap
+						var bmpTile = display.Clone(new Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight), System.Drawing.Imaging.PixelFormat.DontCare);
 
-				//Push them into Program::tiles ?
+						//Make a new tile
+						var newTile = new Tile(bmpTile);
+						//newTile.Texture = imgTile;
+
+						//Add to EditorForm::Tiles
+
+					}
+				}
+
+				//Push them into editorform::tiles ?
+				var parentForm = sender.GetType();
 
 				//Close the form
 
+			}
 			//Otherwise just close the form
 			//Set focus back to editor form
+			this.Close();
 		}
 
 		private void CancelButton_Click(object sender, EventArgs e)
@@ -70,45 +102,43 @@ namespace MapEditor
 		}
 
 
-		private void TilesetLoaderForm_Load(object sender, EventArgs e)
-		{
-			//What does load do?
-				//First function that runs when this form is created?
-		}
+
 
 		private void TextBoxRows_TextChanged(object sender, EventArgs e)
 		{
-            //Update this.gridWidth
-            //Update tileset.TileWidth accordingly
+			//Update this.gridWidth
+			//Update tileset.TileWidth accordingly
 		}
 		private void TextBoxColumns_TextChanged(object sender, EventArgs e)
 		{
-            //Update this.gridHeight
-            //Update tileset.TileHeight accordingly
-        }
+			//Update this.gridHeight
 
-        private void TextBoxTileWidth_TextChanged(object sender, EventArgs e)
+			//Update tileset.TileHeight accordingly
+		}
+
+		private void TextBoxTileWidth_TextChanged(object sender, EventArgs e)
 		{
-            //Update tileWidth and gridWidth accordinly
-			if (int.TryParse(textBoxTileWidth.Text, out gridWidth) == true)
-			{
+			//Update tileWidth and gridWidth accordinly
+			if (int.TryParse(textBoxTileWidth.Text, out tileWidth) == true) {
 				DrawDisplay();
 			}
-			textBoxColumns.Text = gridWidth.ToString();
+			textBoxColumns.Text = tileWidth.ToString();
 		}
 
 		private void TextBoxTileHeight_TextChanged(object sender, EventArgs e)
 		{
-            //Update tileHeight and gridHeight accordingly
-			if (int.TryParse(textBoxTileHeight.Text, out gridHeight) == true)
-			{
+			//Update tileHeight and gridHeight accordingly
+			if (int.TryParse(textBoxTileHeight.Text, out tileHeight) == true) {
 				DrawDisplay();
 			}
-			textBoxRows.Text = gridHeight.ToString();
+			textBoxRows.Text = tileHeight.ToString();
 		}
 
 		private void DrawDisplay()
 		{
+			int width = 0;
+			int height = 0;
+
             //Update the display box
 			DisplayBox.DrawToBitmap(display, DisplayBox.Bounds);
 			
@@ -117,26 +147,30 @@ namespace MapEditor
 
 			g.Clear(Color.White);	//?
 
-			//Only draw if an image is available
+
+			//// if Image available ////
 			if (tileset != null)
 			{
 				g.DrawImage(tileset.Image, 0, 0);
+				width = tileset.Image.Width;
+				height = tileset.Image.Height;
+			}
+			else {	//image not avaiable, draw blank bitmap
+				width = display.Width;
+				height = display.Height;
 			}
 
 			//// Draw the grid ////
 			Pen pen = new Pen(Brushes.Black);
 
-			int height = display.Height;
-			int width = display.Width;
-
 			//Verticals
-			for (int y = 0; y < height; y += gridHeight)
+			for (int y = 0; y < height; y += tileHeight)
 			{
 				g.DrawLine(pen, 0, y, width, y);
 			}
 
 			//Horizontals
-			for (int x = 0; x < width; x += gridWidth)
+			for (int x = 0; x < width; x += tileWidth)
 			{
 				g.DrawLine(pen, x, 0, x, height);
 			}
@@ -146,5 +180,5 @@ namespace MapEditor
 			//Update the display box
 			DisplayBox.Image = display;
 		}
-    }
+	}
 }
