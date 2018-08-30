@@ -17,8 +17,8 @@ namespace MapEditor
 		Bitmap display;
 		static int rows;
 		static int cols;
-		static int tileWidth = 10;			
-		static int tileHeight = 10;
+		static int tileWidth = 32;			
+		static int tileHeight = 32;
 
 		public TilesetLoaderForm()	
         {
@@ -29,11 +29,6 @@ namespace MapEditor
 
 			//Allocate the display
 			display = new Bitmap(DisplayBox.Width, DisplayBox.Height);
-
-			//
-			textBoxTileWidth.Text = tileWidth.ToString();
-			textBoxTileHeight.Text = tileHeight.ToString();
-        }
 
 		private void TilesetLoaderForm_Load(object sender, EventArgs e)
 		{
@@ -49,12 +44,13 @@ namespace MapEditor
 			{
 				if (openDlg.CheckFileExists == true) {
 					tileset = new Tileset(openDlg.FileName);
+
+					//also set the initial tile width/heights
+					textBoxTileWidth.Text = tileWidth.ToString();
+					textBoxTileHeight.Text = tileHeight.ToString();
+
 					DrawDisplay();
 				}
-
-				//Also set the tileset's tile sizes?
-				//tileset.TileWidth = gridWidth;
-				//tileset.TileHeight = gridHeight;
 			}
 			openDlg.Dispose();
 		}
@@ -106,32 +102,55 @@ namespace MapEditor
 
 		private void TextBoxRows_TextChanged(object sender, EventArgs e)
 		{
-			//Update this.gridWidth
-			//Update tileset.TileWidth accordingly
+			if (tileset != null)
+			{
+				//Update rows and tileHeight accordingly
+				if (int.TryParse(textBoxRows.Text, out rows) == true)
+				{
+					tileHeight = tileset.Image.Height / rows;
+					textBoxTileHeight.Text = tileHeight.ToString();
+					DrawDisplay();
+				}
+			}
 		}
 		private void TextBoxColumns_TextChanged(object sender, EventArgs e)
 		{
-			//Update this.gridHeight
-
-			//Update tileset.TileHeight accordingly
+			if (tileset != null)
+			{
+				//Update cols and tileWidth accordingly
+				if (int.TryParse(textBoxColumns.Text, out cols) == true)
+				{
+					tileWidth = tileset.Image.Width / cols;
+					textBoxTileWidth.Text = tileWidth.ToString();
+					DrawDisplay();
+				}
+			}
 		}
-
 		private void TextBoxTileWidth_TextChanged(object sender, EventArgs e)
 		{
-			//Update tileWidth and gridWidth accordinly
-			if (int.TryParse(textBoxTileWidth.Text, out tileWidth) == true) {
-				DrawDisplay();
+			if (tileset != null)
+			{
+				//Update tileWidth and cols accordingly
+				if (int.TryParse(textBoxTileWidth.Text, out tileWidth) == true)
+				{
+					cols = tileset.Image.Width / tileWidth;
+					textBoxColumns.Text = cols.ToString();
+					DrawDisplay();
+				}
 			}
-			textBoxColumns.Text = tileWidth.ToString();
 		}
-
 		private void TextBoxTileHeight_TextChanged(object sender, EventArgs e)
 		{
-			//Update tileHeight and gridHeight accordingly
-			if (int.TryParse(textBoxTileHeight.Text, out tileHeight) == true) {
-				DrawDisplay();
+			if (tileset != null)
+			{
+				//Update tileHeight and rows accordingly
+				if (int.TryParse(textBoxTileHeight.Text, out tileHeight) == true)
+				{
+					rows = tileset.Image.Height / tileHeight;
+					textBoxRows.Text = rows.ToString();
+					DrawDisplay();
+				}
 			}
-			textBoxRows.Text = tileHeight.ToString();
 		}
 
 		private void DrawDisplay()
