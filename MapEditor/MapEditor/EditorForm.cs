@@ -14,12 +14,17 @@ namespace MapEditor
     {
 		//This is the meat of the current document:
 		static private Map map;							//The one and only map
-		static private List<Tileset> tilesets;          //Can hold many tilesets OR...
-		static private List<Tile> availableTiles;       //All the tiles in the list box 
+		static public List<Tile> availableTiles;        //All the tiles in the list box 
+		static public ImageList tileSwatches;			//"Swatches" of the tiles used for painting, but not the actual tiles themselves	
+		//static public List<Tileset> tilesets;			//Can hold many tilesets OR...
 
         public EditorForm()
         {
             InitializeComponent();
+			availableTiles = new List<Tile>();
+			tileSwatches = new ImageList();
+			//Set the image list for the tile palette
+			tilePalette.LargeImageList = tileSwatches;
         }
 
         private void ShowNewForm(object sender, EventArgs e)
@@ -97,8 +102,6 @@ namespace MapEditor
 			//Calls THE save function
 		}
 
-
-
 		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
         {
 			//If there are changes then ask to save changes (utilise dirty flag pattern)
@@ -109,11 +112,9 @@ namespace MapEditor
         private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
-
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
-
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
@@ -122,44 +123,24 @@ namespace MapEditor
         {
             toolStrip.Visible = toolBarToolStripMenuItem.Checked;
         }
-
         private void StatusBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
 
-        private void CascadeToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.Cascade);
-        }
 
-        private void TileVerticalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileVertical);
-        }
-
-        private void TileHorizontalToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.TileHorizontal);
-        }
-
-        private void ArrangeIconsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            LayoutMdi(MdiLayout.ArrangeIcons);
-        }
-
-        private void CloseAllToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            foreach (Form childForm in MdiChildren)
-            {
-                childForm.Close();
-            }
-        }
-
+		/// <summary>
+		/// ListView Box
+		/// </summary>
 		private void AddTilesButton_Click(object sender, EventArgs e)
 		{
 			TilesetLoaderForm tileSetLoadForm = new TilesetLoaderForm();
-			tileSetLoadForm.ShowDialog();
+
+			if (tileSetLoadForm.ShowDialog(this) == DialogResult.OK) 
+			{
+				//If there are new tiles then load in new tiles
+				UpdateTilePaletteItems();
+			}
 
 			//Deactivate this form so the user can't interact with it...
 			//NOPE... just use ShowDialog() instead of Show()
@@ -173,15 +154,30 @@ namespace MapEditor
 
 		}
 
-
-		private void helpToolStripButton_Click(object sender, EventArgs e)
+		private void HelpToolStripButton_Click(object sender, EventArgs e)
 		{
 			//Open user manual
 		}
-
-		private void userManualToolStripMenuItem_Click(object sender, EventArgs e)
+		private void UserManualToolStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//Open user manual
+		}
+		
+		private void UpdateTilePaletteItems()
+		{
+			//Go through all tiles and update the list items
+			int i = 0;
+			foreach (var tile in availableTiles)
+			{
+				tileSwatches.Images.Add(tile.Texture);
+				++i;
+
+			}
+		}
+
+		private void tilePalette_SelectedIndexChanged(object sender, EventArgs e)
+		{
+
 		}
 	}
 }
