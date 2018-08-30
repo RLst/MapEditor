@@ -12,7 +12,10 @@ namespace MapEditor
 {
     public partial class EditorForm : Form
     {
-        private int childFormNumber = 0;
+		//This is the meat of the current document:
+		static private Map map;							//The one and only map
+		static private List<Tileset> tilesets;          //Can hold many tilesets OR...
+		static private List<Tile> availableTiles;       //All the tiles in the list box 
 
 		private string currentDocumentPath = null;
 		private bool currentDocumentNotPreviouslySaved = true;
