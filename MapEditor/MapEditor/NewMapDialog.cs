@@ -68,8 +68,6 @@ namespace MapEditor
 			//Create a blank new map of specified size and tile layout
 
 			//Delete
-
-
 			
 		}
 	}

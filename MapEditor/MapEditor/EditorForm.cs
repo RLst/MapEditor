@@ -53,13 +53,6 @@ namespace MapEditor
 
 			//Otherwise clear Program.map and create a new map
 
-			/*
-			Form childForm = new TilesetLoaderForm();
-            //Form childForm = new Form();
-            childForm.MdiParent = this;
-            childForm.Text = "Window " + childFormNumber++;
-            childForm.Show();
-			*/
 		}
 
 		/// <summary>
@@ -118,10 +111,7 @@ namespace MapEditor
 
 			NewMapDialog.ShowDialog();
 
-
-
 		}
-
 		private void newToolStripButton_Click(object sender, EventArgs e)
 		{
 			//Open create new map dialog
@@ -191,10 +181,7 @@ namespace MapEditor
 				//If there are new tiles then load in new tiles
 				UpdateTilePaletteItems();
 			}
-			tileSetLoadForm.Dispose();
-
-			//Deactivate this form so the user can't interact with it...
-			//NOPE... just use ShowDialog() instead of Show()
+			tileSetLoadForm.Dispose();	//Is this required?
 		}
 		private void RemoveTilesButton_Click(object sender, EventArgs e)
 		{
@@ -225,11 +212,6 @@ namespace MapEditor
 				tilePalette.Items.Add(item);
 			}
 			//tilePalette.LargeImageList = tileSwatches;	//This was already done in the constructor
-		}
-
-		private void tilePalette_SelectedIndexChanged(object sender, EventArgs e)
-		{
-
 		}
 
 	}
