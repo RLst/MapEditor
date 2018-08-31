@@ -16,6 +16,7 @@ namespace MapEditor
 		static private Map map;							//The one and only map
 		static private List<Tileset> tilesets;          //Can hold many tilesets OR...
 		static private List<Tile> availableTiles;       //All the tiles in the list box 
+		static private ImageList tileSwatches;
 
 		private string currentDocumentPath = null;
 		private bool currentDocumentNotPreviouslySaved = true;
@@ -25,6 +26,13 @@ namespace MapEditor
         public EditorForm()
         {
             InitializeComponent();
+
+			//Setup tilePalette listview
+			availableTiles = new List<Tile>();
+			tileSwatches = new ImageList();
+			tilePalette.LargeImageList = tileSwatches;
+			tilePalette.LargeImageList.ImageSize = new Size(48, 48);
+			tilePalette.LargeImageList.ColorDepth = ColorDepth.Depth24Bit;
         }
 
 		/// <summary>
@@ -229,7 +237,24 @@ namespace MapEditor
 		{
 			//Open user manual
 		}
+		
+		private void UpdateTilePaletteItems()
+		{
+			//Go through all tiles and update the list items
+			//int i = 0;
+			for (int i = 0; i < availableTiles.Count; i++)
+			{
+				tileSwatches.Images.Add(availableTiles[i].Image);
+				var item = new ListViewItem();
+				item.ImageIndex = i;
+				tilePalette.Items.Add(item);
+			}
+			//tilePalette.LargeImageList = tileSwatches;	//This was already done in the constructor
+		}
 
+		private void tilePalette_SelectedIndexChanged(object sender, EventArgs e)
+		{
+		}
 
 	}
 }
