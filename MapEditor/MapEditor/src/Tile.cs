@@ -11,40 +11,40 @@ namespace MapEditor
     {
         private Tileset tileset;            //The tileset this tile is using
         private Point tilesetIDX;           //The tileset index/coord this tile is referring to
-        private Image texture;              //The actual texture of the tile
+        private Image image;              //The actual texture of the tile
         private Point mapIDX;				//Which map index/coord of the tile
 		
 
 		public Tile(Image texture)
 		{
-			this.texture = texture;
+			this.image = texture;
 		}
 		public Tile(Image texture, Point mapIDX)
 		{
-			this.texture = texture;
+			this.image = texture;
 			this.mapIDX = mapIDX;
 		}
 		public Tile(Image texture, Point mapIDX, Point tilesetIDX)
 		{
-			this.texture = texture;
+			this.image = texture;
 			this.mapIDX = mapIDX;
 			this.tilesetIDX = tilesetIDX;
 		}
 
-		public Image Texture
+		public Image Image
 		{
 			get
 			{
-				//Make sure tileset is not null
-				if (tileset != null) 
-				{
-					//??? Gets the tile from the tileset using the index
-
-					//Return the image
-					return texture;
-				}
-				//Otherwise return null
-				return null;
+				return image;
+				////Make sure tileset is not null
+				//if (tileset != null) 
+				//{
+				//	//??? Gets the tile from the tileset using the index
+				//	//Return the image
+				//	return image;
+				//}
+				////Otherwise return null
+				//return null;
 			}
 		}
 
