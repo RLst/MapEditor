@@ -71,7 +71,7 @@ namespace MapEditor
 						//var newTile = new Tile(bmpTile);
 
 						//Add to EditorForm.Tiles
-						EditorForm.availableTiles.Add(new Tile(singleTile));
+						EditorForm.tilePalette.Add(new Tile(singleTile));
 						//Update the editorform.tilepalette?
 						//OR run procedures for the listview to update?
 					}
