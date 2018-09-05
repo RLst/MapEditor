@@ -13,10 +13,10 @@ namespace MapEditor
 	public partial class NewMapDialog : Form
 	{
 		//Locals just for this dialog
-		static uint rows = 15;
-		static uint cols = 15;
-		static uint tileWidth = 32;		//px
-		static uint tileHeight = 32;		//px
+		static int rows = 15;
+		static int cols = 15;
+		static int tileWidth = 32;		//px
+		static int tileHeight = 32;		//px
 
 		public NewMapDialog()
 		{
@@ -26,10 +26,10 @@ namespace MapEditor
 		private void UpdateLblMapSize()
 		{
 			//Calculate the map width
-			uint mapWidth = cols * tileWidth;
+			int mapWidth = cols * tileWidth;
 
 			//Calculate the map height
-			uint mapHeight = rows * tileHeight;
+			int mapHeight = rows * tileHeight;
 
 			//Update
 			lblMapSize.Text = mapWidth.ToString() + " x " + mapHeight.ToString() + " pixels";
@@ -47,23 +47,23 @@ namespace MapEditor
 		private void textBoxRows_TextChanged(object sender, EventArgs e)
 		{
 			//Update rows
-			rows = Convert.ToUInt32(textBoxRows.Text);
+			rows = Convert.ToInt32(textBoxRows.Text);
 		}
 
 		private void textBoxColumns_TextChanged(object sender, EventArgs e)
 		{
 			//Update columns
-			cols = Convert.ToUInt32(textBoxRows.Text);
+			cols = Convert.ToInt32(textBoxRows.Text);
 		}
 
-		private void newmapOKButton_Click(object sender, EventArgs e)
+		private void OKButton_Click(object sender, EventArgs e)
 		{
 			//Make sure rows and column values are valid
 
 
 			//Clear document
-				//Reset Program.map
-				//Clear tilesets/tiles
+			//Reset Program.map
+			//Clear tilesets/tiles
 
 			//Create a blank new map of specified size and tile layout
 
@@ -71,6 +71,11 @@ namespace MapEditor
 
 
 			
+		}
+
+		private void CancelButton_Click(object sender, EventArgs e)
+		{
+			Close();
 		}
 	}
 }
