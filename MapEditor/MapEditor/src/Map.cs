@@ -10,31 +10,6 @@ namespace MapEditor
 {
     class Map
     {
-		//private int rows;
-		//public int Rows
-		//{
-		//	get
-		//	{
-		//		return rows;
-		//	}
-		//	set
-		//	{
-		//		rows = value;
-		//	}
-		//}
-		//private int cols;
-		//public int Cols
-		//{
-		//	get
-		//	{
-		//		return cols;
-		//	}
-		//	set
-		//	{
-		//		cols = value;
-		//	}
-		//}
-
 		//This class can be created with nothing in it
 		//private List<Tile> tiles;
 		private Tile[,] tiles;
@@ -76,51 +51,26 @@ namespace MapEditor
 
 		public Map(int rows, int cols, int tileWidth, int tileHeight)
 		{
-			//tiles = new List<Tile>(rows * cols);
+			NewMap(rows, cols, tileWidth, tileHeight);
+		}
+		public void NewMap(int rows, int cols, int tileWidth, int tileHeight)
+		{
+			//Set new properties
 			Rows = rows;
 			Cols = cols;
 			TileWidth = tileWidth;
 			TileHeight = tileHeight;
 
 			tiles = new Tile[Rows, Cols];
-
-			//Init tiles
-			//InitTiles();
-
-			//Set all tiles to null
-			Clear();
-		}
-
-		private void InitTiles()
-		{
-			for (int row = 0; row < Rows; row++)
-			{
-				for (int col = 0; col < Cols; col++)
-				{
-					tiles[row, col] = new Tile(null);	//Add in a bunch of blank tiles
-				}
-			}
+			//Already cleared. Don't need to clear()
 		}
 
 		//Nulls all elements
 		public void Clear()
 		{
-			for (int row = 0; row < Rows; row++)
+			for (int row = 0; row < tiles.GetLength(0) ; row++)
 			{
-				for (int col = 0; col < Cols; col++)
-				{
-					tiles[row, col] = null;
-				}
-			}
-		}
-
-		//Sets size of map and nullifies all elements
-		public void Clear(int rows, int cols)
-		{
-			//Not finished
-			for (int row = 0; row < rows; row++)
-			{
-				for (int col = 0; col < cols; col++)
+				for (int col = 0; col < tiles.GetLength(1); col++)
 				{
 					tiles[row, col] = null;
 				}

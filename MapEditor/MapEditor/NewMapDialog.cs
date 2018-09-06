@@ -60,16 +60,16 @@ namespace MapEditor
 		{
 			//Make sure rows and column values are valid
 
+			//Clear current document
 
-			//Clear document
 			//Reset Program.map
+			EditorForm.map.NewMap(rows, cols, tileWidth, tileHeight);
+
 			//Clear tilesets/tiles
 
 			//Create a blank new map of specified size and tile layout
 
 			//Delete
-
-
 			
 		}
 

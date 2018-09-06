@@ -13,7 +13,7 @@ namespace MapEditor
     public partial class EditorForm : Form
     {
 		//Map
-		static private Map map = null;                  //Holds the actual map using actual tiles
+		static public Map map = null;                  //Holds the actual map using actual tiles
 		//pbCanvas displays the map
 
 		//Tile palette
@@ -72,7 +72,6 @@ namespace MapEditor
 			//If a current document is open, prompt user to save first
 
 			//Otherwise clear Program.map and create a new map
-
 			/*
 			Form childForm = new TilesetLoaderForm();
             //Form childForm = new Form();
@@ -273,6 +272,7 @@ namespace MapEditor
 			if (e.Button == MouseButtons.Left)
 			{
 				onPaint = true;
+				///DrawCanvas();
 			}
 
 			////Pan
@@ -290,7 +290,6 @@ namespace MapEditor
 			if (onPaint)
 			{
 				//Get selected tile
-				//int selectedIndex;
 				selectedTile = GetSelectedTile(out int selectedIndex);
 
 				//If selected tile is available
@@ -299,13 +298,14 @@ namespace MapEditor
 					Point mapIndex = new Point(e.X, e.Y);
 					var tileUnderMouse = map.FindTile(mapIndex);
 
-					statusStrip.Items[0].Text = "Tile Under Mouse";     //DEBUG
+					//DEBUG
+					statusStrip.Items[0].Text = "Tile Under Mouse";
 
 					//Overwrite if tile is different in map
 					if (tileUnderMouse != selectedTile)
 					{
 						//map.
-
+						
 						//availableTiles[selectedIndex] = selectedTile;		//Actual tiles
 								//Canvas
 					}
@@ -334,9 +334,10 @@ namespace MapEditor
 
 		private Tile GetSelectedTile(out int selectedIndex)
 		{
-			//If there are tiles AND something is selected...
+			//If there are tiles...
 			if (lvTilePalette.Items.Count > 0)
 			{
+				//AND something is selected...
 				if (lvTilePalette.SelectedIndices.Count > 0)
 				{
 					selectedIndex = lvTilePalette.SelectedIndices[0];
@@ -356,19 +357,6 @@ namespace MapEditor
 			Graphics g;
 			g = Graphics.FromImage(map.Bitmap);
 			g.Clear(Color.LightSlateGray);
-
-			//// if Image available ////
-			//if (map.Bi != null)
-			//{
-			//	g.DrawImage(tileset.Image, 0, 0);
-			//	width = tileset.Image.Width;
-			//	height = tileset.Image.Height;
-			//}
-			//else
-			//{   //image not avaiable, draw blank bitmap
-			//	width = display.Width;
-			//	height = display.Height;
-			//}
 
 			//// Map Grid ////
 			Pen pen = new Pen(Brushes.DarkGray);
@@ -392,7 +380,7 @@ namespace MapEditor
 					//Draw tile if available
 					if (map.Tiles[row, col] != null)
 					{
-						//pbCanvas.
+						g.DrawImage(map.Tiles[row,col].Image, row * map.TileWidth, col * map.TileHeight);
 					}
 				}
 			}			
@@ -410,8 +398,12 @@ namespace MapEditor
 			{
 				if (lvTilePalette.SelectedIndices.Count > 0)
 				{
-					//Set the selected tile as the 
+					//Set the current tile brush 
 					selectedTile = GetSelectedTile(out int selectedIndex);
+
+					//DEBUG
+					statusStrip.Items[0].Text = "Selected Tile = " + selectedIndex;
+					return;
 				}
 			}
 			selectedTile = null;
