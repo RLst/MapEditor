@@ -50,8 +50,11 @@ namespace MapEditor
 
 			//Setup tilePalette listview
 			lvTilePalette.LargeImageList = tileSwatches;
-			lvTilePalette.LargeImageList.ImageSize = new Size(48, 48);
+			lvTilePalette.LargeImageList.ImageSize = new Size(38, 38);
 			lvTilePalette.LargeImageList.ColorDepth = ColorDepth.Depth24Bit;
+
+			//DEBUG
+			statusStrip.Items.Add("test");
         }
 
 		/// <summary>
@@ -65,14 +68,12 @@ namespace MapEditor
 			if (newMapDialog.ShowDialog(this) == DialogResult.OK)
 			{
 				//Clear/reset current document
-				//newMapDialog.
-				
+				//newMapDialog
 			}
 
-			//If a current document is open, prompt user to save first
-
-			//Otherwise clear Program.map and create a new map
 			/*
+			//If a current document is open, prompt user to save first
+			//Otherwise clear Program.map and create a new map
 			Form childForm = new TilesetLoaderForm();
             //Form childForm = new Form();
             childForm.MdiParent = this;
@@ -249,23 +250,6 @@ namespace MapEditor
 			//tilePalette.LargeImageList = tileSwatches;	//This was already done in the constructor
 		}
 
-		//private void Canvas_Click(object sender, EventArgs e)
-		//{
-		//	var mouse = e as MouseEventArgs;
-
-		//	//Pan camera
-		//	//If middle clicked...
-		//	if (mouse.Button == MouseButtons.Middle)
-		//	{
-		//		//Get drag start pos
-		//		//var dragStart = new Point(mouse.X, mouse.Y);
-
-		//		//Update grid based on the difference of the drag
-	
-		//	}
-
-		//}
-
 		private void Canvas_MouseDown(object sender, MouseEventArgs e)
 		{
 			////Paint
@@ -286,32 +270,46 @@ namespace MapEditor
 
 		private void Canvas_MouseMove(object sender, MouseEventArgs e)
 		{
+			//DEBUG
+			statusStrip.Items[0].Text = "Mouse Coords = " + e.X.ToString() + ", " + e.Y.ToString();
+			statusStrip.Items[1].Text = "Map Cell Index = " + map.PosToIndex(e.X, e.Y);
+
+
 			////Paint
 			if (onPaint)
 			{
+				//PaintTile(e); VVV
+
 				//Get selected tile
 				selectedTile = GetSelectedTile(out int selectedIndex);
 
-				//If selected tile is available
-				if (selectedTile != null)
+				var mouseMapIDX = map.PosToIndex(e.X, e.Y);
+
+				//Mouse has to be within bounds of map
+				if (MouseWithinMapBounds(mouseMapIDX))
 				{
-					Point mapIndex = new Point(e.X, e.Y);
-					var tileUnderMouse = map.FindTile(mapIndex);
-
-					//DEBUG
-					statusStrip.Items[0].Text = "Tile Under Mouse";
-
-					//Overwrite if tile is different in map
-					if (tileUnderMouse != selectedTile)
+					//If selected tile is available
+					if (selectedTile != null)
 					{
-						//map.
-						
-						//availableTiles[selectedIndex] = selectedTile;		//Actual tiles
-								//Canvas
-					}
+						var tileUnderMouse = map.Tiles[mouseMapIDX.X, mouseMapIDX.Y];
+						//Point mapIndex = new Point(e.X, e.Y);
+						//var tileUnderMouse = map.FindTile(mapIndex);
 
-					DrawCanvas();
-					return;     //Only one thing at a time?
+						//DEBUG
+						if (tileUnderMouse != null)
+						{
+							statusStrip.Items[0].Text = "Tile Under Mouse = " + tileUnderMouse.ToString();
+							statusStrip.Items[1].Text = "Map Cell Index = " + map.PosToIndex(e.X, e.Y);
+						}
+
+						//Overwrite if tile is different in map
+						if (tileUnderMouse != selectedTile)
+						{
+							map.Tiles[mouseMapIDX.X, mouseMapIDX.Y] = selectedTile;   //Modify the actual tiles
+							DrawCanvas();
+						}
+						return;     //Do one thing at a time?
+					}
 				}
 			}
 
@@ -323,6 +321,12 @@ namespace MapEditor
 
 			}
 
+		}
+
+		private bool MouseWithinMapBounds(Point mouseMapIDX)
+		{
+			return (Enumerable.Range(0, map.Tiles.GetLength(0)).Contains(mouseMapIDX.X) &&
+				Enumerable.Range(0, map.Tiles.GetLength(1)).Contains(mouseMapIDX.Y));
 		}
 
 		private void Canvas_MouseUp(object sender, MouseEventArgs e)
@@ -351,25 +355,30 @@ namespace MapEditor
 
 		private void DrawCanvas()
 		{
+			int width = 0, height = 0;
+
 			//Update the canvas
 			pbCanvas.DrawToBitmap(map.Bitmap, pbCanvas.Bounds);
 
+			//Draw background
 			Graphics g;
 			g = Graphics.FromImage(map.Bitmap);
-			g.Clear(Color.LightSlateGray);
+			g.Clear(Color.LightGray);
 
-			//// Map Grid ////
-			Pen pen = new Pen(Brushes.DarkGray);
+			//// Draw Grid ////
+			Pen pen = new Pen(Brushes.Black);
 			//Verticals
-			for (int y = 0; y < pbCanvas.Height; y += map.TileHeight)
+			for (int y = 0; y < map.Height; y += map.TileHeight)
 			{
-				g.DrawLine(pen, 0, y, pbCanvas.Width, y);
+				g.DrawLine(pen, 0, y, map.Width, y);
 			}
+			g.DrawLine(pen, 0, map.Height, map.Width, map.Height);	//End border of map
 			//Horizontals
-			for (int x = 0; x < pbCanvas.Width; x += map.TileWidth)
+			for (int x = 0; x < map.Width; x += map.TileWidth)
 			{
-				g.DrawLine(pen, x, 0, x, pbCanvas.Height);
+				g.DrawLine(pen, x, 0, x, map.Height);
 			}
+			g.DrawLine(pen, map.Width, 0, map.Width, map.Height);	//End border of map
 
 			//// Draw the tiles ////
 			//Go through the map

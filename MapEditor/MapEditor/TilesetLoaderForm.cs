@@ -17,8 +17,8 @@ namespace MapEditor
 		Bitmap display;
 		static int rows;
 		static int cols;
-		static int tileWidth = 32;			
-		static int tileHeight = 32;
+		static int tileWidth = 64;			
+		static int tileHeight = 64;
 
 		public TilesetLoaderForm()	
         {

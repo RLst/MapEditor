@@ -33,14 +33,14 @@ namespace MapEditor
 		public int TileWidth { get; set; }
 		public int TileHeight { get; set; }
 
-		private int Width   //Return the total width of the map
+		public int Width   //Return the total width of the map
 		{
 			get
 			{
 				return Cols * TileWidth;
 			}
 		}
-		private int Height	//Return the total height of the map
+		public int Height	//Return the total height of the map
 		{
 			get
 			{
@@ -103,11 +103,16 @@ namespace MapEditor
 		public Tile FindTile(Point mapPos)
 		{
 			//Convert from map pos into map index
-			var row = (mapPos.X / Width);
-			var col = (mapPos.Y / Height);
+			var row = (mapPos.X / TileWidth);
+			var col = (mapPos.Y / TileHeight);
 
 			//Run through FindTile from index
 			return FindTile(row, col);
+		}
+
+		public Point PosToIndex(int mapPosX, int mapPosY)
+		{
+			return new Point(mapPosX / TileWidth, mapPosY / TileHeight);
 		}
 	}
 }
