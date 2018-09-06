@@ -412,6 +412,7 @@
 			// 
 			this.pbCanvas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+			this.pbCanvas.Cursor = System.Windows.Forms.Cursors.Cross;
 			this.pbCanvas.Location = new System.Drawing.Point(18, 80);
 			this.pbCanvas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.pbCanvas.Name = "pbCanvas";

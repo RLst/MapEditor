@@ -25,7 +25,7 @@ namespace MapEditor
             InitializeComponent();      //This literally loads all the components up and sets and positions them etc
 
 			//Allocate the display
-			display = new Bitmap(DisplayBox.Width, DisplayBox.Height);
+			display = new Bitmap(pbDisplay.Width, pbDisplay.Height);
 			DrawDisplay();
 		}
 
@@ -154,7 +154,7 @@ namespace MapEditor
 			int height = 0;
 
             //Update the display box
-			DisplayBox.DrawToBitmap(display, DisplayBox.Bounds);
+			pbDisplay.DrawToBitmap(display, pbDisplay.Bounds);
 			
 			Graphics g;
 			g = Graphics.FromImage(display);
@@ -190,7 +190,7 @@ namespace MapEditor
 			g.Dispose();
 
 			//Update the display box
-			DisplayBox.Image = display;
+			pbDisplay.Image = display;
 		}
 	}
 }

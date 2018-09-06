@@ -256,7 +256,7 @@ namespace MapEditor
 			if (e.Button == MouseButtons.Left)
 			{
 				onPaint = true;
-				///DrawCanvas();
+				///PaintTile(e);
 			}
 
 			////Pan
@@ -278,7 +278,7 @@ namespace MapEditor
 			////Paint
 			if (onPaint)
 			{
-				//PaintTile(e); VVV
+				//VVV This below should be turned into PaintTile(e)
 
 				//Get selected tile
 				selectedTile = GetSelectedTile(out int selectedIndex);
@@ -355,8 +355,6 @@ namespace MapEditor
 
 		private void DrawCanvas()
 		{
-			int width = 0, height = 0;
-
 			//Update the canvas
 			pbCanvas.DrawToBitmap(map.Bitmap, pbCanvas.Bounds);
 
