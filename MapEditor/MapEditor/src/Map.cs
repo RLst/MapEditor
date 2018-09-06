@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MapEditor
 {
-    class Map
+    public class Map
     {
 		//This class can be created with nothing in it
 		//private List<Tile> tiles;
