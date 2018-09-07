@@ -238,26 +238,18 @@ namespace MapEditor
 			//Open user manual
 		}
 		
-		private void UpdateTilePaletteItems()
-		{
-			//Go through all tiles and update the list items
-			for (int i = 0; i < tilePalette.Count; i++)
-			{
-				tileSwatches.Images.Add(tilePalette[i].Image);
-				var item = new ListViewItem();
-				item.ImageIndex = i;
-				lvTilePalette.Items.Add(item);
-			}
-			//tilePalette.LargeImageList = tileSwatches;	//This was already done in the constructor
-		}
 
+
+		/// <summary>
+		/// Canvas painting methods
+		/// </summary>
 		private void Canvas_MouseDown(object sender, MouseEventArgs e)
 		{
 			////Paint
 			if (e.Button == MouseButtons.Left)
 			{
 				onPaint = true;
-				///PaintTile(e);
+				PaintTile(e);
 			}
 
 			////Pan
@@ -271,71 +263,65 @@ namespace MapEditor
 
 		private void Canvas_MouseMove(object sender, MouseEventArgs e)
 		{
-			//DEBUG
+			///DEBUG
 			statusStrip.Items[0].Text = "Mouse Coords = " + e.X.ToString() + ", " + e.Y.ToString();
 			statusStrip.Items[1].Text = "Map Cell Index = " + map.PosToIndex(e.X, e.Y);
-
 
 			////Paint
 			if (onPaint)
 			{
-				//VVV This below should be turned into PaintTile(e)
-
-				//Get selected tile
-				selectedTile = GetSelectedTile(out int selectedIndex);
-
-				var mouseMapIDX = map.PosToIndex(e.X, e.Y);
-
-				//Mouse has to be within bounds of map
-				if (MouseWithinMapBounds(mouseMapIDX))
-				{
-					//If selected tile is available
-					if (selectedTile != null)
-					{
-						var tileUnderMouse = map.Tiles[mouseMapIDX.X, mouseMapIDX.Y];
-						//Point mapIndex = new Point(e.X, e.Y);
-						//var tileUnderMouse = map.FindTile(mapIndex);
-
-						//DEBUG
-						if (tileUnderMouse != null)
-						{
-							statusStrip.Items[0].Text = "Tile Under Mouse = " + tileUnderMouse.ToString();
-							statusStrip.Items[1].Text = "Map Cell Index = " + map.PosToIndex(e.X, e.Y);
-						}
-
-						//Overwrite if tile is different in map
-						if (tileUnderMouse != selectedTile)
-						{
-							map.Tiles[mouseMapIDX.X, mouseMapIDX.Y] = selectedTile;   //Modify the actual tiles
-							DrawCanvas();
-						}
-						return;     //Do one thing at a time?
-					}
-				}
+				PaintTile(e);
 			}
 
 			////Camera Pan
 			if (onPan)
 			{
 				//"Move" camera
-
-
 			}
 
 		}
-
-		private bool MouseWithinMapBounds(Point mouseMapIDX)
-		{
-			return (Enumerable.Range(0, map.Tiles.GetLength(0)).Contains(mouseMapIDX.X) &&
-				Enumerable.Range(0, map.Tiles.GetLength(1)).Contains(mouseMapIDX.Y));
-		}
-
+		
 		private void Canvas_MouseUp(object sender, MouseEventArgs e)
 		{
 			//Clear all mouse states
 			onPaint = false;
 			onPan = false;
 		}
+
+		/// <summary>
+		/// Paints currently selected tile (if available) at current mouse cursor (if within bounds of map)
+		/// </summary>
+		private void PaintTile(MouseEventArgs me)
+		{
+			selectedTile = GetSelectedTile(out int selectedIndex);
+
+			var mouseMapIDX = map.PosToIndex(me.X, me.Y);
+
+			//Mouse has to be within bounds of map
+			if (MouseWithinMapBounds(mouseMapIDX))
+			{
+				//If selected tile is available
+				if (selectedTile != null)
+				{
+					var tileUnderMouse = map.Tiles[mouseMapIDX.X, mouseMapIDX.Y];
+
+					//Overwrite if tile is different in map
+					if (tileUnderMouse != selectedTile)
+					{
+						map.Tiles[mouseMapIDX.X, mouseMapIDX.Y] = selectedTile;   //Modify the actual tiles
+						DrawCanvas();
+					}
+
+					///DEBUG
+					if (tileUnderMouse != null)
+					{
+						statusStrip.Items[0].Text = "Tile Under Mouse = " + tileUnderMouse.ToString();
+						statusStrip.Items[1].Text = "Map Cell Index = " + map.PosToIndex(me.X, me.Y);
+					}
+				}
+			}
+		}
+
 
 		private Tile GetSelectedTile(out int selectedIndex)
 		{
@@ -354,12 +340,33 @@ namespace MapEditor
 			return null;
 		}
 
+		private void TilePalette_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			if (lvTilePalette.Items.Count > 0)
+			{
+				if (lvTilePalette.SelectedIndices.Count > 0)
+				{
+					//Set the current tile brush 
+					selectedTile = GetSelectedTile(out int selectedIndex);
+
+					///DEBUG
+					statusStrip.Items[0].Text = "Selected Tile = " + selectedIndex;
+					return;
+				}
+			}
+			selectedTile = null;
+		}
+
+
+		/// <summary>
+		/// Draws the canvas
+		/// </summary>
 		private void DrawCanvas()
 		{
-			//Update the canvas
+			////Update the canvas
 			pbCanvas.DrawToBitmap(map.Bitmap, pbCanvas.Bounds);
 
-			//Draw background
+			////Draw background
 			Graphics g;
 			g = Graphics.FromImage(map.Bitmap);
 			g.Clear(Color.LightGray);
@@ -371,13 +378,13 @@ namespace MapEditor
 			{
 				g.DrawLine(pen, 0, y, map.Width, y);
 			}
-			g.DrawLine(pen, 0, map.Height, map.Width, map.Height);	//End border of map
-			//Horizontals
+			g.DrawLine(pen, 0, map.Height, map.Width, map.Height);  //Grid border of map
+																	//Horizontals
 			for (int x = 0; x < map.Width; x += map.TileWidth)
 			{
 				g.DrawLine(pen, x, 0, x, map.Height);
 			}
-			g.DrawLine(pen, map.Width, 0, map.Width, map.Height);	//End border of map
+			g.DrawLine(pen, map.Width, 0, map.Width, map.Height);   //Grid border of map
 
 			//// Draw the tiles ////
 			//Go through the map
@@ -388,10 +395,10 @@ namespace MapEditor
 					//Draw tile if available
 					if (map.Tiles[row, col] != null)
 					{
-						g.DrawImage(map.Tiles[row,col].Image, row * map.TileWidth, col * map.TileHeight);
+						g.DrawImage(map.Tiles[row, col].Image, row * map.TileWidth, col * map.TileHeight);
 					}
 				}
-			}			
+			}
 
 			//Finished drawing
 			g.Dispose();
@@ -400,21 +407,31 @@ namespace MapEditor
 			pbCanvas.Image = map.Bitmap;
 		}
 
-		private void TilePalette_SelectedIndexChanged(object sender, EventArgs e)
+		/// <summary>
+		/// Updates tile swatches in the tile palette
+		/// </summary>
+		private void UpdateTilePaletteItems()
 		{
-			if (lvTilePalette.Items.Count > 0)
+			//Go through all tiles and update the list items
+			for (int i = 0; i < tilePalette.Count; i++)
 			{
-				if (lvTilePalette.SelectedIndices.Count > 0)
-				{
-					//Set the current tile brush 
-					selectedTile = GetSelectedTile(out int selectedIndex);
-
-					//DEBUG
-					statusStrip.Items[0].Text = "Selected Tile = " + selectedIndex;
-					return;
-				}
+				tileSwatches.Images.Add(tilePalette[i].Image);
+				var item = new ListViewItem();
+				item.ImageIndex = i;
+				lvTilePalette.Items.Add(item);
 			}
-			selectedTile = null;
 		}
+
+
+		/////////////////////////////////////
+		//// Auxillary Helper functions ////
+		///////////////////////////////////
+		private bool MouseWithinMapBounds(Point mouseMapIDX)
+		{
+			return (Enumerable.Range(0, map.Tiles.GetLength(0)).Contains(mouseMapIDX.X) &&
+				Enumerable.Range(0, map.Tiles.GetLength(1)).Contains(mouseMapIDX.Y));
+		}
+
+
 	}
 }
