@@ -180,12 +180,14 @@ namespace MapEditor
 			{
 				g.DrawLine(pen, 0, y, width, y);
 			}
+			g.DrawLine(pen, 0, height, width, height);
 
 			//Horizontals
 			for (int x = 0; x < width; x += tileWidth)
 			{
 				g.DrawLine(pen, x, 0, x, height);
 			}
+			g.DrawLine(pen, width, 0, width, height);
 
 			g.Dispose();
 
