@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="MapEditor.EditorForm">
+    <Position X="5" Y="0.5" Width="2.5" />
+    <TypeIdentifier>
+      <HashCode>QLmAGqU4hiAAAgEKCj21gI8CgAgzGEwBChgARTAEAFc=</HashCode>
+      <FileName>EditorForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.NewMapDialog">
+    <Position X="2.75" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>ABACCiAAACAIABECAADAIAACAACoQABIAAAAIQAAAUE=</HashCode>
+      <FileName>NewMapDialog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Camera">
+    <Position X="11.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>src\Camera.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Canvas">
+    <Position X="11.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAYAA=</HashCode>
+      <FileName>src\Canvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Map">
+    <Position X="7.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAABAAQAEAAAAgAAOAAAgAABAAAAAAAAQBAAAA=</HashCode>
+      <FileName>src\Map.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Program">
+    <Position X="0.5" Y="0.5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>src\Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Tile">
+    <Position X="0.5" Y="6" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAACAAAAAgAAAEAAAABAAIAAABAAAAAA=</HashCode>
+      <FileName>src\Tile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Tileset">
+    <Position X="0.5" Y="2" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAAAAAEAAAAAAACAAEAAAAFAAAABAAQgAAAA=</HashCode>
+      <FileName>src\Tileset.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.TilesetLoaderForm">
+    <Position X="9.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBACAkAEACQAQAEgAADAAAICAAGgAARBYAIAYAAQAEM=</HashCode>
+      <FileName>TilesetLoaderForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Properties.Resources">
+    <Position X="7.75" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MapEditor.Properties.Settings" Collapsed="true">
+    <Position X="14.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

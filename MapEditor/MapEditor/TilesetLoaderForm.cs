@@ -17,15 +17,15 @@ namespace MapEditor
 		Bitmap display;
 		static int rows;
 		static int cols;
-		static int tileWidth = 32;			
-		static int tileHeight = 32;
+		static int tileWidth = 64;			
+		static int tileHeight = 64;
 
 		public TilesetLoaderForm()	
         {
             InitializeComponent();      //This literally loads all the components up and sets and positions them etc
 
 			//Allocate the display
-			display = new Bitmap(DisplayBox.Width, DisplayBox.Height);
+			display = new Bitmap(pbDisplay.Width, pbDisplay.Height);
 			DrawDisplay();
 		}
 
@@ -71,7 +71,9 @@ namespace MapEditor
 								System.Drawing.Imaging.PixelFormat.DontCare);
 
 						//Add to EditorForm.Tiles
-						EditorForm.availableTiles.Add(new Tile(singleTile));
+						EditorForm.tilePalette.Add(new Tile(singleTile));
+						//Update the editorform.tilepalette?
+						//OR run procedures for the listview to update?
 					}
 				}
 
@@ -152,7 +154,7 @@ namespace MapEditor
 			int height = 0;
 
             //Update the display box
-			DisplayBox.DrawToBitmap(display, DisplayBox.Bounds);
+			pbDisplay.DrawToBitmap(display, pbDisplay.Bounds);
 			
 			Graphics g;
 			g = Graphics.FromImage(display);
@@ -178,17 +180,19 @@ namespace MapEditor
 			{
 				g.DrawLine(pen, 0, y, width, y);
 			}
+			g.DrawLine(pen, 0, height, width, height);
 
 			//Horizontals
 			for (int x = 0; x < width; x += tileWidth)
 			{
 				g.DrawLine(pen, x, 0, x, height);
 			}
+			g.DrawLine(pen, width, 0, width, height);
 
 			g.Dispose();
 
 			//Update the display box
-			DisplayBox.Image = display;
+			pbDisplay.Image = display;
 		}
 	}
 }

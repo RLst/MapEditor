@@ -64,9 +64,8 @@
 			this.statusStrip = new System.Windows.Forms.StatusStrip();
 			this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
 			this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-			this.tilePalette = new System.Windows.Forms.ListView();
-			this.propertiesListBox = new System.Windows.Forms.ListBox();
-			this.mapWorkArea = new System.Windows.Forms.PictureBox();
+			this.lvTilePalette = new System.Windows.Forms.ListView();
+			this.pbCanvas = new System.Windows.Forms.PictureBox();
 			this.addTilesButton = new System.Windows.Forms.Button();
 			this.clearButton = new System.Windows.Forms.Button();
 			this.removeTilesButton = new System.Windows.Forms.Button();
@@ -74,7 +73,7 @@
 			this.menuStrip.SuspendLayout();
 			this.toolStrip.SuspendLayout();
 			this.statusStrip.SuspendLayout();
-			((System.ComponentModel.ISupportInitialize)(this.mapWorkArea)).BeginInit();
+			((System.ComponentModel.ISupportInitialize)(this.pbCanvas)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// menuStrip
@@ -88,7 +87,8 @@
             this.helpMenu});
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
-			this.menuStrip.Size = new System.Drawing.Size(1284, 24);
+			this.menuStrip.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
+			this.menuStrip.Size = new System.Drawing.Size(1203, 24);
 			this.menuStrip.TabIndex = 0;
 			this.menuStrip.Text = "MenuStrip";
 			// 
@@ -106,7 +106,7 @@
             this.exitToolStripMenuItem});
 			this.fileMenu.ImageTransparentColor = System.Drawing.SystemColors.ActiveBorder;
 			this.fileMenu.Name = "fileMenu";
-			this.fileMenu.Size = new System.Drawing.Size(37, 20);
+			this.fileMenu.Size = new System.Drawing.Size(37, 22);
 			this.fileMenu.Text = "&File";
 			// 
 			// newToolStripMenuItem
@@ -187,7 +187,7 @@
             this.copyToolStripMenuItem,
             this.pasteToolStripMenuItem});
 			this.editMenu.Name = "editMenu";
-			this.editMenu.Size = new System.Drawing.Size(39, 20);
+			this.editMenu.Size = new System.Drawing.Size(39, 22);
 			this.editMenu.Text = "&Edit";
 			// 
 			// undoToolStripMenuItem
@@ -249,7 +249,7 @@
             this.toolBarToolStripMenuItem,
             this.statusBarToolStripMenuItem});
 			this.viewMenu.Name = "viewMenu";
-			this.viewMenu.Size = new System.Drawing.Size(44, 20);
+			this.viewMenu.Size = new System.Drawing.Size(44, 22);
 			this.viewMenu.Text = "&View";
 			// 
 			// toolBarToolStripMenuItem
@@ -277,7 +277,7 @@
 			this.toolsMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.optionsToolStripMenuItem});
 			this.toolsMenu.Name = "toolsMenu";
-			this.toolsMenu.Size = new System.Drawing.Size(48, 20);
+			this.toolsMenu.Size = new System.Drawing.Size(48, 22);
 			this.toolsMenu.Text = "&Tools";
 			// 
 			// optionsToolStripMenuItem
@@ -291,7 +291,7 @@
 			this.helpMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.userManualToolStripMenuItem});
 			this.helpMenu.Name = "helpMenu";
-			this.helpMenu.Size = new System.Drawing.Size(44, 20);
+			this.helpMenu.Size = new System.Drawing.Size(44, 22);
 			this.helpMenu.Text = "&Help";
 			// 
 			// userManualToolStripMenuItem
@@ -313,7 +313,7 @@
             this.helpToolStripButton});
 			this.toolStrip.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(1284, 27);
+			this.toolStrip.Size = new System.Drawing.Size(1203, 27);
 			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "ToolStrip";
 			// 
@@ -369,9 +369,9 @@
 			this.statusStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
 			this.statusStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel});
-			this.statusStrip.Location = new System.Drawing.Point(0, 706);
+			this.statusStrip.Location = new System.Drawing.Point(0, 714);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(1284, 22);
+			this.statusStrip.Size = new System.Drawing.Size(1203, 22);
 			this.statusStrip.TabIndex = 2;
 			this.statusStrip.Text = "StatusStrip";
 			// 
@@ -381,42 +381,38 @@
 			this.toolStripStatusLabel.Size = new System.Drawing.Size(39, 17);
 			this.toolStripStatusLabel.Text = "Status";
 			// 
-			// tilePalette
+			// lvTilePalette
 			// 
-			this.tilePalette.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+			this.lvTilePalette.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.tilePalette.Location = new System.Drawing.Point(988, 95);
-			this.tilePalette.Name = "tilePalette";
-			this.tilePalette.Size = new System.Drawing.Size(284, 429);
-			this.tilePalette.TabIndex = 4;
-			this.tilePalette.UseCompatibleStateImageBehavior = false;
+			this.lvTilePalette.Location = new System.Drawing.Point(907, 95);
+			this.lvTilePalette.MultiSelect = false;
+			this.lvTilePalette.Name = "lvTilePalette";
+			this.lvTilePalette.Size = new System.Drawing.Size(284, 613);
+			this.lvTilePalette.TabIndex = 4;
+			this.lvTilePalette.UseCompatibleStateImageBehavior = false;
+			this.lvTilePalette.SelectedIndexChanged += new System.EventHandler(this.TilePalette_SelectedIndexChanged);
 			// 
-			// propertiesListBox
+			// pbCanvas
 			// 
-			this.propertiesListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-			this.propertiesListBox.FormattingEnabled = true;
-			this.propertiesListBox.Location = new System.Drawing.Point(988, 530);
-			this.propertiesListBox.Name = "propertiesListBox";
-			this.propertiesListBox.Size = new System.Drawing.Size(284, 173);
-			this.propertiesListBox.TabIndex = 5;
-			// 
-			// mapWorkArea
-			// 
-			this.mapWorkArea.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+			this.pbCanvas.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.mapWorkArea.Location = new System.Drawing.Point(12, 52);
-			this.mapWorkArea.Name = "mapWorkArea";
-			this.mapWorkArea.Size = new System.Drawing.Size(972, 651);
-			this.mapWorkArea.TabIndex = 3;
-			this.mapWorkArea.TabStop = false;
+			this.pbCanvas.Cursor = System.Windows.Forms.Cursors.Cross;
+			this.pbCanvas.Location = new System.Drawing.Point(12, 52);
+			this.pbCanvas.Name = "pbCanvas";
+			this.pbCanvas.Size = new System.Drawing.Size(891, 656);
+			this.pbCanvas.TabIndex = 3;
+			this.pbCanvas.TabStop = false;
+			this.pbCanvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
+			this.pbCanvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseMove);
+			this.pbCanvas.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseUp);
 			// 
 			// addTilesButton
 			// 
 			this.addTilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.addTilesButton.Location = new System.Drawing.Point(988, 52);
+			this.addTilesButton.Location = new System.Drawing.Point(907, 52);
 			this.addTilesButton.Name = "addTilesButton";
-			this.addTilesButton.Size = new System.Drawing.Size(93, 37);
+			this.addTilesButton.Size = new System.Drawing.Size(93, 38);
 			this.addTilesButton.TabIndex = 6;
 			this.addTilesButton.Text = "Add Tiles...";
 			this.addTilesButton.UseVisualStyleBackColor = true;
@@ -425,9 +421,9 @@
 			// clearButton
 			// 
 			this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.clearButton.Location = new System.Drawing.Point(1184, 52);
+			this.clearButton.Location = new System.Drawing.Point(1103, 52);
 			this.clearButton.Name = "clearButton";
-			this.clearButton.Size = new System.Drawing.Size(88, 37);
+			this.clearButton.Size = new System.Drawing.Size(88, 38);
 			this.clearButton.TabIndex = 6;
 			this.clearButton.Text = "Clear All";
 			this.clearButton.UseVisualStyleBackColor = true;
@@ -436,9 +432,9 @@
 			// removeTilesButton
 			// 
 			this.removeTilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.removeTilesButton.Location = new System.Drawing.Point(1087, 52);
+			this.removeTilesButton.Location = new System.Drawing.Point(1006, 52);
 			this.removeTilesButton.Name = "removeTilesButton";
-			this.removeTilesButton.Size = new System.Drawing.Size(91, 37);
+			this.removeTilesButton.Size = new System.Drawing.Size(91, 38);
 			this.removeTilesButton.TabIndex = 7;
 			this.removeTilesButton.Text = "Remove Tiles";
 			this.removeTilesButton.UseVisualStyleBackColor = true;
@@ -449,13 +445,12 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(1284, 728);
+			this.ClientSize = new System.Drawing.Size(1203, 736);
 			this.Controls.Add(this.removeTilesButton);
 			this.Controls.Add(this.clearButton);
 			this.Controls.Add(this.addTilesButton);
-			this.Controls.Add(this.propertiesListBox);
-			this.Controls.Add(this.tilePalette);
-			this.Controls.Add(this.mapWorkArea);
+			this.Controls.Add(this.lvTilePalette);
+			this.Controls.Add(this.pbCanvas);
 			this.Controls.Add(this.statusStrip);
 			this.Controls.Add(this.toolStrip);
 			this.Controls.Add(this.menuStrip);
@@ -468,7 +463,7 @@
 			this.toolStrip.PerformLayout();
 			this.statusStrip.ResumeLayout(false);
 			this.statusStrip.PerformLayout();
-			((System.ComponentModel.ISupportInitialize)(this.mapWorkArea)).EndInit();
+			((System.ComponentModel.ISupportInitialize)(this.pbCanvas)).EndInit();
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -507,9 +502,8 @@
         private System.Windows.Forms.ToolStripButton helpToolStripButton;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ListView tilePalette;
-        private System.Windows.Forms.ListBox propertiesListBox;
-        private System.Windows.Forms.PictureBox mapWorkArea;
+        private System.Windows.Forms.ListView lvTilePalette;
+        private System.Windows.Forms.PictureBox pbCanvas;
 		private System.Windows.Forms.Button addTilesButton;
 		private System.Windows.Forms.Button clearButton;
 		private System.Windows.Forms.ToolStripMenuItem userManualToolStripMenuItem;

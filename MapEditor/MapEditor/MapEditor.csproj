@@ -51,6 +51,8 @@
     <Compile Include="NewMapDialog.Designer.cs">
       <DependentUpon>NewMapDialog.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Camera.cs" />
+    <Compile Include="src\Canvas.cs" />
     <Compile Include="src\Tileset.cs" />
     <Compile Include="TilesetLoaderForm.cs">
       <SubType>Form</SubType>
@@ -86,6 +88,7 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <None Include="ClassDiagram1.cd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
