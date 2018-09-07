@@ -50,12 +50,13 @@ namespace MapEditor
 
 			//Setup tilePalette listview
 			lvTilePalette.LargeImageList = tileSwatches;
-			lvTilePalette.LargeImageList.ImageSize = new Size(38, 38);
+			lvTilePalette.LargeImageList.ImageSize = new Size(86, 86);
 			lvTilePalette.LargeImageList.ColorDepth = ColorDepth.Depth24Bit;
 
 			//DEBUG
-			statusStrip.Items.Add("test");
-        }
+			statusStrip.Items.Add("Item 2");
+			statusStrip.Items.Add("Item 3");
+		}
 
 		/// <summary>
 		/// Shows dialog to create a new map
