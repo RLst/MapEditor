@@ -12,6 +12,9 @@ namespace MapEditor
 {
     public partial class EditorForm : Form
     {
+		//Old values
+		int rows = 10; int cols = 10; int tilewidth = 64; int tileheight = 64;
+
 		//Map
 		static public Map map = null;                  //Holds the actual map using actual tiles; pbCanvas displays the actual map
 
@@ -29,18 +32,19 @@ namespace MapEditor
 		Point dragStart;
 
 		//Saving
-		private bool currentDocumentNotPreviouslySaved = true;
+		private bool currentDocumentPreviouslySaved;
 		private string currentDocumentPath = null;
-		//private int childFormNumber = 0;
 
         public EditorForm()
         {
             InitializeComponent();
 
-			//Setup core structures
+			//Setup core
 			tilePalette = new List<Tile>();
 			tileSwatches = new ImageList();
 			cam = new Camera();
+			currentDocumentPreviouslySaved = false;
+
 
 			//Setup a blank map and draw the canvas (First ever run)
 			////NEW MAP DIALOG GOES HERE!!! Always ask the user for map settings upon first launch
@@ -66,18 +70,43 @@ namespace MapEditor
 		/// </summary>
         private void ShowNewDialog(object sender, EventArgs e)
         {
-			NewMapDialog newMapDialog = new NewMapDialog();
+			NewMapDialog newMapDialog = new NewMapDialog(rows, cols, tilewidth, tileheight);
 
 			//Show the new map dialog and check if OK clicked
 			if (newMapDialog.ShowDialog(this) == DialogResult.OK)
 			{
-				//Check if new map parameters are valid
+				//If current map not saved then provide option to user to save or cancel
+				if (!currentDocumentPreviouslySaved)
+				{
+					//PromptDialog promptDialog = new PromptDialog();
+					//int result = promptDialog.ShowDialog();
 
-				
+					//if (result == DialogResult.OK)
+					//{
+					//	//Save
+					//	Save();
+					//}
+					//else if (result == DialogResult.Cancel)
+					//{
+					//	//Don't save or create new map
+					//	return;
+					//}
+				}
 
-				//Clear/reset current document
-				//newMapDialog
+				//Save map parameters for next time
+				rows = NewMapDialog.Rows;
+				cols = NewMapDialog.Cols;
+				tilewidth = NewMapDialog.TileWidth;
+				tileheight = NewMapDialog.TileHeight;
+				//Go ahead with creating a new map
+				map.NewMap(rows, cols, tilewidth, tileheight);
+				DrawCanvas();
 			}
+
+		}
+
+		private void PromptSave()
+		{
 
 		}
 
@@ -108,12 +137,15 @@ namespace MapEditor
 		/// </summary>
 		private void Save()
 		{
-			if (currentDocumentNotPreviouslySaved)
+			if (!currentDocumentPreviouslySaved)
 			{
 				SaveAs();
+
 			}
+
 			//Add Save logic here
-			Console.WriteLine("Saving...");
+
+			currentDocumentPreviouslySaved = true;	//Important to set saved flag
 		}
 		private void SaveAs()
 		{
@@ -125,6 +157,8 @@ namespace MapEditor
             {
                 string FileName = saveFileDialog.FileName;
             }
+
+			currentDocumentPreviouslySaved = true;  //Important to set saved flag
 		}
 
 		/// <summary>
@@ -169,7 +203,7 @@ namespace MapEditor
 		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
 		{
 			//If there are changes then ask to save changes (utilise dirty flag pattern)
-			if (currentDocumentNotPreviouslySaved)
+			if (currentDocumentPreviouslySaved)
 			{
 				Save();
 			}

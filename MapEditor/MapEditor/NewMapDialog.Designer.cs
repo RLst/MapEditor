@@ -90,6 +90,7 @@
 			// 
 			// panel
 			// 
+			this.panel.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.panel.Controls.Add(this.textBoxTileHeight);
 			this.panel.Controls.Add(this.textBoxColumns);
 			this.panel.Controls.Add(this.button1);
@@ -112,7 +113,7 @@
 			this.textBoxTileHeight.Name = "textBoxTileHeight";
 			this.textBoxTileHeight.Size = new System.Drawing.Size(100, 20);
 			this.textBoxTileHeight.TabIndex = 2;
-			this.textBoxTileHeight.TextChanged += new System.EventHandler(this.textBoxColumns_TextChanged);
+			this.textBoxTileHeight.TextChanged += new System.EventHandler(this.textBoxTileHeight_TextChanged);
 			// 
 			// button1
 			// 
@@ -130,7 +131,7 @@
 			this.textBoxTileWidth.Name = "textBoxTileWidth";
 			this.textBoxTileWidth.Size = new System.Drawing.Size(100, 20);
 			this.textBoxTileWidth.TabIndex = 2;
-			this.textBoxTileWidth.TextChanged += new System.EventHandler(this.textBoxRows_TextChanged);
+			this.textBoxTileWidth.TextChanged += new System.EventHandler(this.textBoxTileWidth_TextChanged);
 			// 
 			// label2
 			// 
@@ -177,7 +178,7 @@
 			this.Controls.Add(this.lblSize);
 			this.Controls.Add(this.panel);
 			this.Name = "NewMapDialog";
-			this.Text = "NewMap";
+			this.Text = "Create New Map...";
 			this.Load += new System.EventHandler(this.NewMapDialog_Load);
 			this.panel.ResumeLayout(false);
 			this.panel.PerformLayout();

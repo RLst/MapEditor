@@ -12,73 +12,72 @@ namespace MapEditor
 {
 	public partial class NewMapDialog : Form
 	{
-		//Locals just for this dialog
-		static int rows = 15;
-		static int cols = 15;
-		static int tileWidth = 32;		//px
-		static int tileHeight = 32;		//px
+		static public int Rows { get; set; }
+		static public int Cols { get; set; }
+		static public int TileWidth { get; set; }
+		static public int TileHeight { get; set; }
 
-		public NewMapDialog()
+
+		public NewMapDialog(int rows = 10, int cols = 10, int tileWidth = 64, int tileHeight = 64)
 		{
 			InitializeComponent();
-		}
-
-		private void UpdateLblMapSize()
-		{
-			//Calculate the map width
-			int mapWidth = cols * tileWidth;
-
-			//Calculate the map height
-			int mapHeight = rows * tileHeight;
-
-			//Update
-			lblMapSize.Text = mapWidth.ToString() + " x " + mapHeight.ToString() + " pixels";
+			Rows = rows;
+			Cols = cols;
+			TileWidth = tileWidth;
+			TileHeight = tileHeight;
 		}
 
 		private void NewMapDialog_Load(object sender, EventArgs e)
 		{
 			//Init textboxes
-			textBoxRows.Text = rows.ToString();
-			textBoxColumns.Text = cols.ToString();
-			textBoxTileWidth.Text = tileWidth.ToString();
-			textBoxTileHeight.Text = tileHeight.ToString();
-			UpdateLblMapSize();
-		}
-		private void textBoxRows_TextChanged(object sender, EventArgs e)
-		{
-			//Update rows
-			rows = Convert.ToInt32(textBoxRows.Text);
+			textBoxRows.Text = Rows.ToString();
+			textBoxColumns.Text = Cols.ToString();
+			textBoxTileWidth.Text = TileWidth.ToString();
+			textBoxTileHeight.Text = TileHeight.ToString();
 			UpdateLblMapSize();
 		}
 
-		private void textBoxColumns_TextChanged(object sender, EventArgs e)
+		private void textBoxRows_TextChanged(object sender, EventArgs e)
 		{
-			//Update columns
-			cols = Convert.ToInt32(textBoxRows.Text);
+			//Update properties and map size label
+			Rows = Convert.ToInt32(textBoxRows.Text);
 			UpdateLblMapSize();
 		}
+		private void textBoxColumns_TextChanged(object sender, EventArgs e)
+		{
+			Cols = Convert.ToInt32(textBoxColumns.Text);
+			UpdateLblMapSize();
+		}
+		private void textBoxTileWidth_TextChanged(object sender, EventArgs e)
+		{
+			TileWidth = Convert.ToInt32(textBoxTileWidth.Text);
+			UpdateLblMapSize();
+		}
+		private void textBoxTileHeight_TextChanged(object sender, EventArgs e)
+		{
+			TileHeight = Convert.ToInt32(textBoxTileHeight.Text);
+			UpdateLblMapSize();
+		}
+
 
 		private void OKButton_Click(object sender, EventArgs e)
 		{
-			//Make sure rows and column values are valid
-
-			//Clear current document
-
-			//Set new map properties
-			EditorForm.map.NewMap(rows, cols, tileWidth, tileHeight);
-			//EditorForm.DrawCanvas();
-
-			//Clear tilesets/tiles
-
-			//Create a blank new map of specified size and tile layout
-
-			//Delete
-			
+			//Flag OK
+			DialogResult = DialogResult.OK;
+			Close();
 		}
 
 		private void CancelButton_Click(object sender, EventArgs e)
 		{
 			Close();
 		}
+
+		private void UpdateLblMapSize()
+		{
+			int mapWidth = Cols * TileWidth;
+			int mapHeight = Rows * TileHeight;
+			lblMapSize.Text = mapWidth.ToString() + " x " + mapHeight.ToString() + " pixels";
+		}
+
 	}
 }
