@@ -48,12 +48,14 @@ namespace MapEditor
 		{
 			//Update rows
 			rows = Convert.ToInt32(textBoxRows.Text);
+			UpdateLblMapSize();
 		}
 
 		private void textBoxColumns_TextChanged(object sender, EventArgs e)
 		{
 			//Update columns
 			cols = Convert.ToInt32(textBoxRows.Text);
+			UpdateLblMapSize();
 		}
 
 		private void OKButton_Click(object sender, EventArgs e)
@@ -62,8 +64,9 @@ namespace MapEditor
 
 			//Clear current document
 
-			//Reset Program.map
+			//Set new map properties
 			EditorForm.map.NewMap(rows, cols, tileWidth, tileHeight);
+			//EditorForm.DrawCanvas();
 
 			//Clear tilesets/tiles
 

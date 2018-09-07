@@ -88,7 +88,7 @@
 			this.menuStrip.Location = new System.Drawing.Point(0, 0);
 			this.menuStrip.Name = "menuStrip";
 			this.menuStrip.Padding = new System.Windows.Forms.Padding(6, 1, 0, 1);
-			this.menuStrip.Size = new System.Drawing.Size(1203, 24);
+			this.menuStrip.Size = new System.Drawing.Size(1254, 24);
 			this.menuStrip.TabIndex = 0;
 			this.menuStrip.Text = "MenuStrip";
 			// 
@@ -115,7 +115,7 @@
 			this.newToolStripMenuItem.ImageTransparentColor = System.Drawing.Color.Black;
 			this.newToolStripMenuItem.Name = "newToolStripMenuItem";
 			this.newToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.N)));
-			this.newToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+			this.newToolStripMenuItem.Size = new System.Drawing.Size(214, 26);
 			this.newToolStripMenuItem.Text = "&New Map";
 			this.newToolStripMenuItem.Click += new System.EventHandler(this.ShowNewDialog);
 			// 
@@ -313,7 +313,7 @@
             this.helpToolStripButton});
 			this.toolStrip.Location = new System.Drawing.Point(0, 24);
 			this.toolStrip.Name = "toolStrip";
-			this.toolStrip.Size = new System.Drawing.Size(1203, 27);
+			this.toolStrip.Size = new System.Drawing.Size(1254, 27);
 			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "ToolStrip";
 			// 
@@ -327,7 +327,7 @@
 			this.newToolStripButton.Text = "New";
 			this.newToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.newToolStripButton.ToolTipText = "Create new documents";
-			this.newToolStripButton.Click += new System.EventHandler(this.newToolStripButton_Click);
+			this.newToolStripButton.Click += new System.EventHandler(this.ShowNewDialog);
 			// 
 			// openToolStripButton
 			// 
@@ -371,7 +371,7 @@
             this.toolStripStatusLabel});
 			this.statusStrip.Location = new System.Drawing.Point(0, 714);
 			this.statusStrip.Name = "statusStrip";
-			this.statusStrip.Size = new System.Drawing.Size(1203, 22);
+			this.statusStrip.Size = new System.Drawing.Size(1254, 22);
 			this.statusStrip.TabIndex = 2;
 			this.statusStrip.Text = "StatusStrip";
 			// 
@@ -385,7 +385,7 @@
 			// 
 			this.lvTilePalette.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lvTilePalette.Location = new System.Drawing.Point(907, 95);
+			this.lvTilePalette.Location = new System.Drawing.Point(958, 95);
 			this.lvTilePalette.MultiSelect = false;
 			this.lvTilePalette.Name = "lvTilePalette";
 			this.lvTilePalette.Size = new System.Drawing.Size(284, 613);
@@ -400,7 +400,7 @@
 			this.pbCanvas.Cursor = System.Windows.Forms.Cursors.Cross;
 			this.pbCanvas.Location = new System.Drawing.Point(12, 52);
 			this.pbCanvas.Name = "pbCanvas";
-			this.pbCanvas.Size = new System.Drawing.Size(891, 656);
+			this.pbCanvas.Size = new System.Drawing.Size(942, 656);
 			this.pbCanvas.TabIndex = 3;
 			this.pbCanvas.TabStop = false;
 			this.pbCanvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);
@@ -410,7 +410,7 @@
 			// addTilesButton
 			// 
 			this.addTilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.addTilesButton.Location = new System.Drawing.Point(907, 52);
+			this.addTilesButton.Location = new System.Drawing.Point(958, 52);
 			this.addTilesButton.Name = "addTilesButton";
 			this.addTilesButton.Size = new System.Drawing.Size(93, 38);
 			this.addTilesButton.TabIndex = 6;
@@ -421,7 +421,7 @@
 			// clearButton
 			// 
 			this.clearButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.clearButton.Location = new System.Drawing.Point(1103, 52);
+			this.clearButton.Location = new System.Drawing.Point(1154, 52);
 			this.clearButton.Name = "clearButton";
 			this.clearButton.Size = new System.Drawing.Size(88, 38);
 			this.clearButton.TabIndex = 6;
@@ -432,7 +432,7 @@
 			// removeTilesButton
 			// 
 			this.removeTilesButton.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.removeTilesButton.Location = new System.Drawing.Point(1006, 52);
+			this.removeTilesButton.Location = new System.Drawing.Point(1057, 52);
 			this.removeTilesButton.Name = "removeTilesButton";
 			this.removeTilesButton.Size = new System.Drawing.Size(91, 38);
 			this.removeTilesButton.TabIndex = 7;
@@ -445,7 +445,7 @@
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.SystemColors.Control;
-			this.ClientSize = new System.Drawing.Size(1203, 736);
+			this.ClientSize = new System.Drawing.Size(1254, 736);
 			this.Controls.Add(this.removeTilesButton);
 			this.Controls.Add(this.clearButton);
 			this.Controls.Add(this.addTilesButton);

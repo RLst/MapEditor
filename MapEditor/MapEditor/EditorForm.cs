@@ -71,6 +71,10 @@ namespace MapEditor
 			//Show the new map dialog and check if OK clicked
 			if (newMapDialog.ShowDialog(this) == DialogResult.OK)
 			{
+				//Check if new map parameters are valid
+
+				
+
 				//Clear/reset current document
 				//newMapDialog
 			}
@@ -132,14 +136,6 @@ namespace MapEditor
 			var NewMapDialog = new NewMapDialog();
 
 			NewMapDialog.ShowDialog();
-		}
-		private void newToolStripButton_Click(object sender, EventArgs e)
-		{
-			//Open create new map dialog
-			ShowNewDialog(sender, e);
-
-			//var newMapDlg = new NewMapDialog();
-			//newMapDlg.ShowDialog();
 		}
 
 		//Save
