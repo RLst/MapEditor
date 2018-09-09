@@ -40,22 +40,22 @@ namespace MapEditor
 		private void textBoxRows_TextChanged(object sender, EventArgs e)
 		{
 			//Update properties and map size label
-			Rows = Convert.ToInt32(textBoxRows.Text);
+			Rows = Convert.ToInt32((textBoxRows.Text == "") ? "0" : textBoxRows.Text);
 			UpdateLblMapSize();
 		}
 		private void textBoxColumns_TextChanged(object sender, EventArgs e)
 		{
-			Cols = Convert.ToInt32(textBoxColumns.Text);
+			Cols = Convert.ToInt32((textBoxColumns.Text == "") ? "0" : textBoxColumns.Text);
 			UpdateLblMapSize();
 		}
 		private void textBoxTileWidth_TextChanged(object sender, EventArgs e)
 		{
-			TileWidth = Convert.ToInt32(textBoxTileWidth.Text);
+			TileWidth = Convert.ToInt32((textBoxTileWidth.Text == "") ? "0" : textBoxTileWidth.Text);
 			UpdateLblMapSize();
 		}
 		private void textBoxTileHeight_TextChanged(object sender, EventArgs e)
 		{
-			TileHeight = Convert.ToInt32(textBoxTileHeight.Text);
+			TileHeight = Convert.ToInt32((textBoxTileHeight.Text == "") ? "0" : textBoxTileHeight.Text);
 			UpdateLblMapSize();
 		}
 
