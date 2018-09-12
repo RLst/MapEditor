@@ -34,6 +34,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -52,7 +53,6 @@
       <DependentUpon>NewMapDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Camera.cs" />
-    <Compile Include="src\Canvas.cs" />
     <Compile Include="src\Tileset.cs" />
     <Compile Include="TilesetLoaderForm.cs">
       <SubType>Form</SubType>
