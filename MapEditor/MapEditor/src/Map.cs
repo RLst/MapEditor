@@ -3,12 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MapEditor
 {
-    public class Map
+	[Serializable]
+	public class Map : ISerializable
     {
 		//This class can be created with nothing in it
 		//private List<Tile> tiles;
@@ -49,10 +51,32 @@ namespace MapEditor
 
 		}
 
+		//Default constructor
 		public Map(int rows, int cols, int tileWidth, int tileHeight)
 		{
 			NewMap(rows, cols, tileWidth, tileHeight);
 		}
+		//Serial constructor
+		public Map(SerializationInfo info, StreamingContext context)
+		{
+			Rows = (int)info.GetValue("rows", typeof(int));
+			Cols = (int)info.GetValue("cols", typeof(int));
+			TileWidth = (int)info.GetValue("tilewidth", typeof(int));
+			TileHeight = (int)info.GetValue("tileheight", typeof(int));
+
+			//Create new tile rectangle array and load
+			//int maprows = (int)info.GetValue("maprows", typeof(int));
+			//int mapcols = (int)info.GetValue("mapcols", typeof(int));
+			tiles = new Tile[Rows, Cols];
+			for (int row = 0; row < Rows; row++)
+			{
+				for (int col = 0; col < Cols; col++)
+				{
+					tiles[row, col] = (Tile)info.GetValue("tile:" + row + "," + col, typeof(Tile));
+				}
+			}
+		}
+
 		public void NewMap(int rows, int cols, int tileWidth, int tileHeight)
 		{
 			//Set new properties
@@ -77,27 +101,27 @@ namespace MapEditor
 			}
 		}
 
-		//Find Tile from index
-		public Tile FindTile(int row, int col)
-		{
-			//Return tile 
-			if (tiles[row, col] != null)
-			{
-				return tiles[row, col];
-			}
+		////Find Tile from index
+		//public Tile FindTile(int row, int col)
+		//{
+		//	//Return tile 
+		//	if (tiles[row, col] != null)
+		//	{
+		//		return tiles[row, col];
+		//	}
 
-			//Go through all tiles and return tile with matching indexes
-			//foreach (var t in tiles)
-			//{
-			//	if (t.MapIDX.X == row && t.MapIDX.Y == col)
-			//	{
-			//		return t;
-			//	}
-			//}
+		//	//Go through all tiles and return tile with matching indexes
+		//	//foreach (var t in tiles)
+		//	//{
+		//	//	if (t.MapIDX.X == row && t.MapIDX.Y == col)
+		//	//	{
+		//	//		return t;
+		//	//	}
+		//	//}
 
-			//Return null if out of bounds or none found
-			return null;
-		}
+		//	//Return null if out of bounds or none found
+		//	return null;
+		//}
 
 		//Find Tile from coords
 		public Tile FindTile(Point mapPos)
@@ -106,13 +130,30 @@ namespace MapEditor
 			var row = (mapPos.X / TileWidth);
 			var col = (mapPos.Y / TileHeight);
 
-			//Run through FindTile from index
-			return FindTile(row, col);
+			return tiles[row, col];
+			////Run through FindTile from index
+			//return FindTile(row, col);
 		}
 
 		public Point PosToIndex(int mapPosX, int mapPosY)
 		{
 			return new Point(mapPosX / TileWidth, mapPosY / TileHeight);
+		}
+
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			//Use the addvalue method to specify serialized values
+			info.AddValue("rows", Rows, typeof(int));
+			info.AddValue("cols", Cols, typeof(int));
+			info.AddValue("tilewidth", TileWidth, typeof(int));
+			info.AddValue("tileheight", TileHeight, typeof(int));
+			for (int row = 0; row < Rows; row++)
+			{
+				for (int col = 0; col < Cols; col++)
+				{
+					info.AddValue("tile:" + row + "," + col, tiles[row, col], typeof(Tile));
+				}
+			}
 		}
 	}
 }

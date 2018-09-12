@@ -15,10 +15,10 @@ namespace MapEditor
 		//These are just for this form only
 		Tileset tileset = null;
 		Bitmap display;
-		static int rows;
-		static int cols;
-		static int tileWidth = 64;			
-		static int tileHeight = 64;
+		/*static*/ int rows;
+		/*static*/ int cols;
+		/*static*/ int tileWidth = 64;			
+		/*static*/ int tileHeight = 64;
 
 		public TilesetLoaderForm()	
         {
@@ -42,6 +42,7 @@ namespace MapEditor
 			if (openDlg.ShowDialog() == DialogResult.OK)
 			{
 				if (openDlg.CheckFileExists == true) {
+					//Make a new tileset
 					tileset = new Tileset(openDlg.FileName);
 
 					//also set the initial tile width/heights
@@ -59,21 +60,36 @@ namespace MapEditor
 			//If an image for the tileset has been loaded... (And the rows/cols/width/height settings are good)
 			if (tileset != null) 
 			{
-				//Split the tileset into individual tiles according to width and height settings
-				var tilesForEditor = new List<Tile>();
+				//Confirm and set tileset properties
+				tileset.Rows = this.rows;
+				tileset.Cols = this.cols;
+				tileset.TileWidth = this.tileWidth;
+				tileset.TileHeight = this.tileHeight;
 
-				for (int row = 0; row < rows; ++row) {
-					for (int col = 0; col < cols; ++col) {
+				//Seperate tileset into individual tiles and insert into editor.tilepalette
+				for (int row = 0; row < rows; row++)
+				{
+					for (int col = 0; col < cols; col++)
+					{
+						//Make a new tile by passing in a tileset and a tileset index
+						var newTile = new Tile(tileset, new Point(row, col));
+
+						//Add to the Editor's tilepalette
+						EditorForm.TilePalette.Add(newTile);
+
+
+						/*
 						//Get a single tile
-						var singleTile = 
-							display.Clone(
-								new Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight), 
-								System.Drawing.Imaging.PixelFormat.DontCare);
+						//var singleTile = 
+						//	display.Clone(
+						//		new Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight), 
+						//		System.Drawing.Imaging.PixelFormat.DontCare);
 
-						//Add to EditorForm.Tiles
-						EditorForm.tilePalette.Add(new Tile(singleTile));
-						//Update the editorform.tilepalette?
-						//OR run procedures for the listview to update?
+						////Add to EditorForm.Tiles
+						//EditorForm.tilePalette.Add(new Tile(singleTile));
+						////Update the editorform.tilepalette?
+						////OR run procedures for the listview to update?
+						*/
 					}
 				}
 

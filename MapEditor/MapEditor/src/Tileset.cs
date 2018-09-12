@@ -7,33 +7,16 @@ using System.Threading.Tasks;
 
 namespace MapEditor
 {
-    class Tileset
+    public class Tileset
     {
+		public Image Image { get; private set; } = null;
+		public string FilePath { get; }
+		public int Rows { get; set; }
+		public int Cols { get; set; }
+		public int TileWidth { get; set; }
+		public int TileHeight { get; set; }
 
-		//Properties
-		private string filePath;
-		public string FilePath
-		{
-			get {
-				return filePath;
-			}
-			set {
-				filePath = value;
-			}
-		}
-
-        private Image image = null;
-		public Image Image
-		{
-			get {
-				return image;
-			}
-			set {
-				//Validity check?
-				image = value;
-			}
-		}
-		
+		/*
         public int TileWidth
 		{
 			get {
@@ -44,7 +27,7 @@ namespace MapEditor
 				//Also set the num of columns accordingly
 				if (image != null)
 				{
-					Columns = image.Width / TileWidth;
+					Cols = image.Width / TileWidth;
 				}
 			}
 		}
@@ -61,7 +44,7 @@ namespace MapEditor
 				}
 			}
 		}
-		public int Columns
+		public int Cols
         {
             get {
 				//Columns = int(imagewidth / tilewidth)
@@ -78,9 +61,9 @@ namespace MapEditor
                     //Must be greater or equal to the image width
                     if (value >= image.Width)
                     {
-                        Columns = value;
+                        Cols = value;
                         //Auto adjust the tile width based on what the user sets
-                        TileWidth = image.Width / Columns;
+                        TileWidth = image.Width / Cols;
                     }
                 }
                 //Otherwise error or do nothing?
@@ -110,20 +93,20 @@ namespace MapEditor
 				
             }
         }
-
+		*/
 
 		public Tileset(string filePath, int rows = 10, int columns = 10)
 		//Loads tileset from image and sets rows/cols
 		{
-			this.filePath = filePath;
+			this.FilePath = filePath;
 			Load();
-			Columns = columns;
+			Cols = columns;
 			Rows = rows;
 		}
 
 		public void Load()
 		{
-			image = Image.FromFile(filePath);
+			Image = Image.FromFile(FilePath);
 		}
 
     }

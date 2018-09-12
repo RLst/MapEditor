@@ -2,63 +2,60 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace MapEditor
 {
-    public class Tile
+	[Serializable]
+	public class Tile : ISerializable
     {
-        private Tileset tileset;            //The tileset this tile is using
-        private Point tilesetIDX;           //The tileset index/coord this tile is referring to
-        private Image image;              //The actual texture of the tile
-        private Point mapIDX;				//Which map index/coord of the tile
-		
+		//Tileset and index
+        public Tileset Tileset { get; }
+		public Point TilesetIDX { get; }
+		public Point MapIDX { get; set; }       //The tile's map index
+		public Image Image { get; }     //The actual texture of the tile
 
-		public Tile(Image texture)
+		public Tile(Tileset tileset, Point tilesetIDX)
 		{
-			this.image = texture;
-		}
-		public Tile(Image texture, Point mapIDX)
-		{
-			this.image = texture;
-			this.mapIDX = mapIDX;
-		}
-		public Tile(Image texture, Point mapIDX, Point tilesetIDX)
-		{
-			this.image = texture;
-			this.mapIDX = mapIDX;
-			this.tilesetIDX = tilesetIDX;
-		}
+			//Set the tileset
+			Tileset = tileset;
 
-		public Image Image
-		{
-			get
-			{
-				return image;
-				////Make sure tileset is not null
-				//if (tileset != null) 
-				//{
-				//	//??? Gets the tile from the tileset using the index
-				//	//Return the image
-				//	return image;
-				//}
-				////Otherwise return null
-				//return null;
-			}
+			//Grab tile from full tileset texture
+			int row = tilesetIDX.X;
+			int col = tilesetIDX.Y;
+			int tilewidth = tileset.TileWidth;
+			int tileheight = tileset.TileHeight;
+			Bitmap bitmap = new Bitmap(tileset.Image);      //Convert image to bitmap so that it can be cropped
+			Image = bitmap.Clone(
+				new Rectangle(col * tilewidth, row * tileheight, tilewidth, tileheight),
+				System.Drawing.Imaging.PixelFormat.DontCare) as Image;
 		}
-
-		public Point MapIDX 
+		//Use to load in from a file
+		public Tile(SerializationInfo info, StreamingContext context)
 		{
-			get {
-				return mapIDX;
-			}
-			set {
-				mapIDX = value;
-			}
+			Tileset = (Tileset)info.GetValue("tileset", typeof(Tileset));
+			TilesetIDX = (Point)info.GetValue("tilesetIDX", typeof(Point));
+			MapIDX = (Point)info.GetValue("mapIDX", typeof(Point));
+
+			//Grab single tile from tileset
+			int row = TilesetIDX.X;
+			int col = TilesetIDX.Y;
+			int tilewidth = Tileset.TileWidth;
+			int tileheight = Tileset.TileHeight;
+			Bitmap bitmap = new Bitmap(Tileset.Image);
+			Image = bitmap.Clone(new Rectangle(col * tilewidth, row * tileheight, tilewidth, tileheight),
+				System.Drawing.Imaging.PixelFormat.DontCare) as Image;
 		}
 
-
-
-    }
+		//Used to saved to a file
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("tileset", Tileset, typeof(Tileset));
+			info.AddValue("tilesetIDX", TilesetIDX, typeof(Point));
+			info.AddValue("mapIDX", MapIDX, typeof(Point));
+			//info.AddValue("image", Image, typeof(Image));
+		}
+	}
 }

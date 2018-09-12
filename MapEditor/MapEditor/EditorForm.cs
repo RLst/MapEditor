@@ -10,21 +10,25 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
+
     public partial class EditorForm : Form
     {
 		//Old values
 		int rows = 10; int cols = 10; int tilewidth = 64; int tileheight = 64;
 
 		//Map
-		static public Map map = null;                  //Holds the actual map using actual tiles; pbCanvas displays the actual map
+		public static Map map = null;        //Holds the actual map using actual tiles; pbCanvas displays the actual map
+
+		//Tilesets - Concreate location for Tiles to reference off
+		static public List<Tileset> tilesets;
 
 		//Tile palette
-		static private Tile selectedTile = null;
-		static private ImageList tileSwatches;			//Thumbnails for lvTilePalette (List View)
-		static public List<Tile> tilePalette;           //The actual tiles in the tile palette
-														//static private List<Tileset> tilesets;
+		private Tile selectedTile = null;
+		public static List<Tile> TilePalette { get; set; }
+		private ImageList tileSwatches;						//Thumbnails for lvTilePalette (List View)
+															//static private List<Tileset> tilesets;
 		//Camera
-		static private Camera cam;
+		private static Camera cam;
 
 		//Editing states
 		bool onPaint = false;       //If the mouse has been pressed 
@@ -35,12 +39,13 @@ namespace MapEditor
 		private bool currentDocumentPreviouslySaved;
 		private string currentDocumentPath = null;
 
-        public EditorForm()
+
+		public EditorForm()
         {
             InitializeComponent();
 
 			//Setup core
-			tilePalette = new List<Tile>();
+			TilePalette = new List<Tile>();
 			tileSwatches = new ImageList();
 			cam = new Camera();
 			currentDocumentPreviouslySaved = false;
@@ -238,7 +243,7 @@ namespace MapEditor
 			//Removes the selected tile
 			var selectedIndex = lvTilePalette.SelectedIndices[0];
 			lvTilePalette.Items.Remove(lvTilePalette.SelectedItems[0]);     //...from the listview image list
-			tilePalette.RemoveAt(selectedIndex);						//...and the actual tile from availableTiles
+			TilePalette.RemoveAt(selectedIndex);						//...and the actual tile from availableTiles
 
 				//Maybe later add ability to remove multiple selected tiles?
 		}
@@ -246,7 +251,7 @@ namespace MapEditor
 		{
 			//Removes all tiles
 			lvTilePalette.Items.Clear();
-			tilePalette.Clear();
+			TilePalette.Clear();
 		}
 
 		private void HelpToolStripButton_Click(object sender, EventArgs e)
@@ -356,7 +361,7 @@ namespace MapEditor
 				if (lvTilePalette.SelectedIndices.Count > 0)
 				{
 					selectedIndex = lvTilePalette.SelectedIndices[0];
-					return tilePalette[selectedIndex];
+					return TilePalette[selectedIndex];
 				}
 			}
 			//Otherwise return null
@@ -438,9 +443,9 @@ namespace MapEditor
 		private void UpdateTilePaletteItems()
 		{
 			//Go through all tiles and update the list items
-			for (int i = 0; i < tilePalette.Count; i++)
+			for (int i = 0; i < TilePalette.Count; i++)
 			{
-				tileSwatches.Images.Add(tilePalette[i].Image);
+				tileSwatches.Images.Add(TilePalette[i].Image);
 				var item = new ListViewItem();
 				item.ImageIndex = i;
 				lvTilePalette.Items.Add(item);
@@ -457,5 +462,11 @@ namespace MapEditor
 				Enumerable.Range(0, map.Tiles.GetLength(1)).Contains(mouseMapIDX.Y));
 		}
 
+		private void EditorForm_Resize(object sender, EventArgs e)
+		{
+			//Resize pbCanvas. accordingly
+			//pbCanvas 
+			//	pbCanvas.Size;
+		}
 	}
 }
