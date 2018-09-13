@@ -15,10 +15,10 @@ namespace MapEditor
 		//These are just for this form only
 		Tileset tileset = null;
 		Bitmap display;
-		/*static*/ int rows;
-		/*static*/ int cols;
-		/*static*/ int tileWidth = 64;			
-		/*static*/ int tileHeight = 64;
+		int cols;
+		int rows;
+		int tileWidth = 32;			
+		int tileHeight = 32;
 
 		public TilesetLoaderForm()	
         {
@@ -61,53 +61,39 @@ namespace MapEditor
 			if (tileset != null) 
 			{
 				//Confirm and set tileset properties
-				tileset.Rows = this.rows;
-				tileset.Cols = this.cols;
-				tileset.TileWidth = this.tileWidth;
-				tileset.TileHeight = this.tileHeight;
+				tileset.Cols = cols;
+				tileset.Rows = rows;
+				tileset.TileWidth = tileWidth;
+				tileset.TileHeight = tileHeight;
 
 				//Seperate tileset into individual tiles and insert into editor.tilepalette
-				for (int row = 0; row < rows; row++)
+				for (int col = 0; col < cols; col++)
 				{
-					for (int col = 0; col < cols; col++)
+					for (int row = 0; row < rows; row++)
 					{
 						//Make a new tile by passing in a tileset and a tileset index
-						var newTile = new Tile(tileset, new Point(row, col));
+						var newTile = new Tile(tileset, new Point(col, row));
 
 						//Add to the Editor's tilepalette
 						EditorForm.TilePalette.Add(newTile);
-
-
-						/*
-						//Get a single tile
-						//var singleTile = 
-						//	display.Clone(
-						//		new Rectangle(col * tileWidth, row * tileHeight, tileWidth, tileHeight), 
-						//		System.Drawing.Imaging.PixelFormat.DontCare);
-
-						////Add to EditorForm.Tiles
-						//EditorForm.tilePalette.Add(new Tile(singleTile));
-						////Update the editorform.tilepalette?
-						////OR run procedures for the listview to update?
-						*/
 					}
 				}
 
 				//Return OK
-				this.DialogResult = DialogResult.OK;
-				this.Close();
+				DialogResult = DialogResult.OK;
+				Close();
 				return;
 			}
 			//Return Cancel
-			this.DialogResult = DialogResult.Cancel;
-			this.Close();
+			DialogResult = DialogResult.Cancel;
+			Close();
 		}
 
 		private void CancelButton_Click(object sender, EventArgs e)
 		{
 			//Close this form
 			///DialogResult = DialogResult.Cancel;
-			this.Close();
+			Close();
 		}
 		
 

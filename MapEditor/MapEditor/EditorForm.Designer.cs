@@ -304,6 +304,7 @@
 			// 
 			// toolStrip
 			// 
+			this.toolStrip.ImageScalingSize = new System.Drawing.Size(24, 24);
 			this.toolStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.newToolStripButton,
             this.openToolStripButton,
@@ -313,7 +314,7 @@
 			this.toolStrip.Location = new System.Drawing.Point(0, 33);
 			this.toolStrip.Name = "toolStrip";
 			this.toolStrip.Padding = new System.Windows.Forms.Padding(0, 0, 2, 0);
-			this.toolStrip.Size = new System.Drawing.Size(1613, 25);
+			this.toolStrip.Size = new System.Drawing.Size(1613, 31);
 			this.toolStrip.TabIndex = 1;
 			this.toolStrip.Text = "ToolStrip";
 			// 
@@ -323,7 +324,7 @@
 			this.newToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("newToolStripButton.Image")));
 			this.newToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
 			this.newToolStripButton.Name = "newToolStripButton";
-			this.newToolStripButton.Size = new System.Drawing.Size(36, 36);
+			this.newToolStripButton.Size = new System.Drawing.Size(28, 28);
 			this.newToolStripButton.Text = "New";
 			this.newToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageAboveText;
 			this.newToolStripButton.ToolTipText = "Create new documents";
@@ -335,7 +336,7 @@
 			this.openToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openToolStripButton.Image")));
 			this.openToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
 			this.openToolStripButton.Name = "openToolStripButton";
-			this.openToolStripButton.Size = new System.Drawing.Size(36, 36);
+			this.openToolStripButton.Size = new System.Drawing.Size(28, 28);
 			this.openToolStripButton.Text = "Open";
 			this.openToolStripButton.Click += new System.EventHandler(this.OpenFile);
 			// 
@@ -345,14 +346,14 @@
 			this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
 			this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
 			this.saveToolStripButton.Name = "saveToolStripButton";
-			this.saveToolStripButton.Size = new System.Drawing.Size(36, 36);
+			this.saveToolStripButton.Size = new System.Drawing.Size(28, 28);
 			this.saveToolStripButton.Text = "Save";
 			this.saveToolStripButton.Click += new System.EventHandler(this.SaveToolStripButton_Click);
 			// 
 			// toolStripSeparator1
 			// 
 			this.toolStripSeparator1.Name = "toolStripSeparator1";
-			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 39);
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 31);
 			// 
 			// helpToolStripButton
 			// 
@@ -360,7 +361,7 @@
 			this.helpToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("helpToolStripButton.Image")));
 			this.helpToolStripButton.ImageTransparentColor = System.Drawing.Color.Black;
 			this.helpToolStripButton.Name = "helpToolStripButton";
-			this.helpToolStripButton.Size = new System.Drawing.Size(36, 36);
+			this.helpToolStripButton.Size = new System.Drawing.Size(28, 28);
 			this.helpToolStripButton.Text = "Help";
 			this.helpToolStripButton.Click += new System.EventHandler(this.HelpToolStripButton_Click);
 			// 
@@ -386,26 +387,22 @@
 			// 
 			this.lvTilePalette.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.lvTilePalette.Location = new System.Drawing.Point(1176, 148);
+			this.lvTilePalette.Location = new System.Drawing.Point(1174, 148);
 			this.lvTilePalette.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.lvTilePalette.MultiSelect = false;
 			this.lvTilePalette.Name = "lvTilePalette";
-			this.lvTilePalette.Size = new System.Drawing.Size(424, 916);
+			this.lvTilePalette.Size = new System.Drawing.Size(426, 916);
 			this.lvTilePalette.TabIndex = 4;
 			this.lvTilePalette.UseCompatibleStateImageBehavior = false;
 			this.lvTilePalette.SelectedIndexChanged += new System.EventHandler(this.TilePalette_SelectedIndexChanged);
 			// 
 			// pbCanvas
 			// 
-			this.pbCanvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
 			this.pbCanvas.Cursor = System.Windows.Forms.Cursors.Cross;
 			this.pbCanvas.Location = new System.Drawing.Point(13, 80);
 			this.pbCanvas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
 			this.pbCanvas.Name = "pbCanvas";
-			this.pbCanvas.Size = new System.Drawing.Size(1148, 984);
-			this.pbCanvas.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+			this.pbCanvas.Size = new System.Drawing.Size(1153, 984);
 			this.pbCanvas.TabIndex = 3;
 			this.pbCanvas.TabStop = false;
 			this.pbCanvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Canvas_MouseDown);

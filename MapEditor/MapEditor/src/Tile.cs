@@ -23,8 +23,8 @@ namespace MapEditor
 			Tileset = tileset;
 
 			//Grab tile from full tileset texture
-			int row = tilesetIDX.X;
-			int col = tilesetIDX.Y;
+			int col = tilesetIDX.X;
+			int row = tilesetIDX.Y;
 			int tilewidth = tileset.TileWidth;
 			int tileheight = tileset.TileHeight;
 			Bitmap bitmap = new Bitmap(tileset.Image);      //Convert image to bitmap so that it can be cropped
@@ -40,12 +40,12 @@ namespace MapEditor
 			MapIDX = (Point)info.GetValue("mapIDX", typeof(Point));
 
 			//Grab single tile from tileset
-			int row = TilesetIDX.X;
-			int col = TilesetIDX.Y;
+			int col = TilesetIDX.X;
+			int row = TilesetIDX.Y;
 			int tilewidth = Tileset.TileWidth;
 			int tileheight = Tileset.TileHeight;
 			Bitmap bitmap = new Bitmap(Tileset.Image);
-			Image = bitmap.Clone(new Rectangle(col * tilewidth, row * tileheight, tilewidth, tileheight),
+			Image = bitmap.Clone(new Rectangle(row * tilewidth, col * tileheight, tilewidth, tileheight),
 				System.Drawing.Imaging.PixelFormat.DontCare) as Image;
 		}
 

@@ -13,8 +13,11 @@ namespace MapEditor
 
     public partial class EditorForm : Form
     {
-		//Old values
-		int rows = 10; int cols = 10; int tilewidth = 64; int tileheight = 64;
+		//Default/Previous values
+		int rows = 15;
+		int cols = 10;
+		int tilewidth = 32;
+		int tileheight = 32;
 
 		//Map
 		public static Map map = null;        //Holds the actual map using actual tiles; pbCanvas displays the actual map
@@ -54,7 +57,7 @@ namespace MapEditor
 			//Setup a blank map and draw the canvas (First ever run)
 			////NEW MAP DIALOG GOES HERE!!! Always ask the user for map settings upon first launch
 
-			map = new Map(10, 10, 64, 64)	//Default starting map
+			map = new Map(cols, rows, tilewidth, tileheight)	//Default starting map
 			{
 				Bitmap = new Bitmap(pbCanvas.Width, pbCanvas.Height)
 			};
@@ -104,7 +107,7 @@ namespace MapEditor
 				tilewidth = NewMapDialog.TileWidth;
 				tileheight = NewMapDialog.TileHeight;
 				//Go ahead with creating a new map
-				map.NewMap(rows, cols, tilewidth, tileheight);
+				map.NewMap(cols, rows, tilewidth, tileheight);
 				DrawCanvas();
 			}
 
@@ -264,7 +267,6 @@ namespace MapEditor
 		}
 		
 
-
 		/// <summary>
 		/// Canvas painting methods
 		/// </summary>
@@ -309,6 +311,13 @@ namespace MapEditor
 			statusStrip.Items[1].Text = "Map Tile Index: " + map.PosToIndex(e.X+cam.X, e.Y+cam.Y);
 		}
 
+		private void Canvas_MouseUp(object sender, MouseEventArgs e)
+		{
+			//Clear all mouse states
+			onPaint = false;
+			onPan = false;
+		}
+
 		private void PanCamera(MouseEventArgs me)
 		{
 			//Set the new camera position
@@ -316,13 +325,7 @@ namespace MapEditor
 			cam.Y = dragStart.Y - me.Y;
 			DrawCanvas();
 		}
-		
-		private void Canvas_MouseUp(object sender, MouseEventArgs e)
-		{
-			//Clear all mouse states
-			onPaint = false;
-			onPan = false;
-		}
+
 
 		/// <summary>
 		/// Paints currently selected tile (if available) at current mouse cursor (if within bounds of map)
@@ -331,7 +334,8 @@ namespace MapEditor
 		{
 			selectedTile = GetSelectedTile(out int selectedIndex);
 
-			var mouseMapIDX = map.PosToIndex(me.X+cam.X, me.Y+cam.Y);
+			var mouseMapIDX = map.PosToIndex(me.X + cam.X, me.Y + cam.Y);
+			//var mouseMapIDX = map.PosToIndex(me.Y + cam.Y, me.X + cam.X);
 
 			//Mouse has to be within bounds of map
 			if (MouseWithinMapBounds(mouseMapIDX))
@@ -340,17 +344,18 @@ namespace MapEditor
 				if (selectedTile != null)
 				{
 					var tileUnderMouse = map.Tiles[mouseMapIDX.X, mouseMapIDX.Y];
+					//var tileUnderMouse = map.Tiles[mouseMapIDX.Y, mouseMapIDX.X];
 
 					//Overwrite if tile is different in map
 					if (tileUnderMouse != selectedTile)
 					{
 						map.Tiles[mouseMapIDX.X, mouseMapIDX.Y] = selectedTile;   //Modify the actual tiles
+						//map.Tiles[mouseMapIDX.Y, mouseMapIDX.X] = selectedTile;   //Modify the actual tiles
 						DrawCanvas();
 					}
 				}
 			}
 		}
-
 
 		private Tile GetSelectedTile(out int selectedIndex)
 		{
@@ -425,7 +430,7 @@ namespace MapEditor
 					//Draw tile if available
 					if (map.Tiles[row, col] != null)
 					{
-						g.DrawImage(map.Tiles[row, col].Image, row * map.TileWidth-cam.X, col * map.TileHeight-cam.Y);
+						g.DrawImage(map.Tiles[row, col].Image, row * map.TileWidth-cam.X, col * map.TileHeight - cam.Y);
 					}
 				}
 			}

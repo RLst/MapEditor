@@ -29,8 +29,8 @@ namespace MapEditor
 
 		public Bitmap Bitmap { get; set; }
 
-		public int Rows { get; set; }
 		public int Cols { get; set; }
+		public int Rows { get; set; }
 
 		public int TileWidth { get; set; }
 		public int TileHeight { get; set; }
@@ -52,53 +52,58 @@ namespace MapEditor
 		}
 
 		//Default constructor
-		public Map(int rows, int cols, int tileWidth, int tileHeight)
+		public Map(int cols, int rows, int tileWidth, int tileHeight)
 		{
-			NewMap(rows, cols, tileWidth, tileHeight);
+			NewMap(cols, rows, tileWidth, tileHeight);
 		}
+
 		//Serial constructor
 		public Map(SerializationInfo info, StreamingContext context)
 		{
-			Rows = (int)info.GetValue("rows", typeof(int));
 			Cols = (int)info.GetValue("cols", typeof(int));
+			Rows = (int)info.GetValue("rows", typeof(int));
 			TileWidth = (int)info.GetValue("tilewidth", typeof(int));
 			TileHeight = (int)info.GetValue("tileheight", typeof(int));
 
 			//Create new tile rectangle array and load
-			//int maprows = (int)info.GetValue("maprows", typeof(int));
-			//int mapcols = (int)info.GetValue("mapcols", typeof(int));
-			tiles = new Tile[Rows, Cols];
-			for (int row = 0; row < Rows; row++)
+			tiles = new Tile[Cols, Rows];
+			for (int col = 0; col < Cols; col++)
 			{
-				for (int col = 0; col < Cols; col++)
+				for (int row = 0; row < Rows; row++)
 				{
-					tiles[row, col] = (Tile)info.GetValue("tile:" + row + "," + col, typeof(Tile));
+					tiles[col, row] = (Tile)info.GetValue("tile:" + col + "," + row, typeof(Tile));
 				}
 			}
 		}
 
-		public void NewMap(int rows, int cols, int tileWidth, int tileHeight)
+		public void NewMap(int cols, int rows, int tileWidth, int tileHeight)
 		{
 			//Set new properties
-			Rows = rows;
 			Cols = cols;
+			Rows = rows;
 			TileWidth = tileWidth;
 			TileHeight = tileHeight;
 
-			tiles = new Tile[Rows, Cols];
-			//Already cleared. Don't need to clear()
+			//Set new cleared array
+			tiles = new Tile[Cols, Rows];
 		}
 
 		//Nulls all elements
 		public void Clear()
 		{
-			for (int row = 0; row < tiles.GetLength(0) ; row++)
-			{
-				for (int col = 0; col < tiles.GetLength(1); col++)
-				{
-					tiles[row, col] = null;
-				}
-			}
+			tiles = new Tile[Cols, Rows];
+		}
+
+		//Find Tile from coords
+		public Tile FindTile(Point mapPos)
+		{
+			//Convert from map pos into map index
+			var col = (mapPos.X / TileWidth);
+			var row = (mapPos.Y / TileHeight);
+
+			return tiles[col, row];
+			////Run through FindTile from index
+			//return FindTile(row, col);
 		}
 
 		////Find Tile from index
@@ -109,7 +114,6 @@ namespace MapEditor
 		//	{
 		//		return tiles[row, col];
 		//	}
-
 		//	//Go through all tiles and return tile with matching indexes
 		//	//foreach (var t in tiles)
 		//	//{
@@ -118,22 +122,9 @@ namespace MapEditor
 		//	//		return t;
 		//	//	}
 		//	//}
-
 		//	//Return null if out of bounds or none found
 		//	return null;
 		//}
-
-		//Find Tile from coords
-		public Tile FindTile(Point mapPos)
-		{
-			//Convert from map pos into map index
-			var row = (mapPos.X / TileWidth);
-			var col = (mapPos.Y / TileHeight);
-
-			return tiles[row, col];
-			////Run through FindTile from index
-			//return FindTile(row, col);
-		}
 
 		public Point PosToIndex(int mapPosX, int mapPosY)
 		{
@@ -143,15 +134,15 @@ namespace MapEditor
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			//Use the addvalue method to specify serialized values
-			info.AddValue("rows", Rows, typeof(int));
 			info.AddValue("cols", Cols, typeof(int));
+			info.AddValue("rows", Rows, typeof(int));
 			info.AddValue("tilewidth", TileWidth, typeof(int));
 			info.AddValue("tileheight", TileHeight, typeof(int));
-			for (int row = 0; row < Rows; row++)
+			for (int col = 0; col < Cols; col++)
 			{
-				for (int col = 0; col < Cols; col++)
+				for (int row = 0; row < Rows; row++)
 				{
-					info.AddValue("tile:" + row + "," + col, tiles[row, col], typeof(Tile));
+					info.AddValue("tile:" + col + "," + row, tiles[col, row], typeof(Tile));
 				}
 			}
 		}
