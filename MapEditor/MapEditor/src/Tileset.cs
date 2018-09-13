@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace MapEditor
 {
-    public class Tileset
+	public class Tileset : ISerializable
     {
 		public Image Image { get; private set; } = null;
 		public string FilePath { get; }
@@ -24,11 +20,17 @@ namespace MapEditor
 			Cols = columns;
 			Rows = rows;
 		}
+		//S
+		public 
+
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			throw new System.NotImplementedException();
+		}
 
 		public void Load()
 		{
 			Image = Image.FromFile(FilePath);
 		}
-
-    }
+	}
 }

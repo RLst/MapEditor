@@ -76,6 +76,22 @@ namespace MapEditor
 			}
 		}
 
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			//Use the addvalue method to specify serialized values
+			info.AddValue("cols", Cols, typeof(int));
+			info.AddValue("rows", Rows, typeof(int));
+			info.AddValue("tilewidth", TileWidth, typeof(int));
+			info.AddValue("tileheight", TileHeight, typeof(int));
+			for (int col = 0; col < Cols; col++)
+			{
+				for (int row = 0; row < Rows; row++)
+				{
+					info.AddValue("tile:" + col + "," + row, tiles[col, row], typeof(Tile));
+				}
+			}
+		}
+
 		public void NewMap(int cols, int rows, int tileWidth, int tileHeight)
 		{
 			//Set new properties
@@ -131,20 +147,6 @@ namespace MapEditor
 			return new Point(mapPosX / TileWidth, mapPosY / TileHeight);
 		}
 
-		public void GetObjectData(SerializationInfo info, StreamingContext context)
-		{
-			//Use the addvalue method to specify serialized values
-			info.AddValue("cols", Cols, typeof(int));
-			info.AddValue("rows", Rows, typeof(int));
-			info.AddValue("tilewidth", TileWidth, typeof(int));
-			info.AddValue("tileheight", TileHeight, typeof(int));
-			for (int col = 0; col < Cols; col++)
-			{
-				for (int row = 0; row < Rows; row++)
-				{
-					info.AddValue("tile:" + col + "," + row, tiles[col, row], typeof(Tile));
-				}
-			}
-		}
+
 	}
 }

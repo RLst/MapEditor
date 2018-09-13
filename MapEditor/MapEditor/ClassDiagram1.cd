@@ -3,7 +3,7 @@
   <Class Name="MapEditor.EditorForm">
     <Position X="5" Y="0.5" Width="2.5" />
     <TypeIdentifier>
-      <HashCode>RLmAHqU4hCAhAgELCi31wI8CgACTGEwBChgARTAEAFc=</HashCode>
+      <HashCode>RLiAHqU5hCAhAgELCi31wI8CgACTGEwBChgARTAEAFc=</HashCode>
       <FileName>EditorForm.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -39,9 +39,10 @@
   <Class Name="MapEditor.Tileset">
     <Position X="0.5" Y="2.5" Width="2" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAEAAAAAAAKAAAAAAABAAAABAAQAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAAAAEAAAAAAAKAgAAAAABAAAABAAQAAAAA=</HashCode>
       <FileName>src\Tileset.cs</FileName>
     </TypeIdentifier>
+    <Lollipop Position="0.2" />
   </Class>
   <Class Name="MapEditor.TilesetLoaderForm">
     <Position X="9.75" Y="0.5" Width="1.5" />

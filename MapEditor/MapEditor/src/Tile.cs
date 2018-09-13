@@ -55,7 +55,6 @@ namespace MapEditor
 			info.AddValue("tileset", Tileset, typeof(Tileset));
 			info.AddValue("tilesetIDX", TilesetIDX, typeof(Point));
 			info.AddValue("mapIDX", MapIDX, typeof(Point));
-			//info.AddValue("image", Image, typeof(Image));
 		}
 	}
 }
