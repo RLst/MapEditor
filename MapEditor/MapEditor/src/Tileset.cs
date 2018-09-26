@@ -1,8 +1,10 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Runtime.Serialization;
 
 namespace MapEditor
 {
+    [Serializable]
 	public class Tileset : ISerializable
     {
 		public Image Image { get; private set; } = null;
@@ -20,12 +22,24 @@ namespace MapEditor
 			Cols = columns;
 			Rows = rows;
 		}
-		//S
-		public 
+        //Serial constructor (Used to LOAD)
+        public Tileset(SerializationInfo info, StreamingContext context)
+        {
+            FilePath = (string)info.GetValue("filepath", typeof(string));
+            Cols = (int)info.GetValue("cols", typeof(int));
+            Rows = (int)info.GetValue("rows", typeof(int));
+            TileWidth = (int)info.GetValue("tilewidth", typeof(int));
+            TileHeight = (int)info.GetValue("tileheight", typeof(int));
+        }
 
+        //Used to SAVE
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
-			throw new System.NotImplementedException();
+            info.AddValue("filepath", FilePath, typeof(string));
+            info.AddValue("cols", Cols, typeof(int));
+            info.AddValue("rows", Rows, typeof(int));
+            info.AddValue("tilewidth", TileWidth, typeof(int));
+			info.AddValue("tileheight", TileHeight, typeof(int));
 		}
 
 		public void Load()

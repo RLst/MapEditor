@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Runtime.Serialization;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MapEditor
 {
-	[Serializable]
+    [Serializable]
 	public class Map : ISerializable
     {
 		//This class can be created with nothing in it
