@@ -3,23 +3,28 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Soap;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace MapEditor
 {
 
     public partial class EditorForm : Form
     {
-		//Default/Previous values
+		//Initial/Previously used values
 		int rows = 15;
 		int cols = 10;
 		int tilewidth = 32;
 		int tileheight = 32;
 
-		//Map
+		//Map [serialize]
+
 		public static Map map = null;        //Holds the actual map using actual tiles; pbCanvas displays the actual map
 
-		//Tilesets - Concreate location for Tiles to reference off
-		static public List<Tileset> tilesets;
+		//Tilesets - Concrete location for Tiles to reference off  [serialize]
+		public static List<Tileset> tilesets;
 
 		//Tile palette
 		private Tile selectedTile = null;
@@ -35,9 +40,11 @@ namespace MapEditor
 		Point dragStart;
 
 		//Saving
-		private bool currentDocumentPreviouslySaved;
 		private string currentDocumentPath = null;
-
+		private bool currentDocumentPreviouslySaved;
+		private bool changesMade = true;
+		private bool onMultiSelect;
+		private Point selectionBoxStart;
 
 		public EditorForm()
         {
@@ -69,10 +76,11 @@ namespace MapEditor
 			statusStrip.Items.Add("Item 3");
 		}
 
+		#region New
 		/// <summary>
 		/// Shows dialog to create a new map
 		/// </summary>
-        private void ShowNewDialog(object sender, EventArgs e)
+		private void ShowNewDialog(object sender, EventArgs e)
         {
 			NewMapDialog newMapDialog = new NewMapDialog(rows, cols, tilewidth, tileheight);
 
@@ -108,26 +116,79 @@ namespace MapEditor
 			}
 
 		}
-
-		private void PromptSave()
+		private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
 		{
+			var NewMapDialog = new NewMapDialog();
 
+			NewMapDialog.ShowDialog();
 		}
 
-		/// <summary>
-		/// Shows dialog to open a new map
-		/// </summary>
+		#endregion
+
+		#region Open
+		//To LOAD a pkrMapEditor "document"....
+		//- Load all the individual tiles into List<Tile> TilePalette
+		//- Load in a new map
+		//- Check new loaded map data is good
+		//- Check if the current document has been saved yet
+		//- Clear all tiles in TilePalette
+		//- Clear the current map
+		//- Redraw TilePalette
+		//- Redraw map
 		private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            openFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+            openFileDialog.Filter = "Text Files (*.map)|*.map|All Files (*.*)|*.*";
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                string FileName = openFileDialog.FileName;
+                string loadFileName = openFileDialog.FileName;
+
+				//Load in the new map
+				IFormatter formatter = new BinaryFormatter();
+				this.Deserializeitem(loadFileName, formatter);
+
+				//Check new map data is good
+
+				//Check if the current document has been saved yet
+				if (currentDocumentPath != null)
+				{
+					//PromptToSave();
+					var dlgResult = MessageBox.Show("Save changes before loading in the new map?", "Open map...", MessageBoxButtons.YesNoCancel);
+					if (dlgResult == DialogResult.Yes)
+					{
+						Save();
+					}
+					else if (dlgResult == DialogResult.No)
+					{
+
+					}
+					else if (dlgResult == DialogResult.Cancel)
+					{
+
+					}
+				}
             }
         }
+		void PromptToSave()
+		{
+			//Prompt for user to save
+			
+		}
+		public void Deserializeitem(string fileName, IFormatter formatter)
+		{
+			FileStream fs = new FileStream(fileName, FileMode.Open);
 
+			//tilesets = (List<Tileset>)formatter.Deserialize(fs);
+			map = (Map)formatter.Deserialize(fs);
+			TilePalette = (List<Tile>)formatter.Deserialize(fs);
+
+			fs.Close();
+			DrawCanvas();
+		}
+		#endregion
+
+		#region Save
 		/// <summary>
 		/// Shows dialog to save current map
 		/// ////////////////////
@@ -139,44 +200,44 @@ namespace MapEditor
 		/// - Export to .map files
 		///		These are the actual files that will be used by the game app
 		/// </summary>
+		//To save a pkrMapEditor "document"...
+		//1. Save all the individual tiles in List<Tile> TilePalette
+		//2. Save the map which includes references to it's own tiles
 		private void Save()
 		{
-			if (!currentDocumentPreviouslySaved)
+			if (currentDocumentPath != null)    //ie. the current work has already been previously saved to a file
+			{
+				//Save as normal
+				
+				currentDocumentPreviouslySaved = true;	//Important to set saved flag
+			}
+			else 
+			//if (!currentDocumentPreviouslySaved)
 			{
 				SaveAs();
-
 			}
-
-			//Add Save logic here
-
-			currentDocumentPreviouslySaved = true;	//Important to set saved flag
 		}
 		private void SaveAs()
 		{
 			//Calls the save dialog and prompts user for a new save file            
 			SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "Text Files (*.txt)|*.txt|All Files (*.*)|*.*";
+            saveFileDialog.Filter = "Text Files (*.map)|*.map|All Files (*.*)|*.*";
+
+			//If user pressed ok and file is valid
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
             {
-                string FileName = saveFileDialog.FileName;
-            }
+				string saveFileName = saveFileDialog.FileName;
+				currentDocumentPath = saveFileName;
 
+				//To save a pkrMapEditor "document"...
+				//1. Save List<Tile> TilePalette
+				//2. Save the map which includes references to it's own tiles
+				IFormatter formatter = new BinaryFormatter();
+				this.SerializeItem(saveFileName, formatter);
+            }
 			currentDocumentPreviouslySaved = true;  //Important to set saved flag
 		}
-
-		/// <summary>
-		/// Handle Menu Items and Buttons
-		/// </summary>
-		//New
-		private void newMapToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			var NewMapDialog = new NewMapDialog();
-
-			NewMapDialog.ShowDialog();
-		}
-
-		//Save
 		private void SaveToolStripButton_Click(object sender, EventArgs e)
 		{
 			//Calls THE save function
@@ -191,9 +252,21 @@ namespace MapEditor
         {
 			SaveAs();
         }
+		public void SerializeItem(string fileName, IFormatter formatter)
+		{
+			FileStream fs = new FileStream(fileName, FileMode.Create);
 
-		//Cut copy and paste
-        private void CutToolStripMenuItem_Click(object sender, EventArgs e)
+			//Need to serialize in order
+			formatter.Serialize(fs, map);
+			formatter.Serialize(fs, TilePalette);
+
+			fs.Close();
+		}
+
+		#endregion
+
+		#region Cut/Copy/Paste
+		private void CutToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
         private void CopyToolStripMenuItem_Click(object sender, EventArgs e)
@@ -202,17 +275,9 @@ namespace MapEditor
         private void PasteToolStripMenuItem_Click(object sender, EventArgs e)
         {
         }
+		#endregion
 
-		//Other
-		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
-		{
-			//If there are changes then ask to save changes (utilise dirty flag pattern)
-			if (currentDocumentPreviouslySaved)
-			{
-				Save();
-			}
-			Close();
-		}
+		#region View
 		private void ToolBarToolStripMenuItem_Click(object sender, EventArgs e)
         {
             toolStrip.Visible = toolBarToolStripMenuItem.Checked;
@@ -221,17 +286,17 @@ namespace MapEditor
         {
             statusStrip.Visible = statusBarToolStripMenuItem.Checked;
         }
+		#endregion
 
-
-		/// <summary>
-		/// ListView Box
-		/// </summary>
+		#region TilePalette
 		private void AddTilesButton_Click(object sender, EventArgs e)
 		{
 			TilesetLoaderForm tileSetLoadForm = new TilesetLoaderForm();
 
 			if (tileSetLoadForm.ShowDialog(this) == DialogResult.OK) 
 			{
+				//Load in new tiles from the tileset
+
 				//If there are new tiles then load in new tiles
 				UpdateTilePaletteItems();
 			}
@@ -252,20 +317,21 @@ namespace MapEditor
 			lvTilePalette.Items.Clear();
 			TilePalette.Clear();
 		}
-
-		private void HelpToolStripButton_Click(object sender, EventArgs e)
+		private void UpdateTilePaletteItems()
 		{
-			//Open user manual
+			//Go through all tiles and update the list items
+			for (int i = 0; i < TilePalette.Count; i++)
+			{
+				tileSwatches.Images.Add(TilePalette[i].Image);
+				var item = new ListViewItem();
+				item.ImageIndex = i;
+				lvTilePalette.Items.Add(item);
+			}
 		}
-		private void UserManualToolStripMenuItem_Click(object sender, EventArgs e)
-		{
-			//Open user manual
-		}
-		
 
-		/// <summary>
-		/// Canvas painting methods
-		/// </summary>
+		#endregion
+
+		#region CanvasEdit
 		private void Canvas_MouseDown(object sender, MouseEventArgs e)
 		{
 			////Paint
@@ -285,6 +351,17 @@ namespace MapEditor
 				///DEBUG
 				statusStrip.Items[2].Text = "Drag start: " + dragStart;
 			}
+
+			////Selection
+			if (e.Button == MouseButtons.Right)
+			{
+				onMultiSelect = true;
+				//Get starting point of selection box
+				selectionBoxStart = new Point(e.X + cam.X, e.Y + cam.Y);
+
+				///DEBUG
+				statusStrip.Items[2].Text = "Selection start: " + selectionBoxStart;
+			}
 		}
 
 		private void Canvas_MouseMove(object sender, MouseEventArgs e)
@@ -300,6 +377,12 @@ namespace MapEditor
 			{
 				//"Move" camera
 				PanCamera(e);
+			}
+
+			if (onMultiSelect)
+			{
+				//Update the selection box
+				DrawSelectionBox(e);
 			}
 
 			///DEBUG
@@ -322,10 +405,6 @@ namespace MapEditor
 			DrawCanvas();
 		}
 
-
-		/// <summary>
-		/// Paints currently selected tile (if available) at current mouse cursor (if within bounds of map)
-		/// </summary>
 		private void PaintTile(MouseEventArgs me)
 		{
 			selectedTile = GetSelectedTile(out int selectedIndex);
@@ -386,14 +465,16 @@ namespace MapEditor
 			}
 			selectedTile = null;
 		}
+		private bool MouseWithinMapBounds(Point mouseMapIDX)
+		{
+			return (Enumerable.Range(0, map.Tiles.GetLength(0)).Contains(mouseMapIDX.X) &&
+				Enumerable.Range(0, map.Tiles.GetLength(1)).Contains(mouseMapIDX.Y));
+		}
 
-
-		/// <summary>
-		/// Draws the canvas
-		/// NOTE: Take notice of camera offsets!
-		/// </summary>
 		private void DrawCanvas()
 		{
+			/// NOTE: Take notice of camera offsets!
+
 			////Update the canvas
 			pbCanvas.DrawToBitmap(map.Bitmap, pbCanvas.Bounds);
 
@@ -407,15 +488,15 @@ namespace MapEditor
 			//Verticals
 			for (int y = 0; y < map.Height; y += map.TileHeight)
 			{
-				g.DrawLine(pen, 0-cam.X, y-cam.Y, map.Width-cam.X, y-cam.Y);
+				g.DrawLine(pen, 0 - cam.X, y - cam.Y, map.Width - cam.X, y - cam.Y);
 			}
-			g.DrawLine(pen, 0-cam.X, map.Height-cam.Y, map.Width-cam.X, map.Height-cam.Y);  //Grid border of map
-																	//Horizontals
+			g.DrawLine(pen, 0 - cam.X, map.Height - cam.Y, map.Width - cam.X, map.Height - cam.Y);  //Grid border of map
+																									//Horizontals
 			for (int x = 0; x < map.Width; x += map.TileWidth)
 			{
-				g.DrawLine(pen, x-cam.X, 0-cam.Y, x-cam.X, map.Height-cam.Y);
+				g.DrawLine(pen, x - cam.X, 0 - cam.Y, x - cam.X, map.Height - cam.Y);
 			}
-			g.DrawLine(pen, map.Width-cam.X, 0-cam.Y, map.Width-cam.X, map.Height-cam.Y);   //Grid border of map
+			g.DrawLine(pen, map.Width - cam.X, 0 - cam.Y, map.Width - cam.X, map.Height - cam.Y);   //Grid border of map
 
 			//// Draw the tiles ////
 			//Go through the map
@@ -426,7 +507,7 @@ namespace MapEditor
 					//Draw tile if available
 					if (map.Tiles[row, col] != null)
 					{
-						g.DrawImage(map.Tiles[row, col].Image, row * map.TileWidth-cam.X, col * map.TileHeight - cam.Y);
+						g.DrawImage(map.Tiles[row, col].Image, row * map.TileWidth - cam.X, col * map.TileHeight - cam.Y);
 					}
 				}
 			}
@@ -438,36 +519,34 @@ namespace MapEditor
 			pbCanvas.Image = map.Bitmap;
 		}
 
-		/// <summary>
-		/// Updates tile swatches in the tile palette
-		/// </summary>
-		private void UpdateTilePaletteItems()
+		void DrawSelectionBox(MouseEventArgs me)
 		{
-			//Go through all tiles and update the list items
-			for (int i = 0; i < TilePalette.Count; i++)
+			
+		}
+		#endregion
+
+		#region Help
+		private void HelpToolStripButton_Click(object sender, EventArgs e)
+		{
+			//Open user manual
+		}
+		private void UserManualToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//Open user manual
+		}
+		#endregion
+
+		#region Exit
+		//Other
+		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
+		{
+			//If there are changes then ask to save changes (utilise dirty flag pattern)
+			if (currentDocumentPreviouslySaved)
 			{
-				tileSwatches.Images.Add(TilePalette[i].Image);
-				var item = new ListViewItem();
-				item.ImageIndex = i;
-				lvTilePalette.Items.Add(item);
+				Save();
 			}
+			Close();
 		}
-
-
-		/////////////////////////////////////
-		//// Auxillary Helper functions ////
-		///////////////////////////////////
-		private bool MouseWithinMapBounds(Point mouseMapIDX)
-		{
-			return (Enumerable.Range(0, map.Tiles.GetLength(0)).Contains(mouseMapIDX.X) &&
-				Enumerable.Range(0, map.Tiles.GetLength(1)).Contains(mouseMapIDX.Y));
-		}
-
-		private void EditorForm_Resize(object sender, EventArgs e)
-		{
-			//Resize pbCanvas. accordingly
-			//pbCanvas 
-			//	pbCanvas.Size;
-		}
+		#endregion
 	}
 }

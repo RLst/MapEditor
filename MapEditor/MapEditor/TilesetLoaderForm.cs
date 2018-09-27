@@ -7,7 +7,7 @@ namespace MapEditor
     public partial class TilesetLoaderForm : Form
     {
 		//These are just for this form only
-		Tileset tileset = null;
+		Tileset m_tileset = null;
 		Bitmap display;
 		int cols;
 		int rows;
@@ -37,7 +37,7 @@ namespace MapEditor
 			{
 				if (openDlg.CheckFileExists == true) {
 					//Make a new tileset
-					tileset = new Tileset(openDlg.FileName);
+					m_tileset = new Tileset(openDlg.FileName);
 
 					//also set the initial tile width/heights
 					textBoxTileWidth.Text = tileWidth.ToString();
@@ -51,34 +51,37 @@ namespace MapEditor
 
 		private void OKButton_Click(object sender, EventArgs e)
 		{
-			//If an image for the tileset has been loaded... (And the rows/cols/width/height settings are good)
-			if (tileset != null) 
+			//If an tileset has actually been loaded and all good
+			if (m_tileset != null) 
 			{
 				//Confirm and set tileset properties
-				tileset.Cols = cols;
-				tileset.Rows = rows;
-				tileset.TileWidth = tileWidth;
-				tileset.TileHeight = tileHeight;
+				m_tileset.Cols = cols;
+				m_tileset.Rows = rows;
+				m_tileset.TileWidth = tileWidth;
+				m_tileset.TileHeight = tileHeight;
 
-				//Seperate tileset into individual tiles and insert into editor.tilepalette
+				//Separate tileset into individual tiles and insert into editor.tilepalette
 				for (int col = 0; col < cols; col++)
 				{
 					for (int row = 0; row < rows; row++)
 					{
 						//Make a new tile by passing in a tileset and a tileset index
-						var newTile = new Tile(tileset, new Point(col, row));
+						var newTile = new Tile(m_tileset, new Point(col, row));
 
 						//Add to the Editor's tilepalette
 						EditorForm.TilePalette.Add(newTile);
 					}
 				}
 
+				////IMPORTANT!! Add the tileset into EditorForm.Tilesets so that it can be referenced later?
+				EditorForm.tilesets.Add(m_tileset);				
+
 				//Return OK
 				DialogResult = DialogResult.OK;
 				Close();
 				return;
 			}
-			//Return Cancel
+			//Otherwise nothing loaded, just return cancel and close the dialog
 			DialogResult = DialogResult.Cancel;
 			Close();
 		}
@@ -93,12 +96,12 @@ namespace MapEditor
 
 		private void TextBoxRows_TextChanged(object sender, EventArgs e)
 		{
-			if (tileset != null)
+			if (m_tileset != null)
 			{
 				//Update rows and tileHeight accordingly
 				if (int.TryParse(textBoxRows.Text, out rows) == true)
 				{
-					tileHeight = tileset.Image.Height / rows;
+					tileHeight = m_tileset.Image.Height / rows;
 					textBoxTileHeight.Text = tileHeight.ToString();
 					DrawDisplay();
 				}
@@ -106,12 +109,12 @@ namespace MapEditor
 		}
 		private void TextBoxColumns_TextChanged(object sender, EventArgs e)
 		{
-			if (tileset != null)
+			if (m_tileset != null)
 			{
 				//Update cols and tileWidth accordingly
 				if (int.TryParse(textBoxColumns.Text, out cols) == true)
 				{
-					tileWidth = tileset.Image.Width / cols;
+					tileWidth = m_tileset.Image.Width / cols;
 					textBoxTileWidth.Text = tileWidth.ToString();
 					DrawDisplay();
 				}
@@ -119,12 +122,12 @@ namespace MapEditor
 		}
 		private void TextBoxTileWidth_TextChanged(object sender, EventArgs e)
 		{
-			if (tileset != null)
+			if (m_tileset != null)
 			{
 				//Update tileWidth and cols accordingly
 				if (int.TryParse(textBoxTileWidth.Text, out tileWidth) == true)
 				{
-					cols = tileset.Image.Width / tileWidth;
+					cols = m_tileset.Image.Width / tileWidth;
 					textBoxColumns.Text = cols.ToString();
 					DrawDisplay();
 				}
@@ -132,12 +135,12 @@ namespace MapEditor
 		}
 		private void TextBoxTileHeight_TextChanged(object sender, EventArgs e)
 		{
-			if (tileset != null)
+			if (m_tileset != null)
 			{
 				//Update tileHeight and rows accordingly
 				if (int.TryParse(textBoxTileHeight.Text, out tileHeight) == true)
 				{
-					rows = tileset.Image.Height / tileHeight;
+					rows = m_tileset.Image.Height / tileHeight;
 					textBoxRows.Text = rows.ToString();
 					DrawDisplay();
 				}
@@ -157,11 +160,11 @@ namespace MapEditor
 			g.Clear(Color.LightSlateGray);
 			
 			//// if Image available ////
-			if (tileset != null)
+			if (m_tileset != null)
 			{
-				g.DrawImage(tileset.Image, 0, 0);
-				width = tileset.Image.Width;
-				height = tileset.Image.Height;
+				g.DrawImage(m_tileset.Image, 0, 0);
+				width = m_tileset.Image.Width;
+				height = m_tileset.Image.Height;
 			}
 			else {	//image not avaiable, draw blank bitmap
 				width = display.Width;
