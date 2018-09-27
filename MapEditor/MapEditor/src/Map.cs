@@ -117,25 +117,6 @@ namespace MapEditor
 			//return FindTile(row, col);
 		}
 
-		////Find Tile from index
-		//public Tile FindTile(int row, int col)
-		//{
-		//	//Return tile 
-		//	if (tiles[row, col] != null)
-		//	{
-		//		return tiles[row, col];
-		//	}
-		//	//Go through all tiles and return tile with matching indexes
-		//	//foreach (var t in tiles)
-		//	//{
-		//	//	if (t.MapIDX.X == row && t.MapIDX.Y == col)
-		//	//	{
-		//	//		return t;
-		//	//	}
-		//	//}
-		//	//Return null if out of bounds or none found
-		//	return null;
-		//}
 
 		public Point PosToIndex(int mapPosX, int mapPosY)
 		{
