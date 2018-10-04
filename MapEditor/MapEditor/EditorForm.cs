@@ -65,6 +65,13 @@ namespace MapEditor
 
 			appName = this.Text;
 
+			NewPKRMap(cols, rows, tilewidth, tileheight);
+		}
+
+		public void NewPKRMap(int cols, int rows, int tileWidth, int tileHeight)
+		{
+			currentDocumentPath = null;
+
 			//Setup core
 			tilesets = new List<Tileset>();
 			TilePalette = new List<Tile>();
@@ -74,11 +81,14 @@ namespace MapEditor
 			//Setup a blank map and draw the canvas (First ever run)
 			////NEW MAP DIALOG GOES HERE!!! Always ask the user for map settings upon first launch
 
-			map = new Map(cols, rows, tilewidth, tileheight)	//Default starting map
+			map = new Map(cols, rows, tileWidth, tileHeight)    //Default starting map
 			{
 				Bitmap = new Bitmap(pbCanvas.Width, pbCanvas.Height)
 			};
 			DrawCanvas();
+
+			//Flags and titlebar
+			ChangesMade = false; currentDocumentPath = null;
 			UpdateWindowTitlebar();
 
 			//Setup tilePalette listview
@@ -89,22 +99,6 @@ namespace MapEditor
 			///DEBUG
 			statusStrip.Items.Add("Item 2");
 			statusStrip.Items.Add("Item 3");
-		}
-
-		public void Clear()
-		{
-			currentDocumentPath = null;
-
-			map = new Map(cols, rows, tilewidth, tileheight)
-			{
-				Bitmap = new Bitmap(pbCanvas.Width, pbCanvas.Height)
-			};
-			tilesets = new List<Tileset>();
-			TilePalette = new List<Tile>();
-			tileSwatches = new ImageList();
-			cam = new Camera();
-			DrawCanvas();
-			UpdateWindowTitlebar();
 		}
 
 		public void UpdateWindowTitlebar()
@@ -150,44 +144,21 @@ namespace MapEditor
 						//Save first
 						Save();
 					}
-					//else if (dlgResult == DialogResult.No)
-					//{
-					//	//Don't save, continue...
-					//}
 				}
 
+				//Save map parameters for next time
+				rows = NewMapDialog.Rows;
+				cols = NewMapDialog.Cols;
+				tilewidth = NewMapDialog.TileWidth;
+				tileheight = NewMapDialog.TileHeight;
+
 				//Continue with creating a new map once 
-				New();
+				NewPKRMap(cols, rows, tilewidth, tileheight);
 			}
-		}
-
-		private void New()
-		{
-			//Save map parameters for next time
-			rows = NewMapDialog.Rows;
-			cols = NewMapDialog.Cols;
-			tilewidth = NewMapDialog.TileWidth;
-			tileheight = NewMapDialog.TileHeight;
-			//Go ahead with creating a new map
-			map.NewMap(cols, rows, tilewidth, tileheight);
-			DrawCanvas();
-
-			//Flags and Titlebars
-			ChangesMade = false; currentDocumentPath = null;
-			UpdateWindowTitlebar();
 		}
 		#endregion
 
 		#region Open
-		//To LOAD a pkrMapEditor "document"....
-		//- Load all the individual tiles into List<Tile> TilePalette
-		//- Load in a new map
-		//- Check new loaded map data is good
-		//- Check if the current document has been saved yet
-		//- Clear all tiles in TilePalette
-		//- Clear the current map
-		//- Redraw TilePalette
-		//- Redraw map
 		private void OpenFile(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -216,7 +187,7 @@ namespace MapEditor
 
 				//Load in the new map
 				IFormatter formatter = new BinaryFormatter();
-				Clear();			//Reset map
+				//NewPKRMap(cols, rows, tilewidth, tileheight);			//Reset map
 				Deserializeitem(loadFileName, formatter);
 				UpdateTilePaletteItems();
 				DrawCanvas();       //Redraw canvas
@@ -237,38 +208,9 @@ namespace MapEditor
 
 			fs.Close();
 		}
-		//void PromptToSave()
-		//{
-		//	//Prompt for user to save where necessary
-		//	if (changesMade)
-		//	{
-		//		var dlgResult = MessageBox.Show("Changes have been made. Save?", "Save changes?...", MessageBoxButtons.YesNoCancel);
-		//		if (dlgResult == DialogResult.Cancel)
-		//		{
-		//			//Break out and don't load
-		//			return;
-		//		}
-		//		else if (dlgResult == DialogResult.Yes)
-		//		{
-		//			//Save first
-		//			Save();
-		//		}
-		//	}
-		//}
 		#endregion
 
 		#region Save
-		/// <summary>
-		/// Shows dialog to save current map
-		/// ////////////////////
-		/// pkr Map Editor Project files:
-		/// - Saved as .mep files (map editor project)
-		///		Which includes the current map data
-		///		Any tilesets/tiles in the tile palette
-		///		Other settings
-		/// - Export to .map files
-		///		These are the actual files that will be used by the game app
-		/// </summary>
 		private void Save()
 		{
 			if (currentDocumentPath != null)	//ie. Current work has not been saved previously...
@@ -427,6 +369,9 @@ namespace MapEditor
 		}
 		private void UpdateTilePaletteItems()
 		{
+
+			lvTilePalette.Clear();
+
 			//Go through all tiles and update the list items
 			for (int i = 0; i < TilePalette.Count; i++)
 			{
@@ -665,10 +610,17 @@ namespace MapEditor
 		//Other
 		private void ExitToolsStripMenuItem_Click(object sender, EventArgs e)
 		{
-			CloseApplication();
+			if (!PromptSave(e))
+			{
+				Application.Exit();
+			}
+		}
+		private void EditorForm_FormClosing(object sender, FormClosingEventArgs e)
+		{
+			e.Cancel = PromptSave(e);
 		}
 
-		private void CloseApplication()
+		private bool PromptSave(EventArgs e)
 		{
 			//Prompt user to save if neccessary
 			if (ChangesMade)
@@ -676,8 +628,8 @@ namespace MapEditor
 				var dlgResult = MessageBox.Show("Save changes before quitting?", "Quit...", MessageBoxButtons.YesNoCancel);
 				if (dlgResult == DialogResult.Cancel)
 				{
-					//Break out and cancel
-					return;
+					//Break out
+					return true;	//Cancel Close
 				}
 				else if (dlgResult == DialogResult.Yes)
 				{
@@ -686,9 +638,10 @@ namespace MapEditor
 				}
 				//else user chose No so continue...
 			}
-			Close();
+			return false;	//Proceed with close
 		}
 		#endregion
+
 
 	}
 }

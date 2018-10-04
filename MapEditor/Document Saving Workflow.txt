@@ -28,3 +28,11 @@ changesMade = true
 6. After second save (Save)
 currentDocPath = Something
 PrevSave = true
+changesMade = false
+
+7a. Load in the same file, no changes made
+if (!changesMade)
+	promptToSaveFirst
+	
+
+if (currentDocPath = loadFilePath) then don't do anything

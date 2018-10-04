@@ -5,14 +5,14 @@ using System.Runtime.Serialization;
 namespace MapEditor
 {
 	[Serializable]
-	public class Tileset /*: ISerializable*/
-		//A tileset is only used to create tiles and then discarded from memory ie:
-		//1. User opens tileset loader dialog
-		//2. Loads in a tileset image
-		//3. Sets the tile width/height settings etc
-		//4. Presses ok, the tileset's image is then used to create tiles
-		//5. Tileset is essentially discarded at this point
-    {
+	public class Tileset : ISerializable
+	//A tileset is only used to create tiles and then discarded from memory ie:
+	//1. User opens tileset loader dialog
+	//2. Loads in a tileset image
+	//3. Sets the tile width/height settings etc
+	//4. Presses ok, the tileset's image is then used to create tiles
+	//5. Tileset is essentially discarded at this point
+	{
 		public Image Image { get; private set; } = null;
 		public string FilePath { get; }
 		public int Cols { get; set; }
