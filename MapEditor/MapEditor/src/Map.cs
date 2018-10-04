@@ -56,6 +56,7 @@ namespace MapEditor
 		//Serial constructor (USED TO LOAD)
 		public Map(SerializationInfo info, StreamingContext context)
 		{
+			Bitmap = (Bitmap)info.GetValue("bitmap", typeof(Bitmap));
 			Cols = (int)info.GetValue("cols", typeof(int));
 			Rows = (int)info.GetValue("rows", typeof(int));
 			TileWidth = (int)info.GetValue("tilewidth", typeof(int));
@@ -77,6 +78,7 @@ namespace MapEditor
 		public void GetObjectData(SerializationInfo info, StreamingContext context)
 		{
 			//Use the addvalue method to specify serialized values
+			info.AddValue("bitmap", Bitmap, typeof(Bitmap));
 			info.AddValue("cols", Cols, typeof(int));
 			info.AddValue("rows", Rows, typeof(int));
 			info.AddValue("tilewidth", TileWidth, typeof(int));
@@ -127,7 +129,7 @@ namespace MapEditor
 		}
 
 		//Canvas position to Map Index
-		public Point PosToIndex(int mapPosX, int mapPosY)
+		public Point CanvasPosToIndex(int mapPosX, int mapPosY)
 		{
 			return new Point(mapPosX / TileWidth, mapPosY / TileHeight);
 		}

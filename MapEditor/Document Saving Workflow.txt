@@ -1,0 +1,30 @@
+Document save workflow
+
+1. Blank document
+currentDocPath = null
+documentPrevSave = false;
+changesMade = false
+
+2. Before first Save (SaveAs)
+currentDocPath = null
+PrevSave = false;
+changesMade = true
+
+3. After first Save (SaveAs)
+currentDocPath = "..\something.abc"
+prevSave = true;
+changesMade = false;
+
+4. Edit
+currentDocPath = "..\something.abc"
+prevSave = true;
+changesMade = true;
+
+5. Before second save (Save)
+currentDocPath = SOMETHING
+prevSave = true
+changesMade = true
+
+6. After second save (Save)
+currentDocPath = Something
+PrevSave = true

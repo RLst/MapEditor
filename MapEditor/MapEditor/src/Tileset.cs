@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Runtime.Serialization;
 
 namespace MapEditor
 {
@@ -27,26 +28,26 @@ namespace MapEditor
 			Cols = columns;
 			Rows = rows;
 		}
-        //Serial constructor (Used to LOAD)
-		//public Tileset(SerializationInfo info, StreamingContext context)
-		//{
-		//	FilePath = (string)info.GetValue("filepath", typeof(string));
-		//	LoadImage(FilePath);
-		//	Cols = (int)info.GetValue("cols", typeof(int));
-		//	Rows = (int)info.GetValue("rows", typeof(int));
-		//	TileWidth = (int)info.GetValue("tilewidth", typeof(int));
-		//	TileHeight = (int)info.GetValue("tileheight", typeof(int));
-		//}
+		//Serial constructor(Used to LOAD)
+		public Tileset(SerializationInfo info, StreamingContext context)
+		{
+			FilePath = (string)info.GetValue("filepath", typeof(string));
+			//LoadImage(FilePath);
+			Cols = (int)info.GetValue("cols", typeof(int));
+			Rows = (int)info.GetValue("rows", typeof(int));
+			TileWidth = (int)info.GetValue("tilewidth", typeof(int));
+			TileHeight = (int)info.GetValue("tileheight", typeof(int));
+		}
 
-        //Used to SAVE
-		//public void GetObjectData(SerializationInfo info, StreamingContext context)
-		//{
-		//	info.AddValue("filepath", FilePath, typeof(string));
-		//	//Not required to save this.Image as it is derived from FilePath
-		//	info.AddValue("cols", Cols, typeof(int));
-		//	info.AddValue("rows", Rows, typeof(int));
-		//	info.AddValue("tilewidth", TileWidth, typeof(int));
-		//	info.AddValue("tileheight", TileHeight, typeof(int));
-		//}
+		//Used to SAVE
+		public void GetObjectData(SerializationInfo info, StreamingContext context)
+		{
+			info.AddValue("filepath", FilePath, typeof(string));
+			//Not required to save this.Image as it is derived from FilePath
+			info.AddValue("cols", Cols, typeof(int));
+			info.AddValue("rows", Rows, typeof(int));
+			info.AddValue("tilewidth", TileWidth, typeof(int));
+			info.AddValue("tileheight", TileHeight, typeof(int));
+		}
 	}
 }

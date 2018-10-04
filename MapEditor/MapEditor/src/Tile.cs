@@ -10,7 +10,7 @@ namespace MapEditor
 		//Tileset and index
         //public Tileset Tileset { get; }			//The tileset this tile is referencing offk
 		//public Point TilesetIDX { get; }		//Where the tile is on the tileset
-		public Point MapIDX { get; set; }       //Where the tile is on the map
+		public Point MapIDX { get; set; }       //Where the tile is on the map (so far used for drag drop)
 		public Image Image { get; }				//The actual texture of the tile
 
 		public Tile(Tileset tileset, Point tilesetIDX)
