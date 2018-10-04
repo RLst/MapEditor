@@ -115,7 +115,15 @@ namespace MapEditor
 			var col = (mapPos.X / TileWidth);
 			var row = (mapPos.Y / TileHeight);
 
-			return Tiles[col, row];
+			//If out of bounds return null
+			if (col >= 0 && col < Tiles.GetLength(0))
+			{
+				if (row >= 0 && row < Tiles.GetLength(1))
+				{
+					return Tiles[col, row];
+				}
+			}
+			return null;
 		}
 
 		//Canvas position to Map Index

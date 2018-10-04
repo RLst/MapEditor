@@ -53,6 +53,7 @@
       <DependentUpon>NewMapDialog.cs</DependentUpon>
     </Compile>
     <Compile Include="src\Camera.cs" />
+    <Compile Include="src\SaveObject.cs" />
     <Compile Include="src\Tileset.cs" />
     <Compile Include="TilesetLoaderForm.cs">
       <SubType>Form</SubType>

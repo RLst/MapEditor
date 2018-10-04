@@ -74,7 +74,7 @@ namespace MapEditor
 				}
 
 				////IMPORTANT!! Add the tileset into EditorForm.Tilesets so that it can be referenced later?
-				EditorForm.tilesets.Add(m_tileset);				
+				EditorForm.tilesets.Add(m_tileset);
 
 				//Return OK
 				DialogResult = DialogResult.OK;
