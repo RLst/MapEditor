@@ -11,12 +11,16 @@ namespace MapEditor
 		Bitmap display;
 		int cols;
 		int rows;
-		int tileWidth = 32;			
-		int tileHeight = 32;
+		int tileWidth;
+		int tileHeight;
 
-		public TilesetLoaderForm()	
+		public TilesetLoaderForm(int tileWidth = 32, int tileHeight = 32)	
         {
             InitializeComponent();      //This literally loads all the components up and sets and positions them etc
+
+			//Ideally match with the editor form's tile size
+			this.tileWidth = tileWidth;
+			this.tileHeight = tileHeight;
 
 			//Allocate the display
 			display = new Bitmap(pbDisplay.Width, pbDisplay.Height);
@@ -32,6 +36,8 @@ namespace MapEditor
 		private void LoadButton_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openDlg = new OpenFileDialog();
+			openDlg.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+			openDlg.Filter = "Image Files (*.png, *.jpg, *.jpeg)|*.png; *.jpg; *.jpeg|All Files (*.*)|*.*";
 
 			if (openDlg.ShowDialog() == DialogResult.OK)
 			{

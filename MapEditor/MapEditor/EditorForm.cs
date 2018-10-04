@@ -22,13 +22,15 @@ namespace MapEditor
 		/// tileSwatches
 		/// </summary>
 
+		//Used to update title bar 
+		public string appName;
 
 		//Initial/Previously used values
 		//<S>
-		int rows = 15;
-		int cols = 10;
-		int tilewidth = 32;
-		int tileheight = 32;
+		int rows = 8;
+		int cols = 8;
+		int tilewidth = 64;
+		int tileheight = 64;
 
 		//Flags
 		private string currentDocumentPath = null;
@@ -45,26 +47,23 @@ namespace MapEditor
 		//Drag n Drop
 		private Tile draggedTile;
 
-		//Map
-		//<S>
+		//Map <S>
 		public static Map map = null;        //Holds the actual map using actual tiles; pbCanvas displays the actual map
 
-		//Tilesets - Concrete location for Tiles to reference off
-		//<S>
+		//Tilesets <S> - Concrete location for Tiles to reference off
 		public static List<Tileset> tilesets;
 
 		//Tile palette
 		private Tile selectedTile = null;
-		//<S>
-		public static List<Tile> TilePalette { get; set; }      //Holds the ACTUAL tiles in the Tile Palette
-
-		//<S>
+		public static List<Tile> TilePalette { get; set; }      //<S> //Holds the ACTUAL tiles in the Tile Palette
 		private ImageList tileSwatches;							//Holds the thumbnails for lvTilePalette (List View)
 
 
 		public EditorForm()
         {
             InitializeComponent();
+
+			appName = this.Text;
 
 			//Setup core
 			tilesets = new List<Tileset>();
@@ -80,6 +79,7 @@ namespace MapEditor
 				Bitmap = new Bitmap(pbCanvas.Width, pbCanvas.Height)
 			};
 			DrawCanvas();
+			UpdateWindowTitlebar();
 
 			//Setup tilePalette listview
 			lvTilePalette.LargeImageList = tileSwatches;
@@ -104,6 +104,24 @@ namespace MapEditor
 			tileSwatches = new ImageList();
 			cam = new Camera();
 			DrawCanvas();
+			UpdateWindowTitlebar();
+		}
+
+		public void UpdateWindowTitlebar()
+		{
+			string changeFlag = (ChangesMade) ? "*" : null;
+
+			string documentPath;
+			if (currentDocumentPath != null)
+			{
+				FileInfo fi = new FileInfo(currentDocumentPath);
+				documentPath = fi.Name + " - ";
+			}
+			else
+			{
+				documentPath = "Untitled Map - ";
+			}
+			Text = changeFlag + documentPath + appName;
 		}
 
 		#region New
@@ -153,6 +171,10 @@ namespace MapEditor
 			//Go ahead with creating a new map
 			map.NewMap(cols, rows, tilewidth, tileheight);
 			DrawCanvas();
+
+			//Flags and Titlebars
+			ChangesMade = false; currentDocumentPath = null;
+			UpdateWindowTitlebar();
 		}
 		#endregion
 
@@ -170,7 +192,7 @@ namespace MapEditor
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            openFileDialog.Filter = "pkr Map Files (*.pkrmap)|*.map|All Files (*.*)|*.*";
+            openFileDialog.Filter = "pkr Map Files (*.pmap)|*.pmap|All Files (*.*)|*.*";
             if (openFileDialog.ShowDialog(this) == DialogResult.OK)
             {
 				//Prompt user to save if neccessary
@@ -197,7 +219,11 @@ namespace MapEditor
 				Clear();			//Reset map
 				Deserializeitem(loadFileName, formatter);
 				UpdateTilePaletteItems();
-				DrawCanvas();		//Redraw canvas
+				DrawCanvas();       //Redraw canvas
+
+				//Flags and Titlebars
+				ChangesMade = false; currentDocumentPath = loadFileName;
+				UpdateWindowTitlebar();
             }
         }
 		public void Deserializeitem(string fileName, IFormatter formatter)
@@ -250,8 +276,9 @@ namespace MapEditor
 				IFormatter formatter = new BinaryFormatter();
 				SerializeItem(currentDocumentPath, formatter);
 
-				//Set important flags
+				//Flags and Titlebars
 				ChangesMade = false;
+				UpdateWindowTitlebar();
 			}
 			else 
 			{
@@ -263,7 +290,7 @@ namespace MapEditor
 			//Calls the save dialog and prompts user for a new save file            
 			SaveFileDialog saveFileDialog = new SaveFileDialog();
             saveFileDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
-            saveFileDialog.Filter = "pkr Map Files (*.pkrmap)|*.map|All Files (*.*)|*.*";
+            saveFileDialog.Filter = "pkr Map Files (*.pmap)|*.pmap|All Files (*.*)|*.*";
 
 			//If user pressed ok and file is valid
             if (saveFileDialog.ShowDialog(this) == DialogResult.OK)
@@ -272,8 +299,9 @@ namespace MapEditor
 				IFormatter formatter = new BinaryFormatter();
 				SerializeItem(saveFileName, formatter);
 
-				//Set important flags
+				//Flags and Titlebars
 				currentDocumentPath = saveFileName;	ChangesMade = false;
+				UpdateWindowTitlebar();
             }
 		}
 		public void SerializeItem(string fileName, IFormatter formatter)
@@ -371,7 +399,7 @@ namespace MapEditor
 		#region TilePalette
 		private void AddTilesButton_Click(object sender, EventArgs e)
 		{
-			TilesetLoaderForm tileSetLoadForm = new TilesetLoaderForm();
+			TilesetLoaderForm tileSetLoadForm = new TilesetLoaderForm(tilewidth, tileheight);
 
 			if (tileSetLoadForm.ShowDialog(this) == DialogResult.OK) 
 			{
@@ -525,8 +553,9 @@ namespace MapEditor
 						map.Tiles[mouseMapIDX.X, mouseMapIDX.Y] = selectedTile;   //Modify the actual tiles
 						DrawCanvas();
 
-						//Set important flags
+						//Flags and Titlebars
 						ChangesMade = true;
+						UpdateWindowTitlebar();
 					}
 				}
 			}
