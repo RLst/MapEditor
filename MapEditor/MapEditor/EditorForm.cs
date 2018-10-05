@@ -38,14 +38,14 @@ namespace MapEditor
 		private bool ChangesMade { get; set; } = false;
 		private bool onCamPan = false;
 		private bool onPaint = false;       //If the mouse has been pressed 
-		private bool onTileDrag = false;
+		//private bool onTileDrag = false;
 
 		//Camera
 		private static Camera cam;
 		Point camDragStart;
 
 		//Drag n Drop
-		private Tile draggedTile;
+		//private Tile draggedTile;
 
 		//Map <S>
 		public static Map map = null;        //Holds the actual map using actual tiles; pbCanvas displays the actual map
@@ -405,20 +405,20 @@ namespace MapEditor
 				statusStrip.Items[2].Text = "Drag start: " + camDragStart;
 			}
 
-			////Canvas Drag and Drop
-			if (e.Button == MouseButtons.Right)
-			{
-				//dragPhase = DragPhase.Begun;
-				onTileDrag = true;
+			//////Canvas Drag and Drop
+			//if (e.Button == MouseButtons.Right)
+			//{
+			//	//dragPhase = DragPhase.Begun;
+			//	onTileDrag = true;
 
-				//Get the tile at cursor if any
-				draggedTile = map.FindTile(new Point(e.X + cam.X, e.Y + cam.Y));
+			//	//Get the tile at cursor if any
+			//	draggedTile = map.FindTile(new Point(e.X + cam.X, e.Y + cam.Y));
 
-				if (draggedTile == null)
-					onTileDrag = false; //A valid tile wasn't found at cursor
-				else
-					UseWaitCursor = true;
-			}
+			//	if (draggedTile == null)
+			//		onTileDrag = false; //A valid tile wasn't found at cursor
+			//	else
+			//		UseWaitCursor = true;
+			//}
 		}
 
 		private void Canvas_MouseMove(object sender, MouseEventArgs e)
@@ -440,7 +440,7 @@ namespace MapEditor
 			///DEBUG
 			statusStrip.Items[0].Text = "Map Coords: " + (e.X+cam.X) + ", " + (e.Y+cam.Y);
 			statusStrip.Items[1].Text = "Map Tile Index: " + map.CanvasPosToIndex(e.X+cam.X, e.Y+cam.Y);
-			statusStrip.Items[2].Text = "Drag phase: " + onTileDrag;
+			//statusStrip.Items[2].Text = "Drag phase: " + onTileDrag;
 		}
 
 		private void Canvas_MouseUp(object sender, MouseEventArgs e)
@@ -450,23 +450,23 @@ namespace MapEditor
 			onCamPan = false;
 
 			////Canvas Drag and drop
-			onTileDrag = false;
-			if (draggedTile != null)
-			{
-				//Get the drop location on the map
-				var dropMapIDX = map.CanvasPosToIndex(e.X + cam.X, e.Y + cam.Y);
+			//onTileDrag = false;
+			//if (draggedTile != null)
+			//{
+			//	//Get the drop location on the map
+			//	var dropMapIDX = map.CanvasPosToIndex(e.X + cam.X, e.Y + cam.Y);
 
-				//"Pickup" the tile
-				map.Tiles[draggedTile.MapIDX.X, draggedTile.MapIDX.Y] = null;
+			//	//"Pickup" the tile
+			//	map.Tiles[draggedTile.MapIDX.X, draggedTile.MapIDX.Y] = null;
 
-				//"Drop" the tile
-				map.Tiles[dropMapIDX.X, dropMapIDX.Y] = draggedTile;
-				DrawCanvas();
-				ChangesMade = true;
+			//	//"Drop" the tile
+			//	map.Tiles[dropMapIDX.X, dropMapIDX.Y] = draggedTile;
+			//	DrawCanvas();
+			//	ChangesMade = true;
 
-				//Change cursor (feedback for the user)
-				Application.UseWaitCursor = false;
-			}
+			//	//Change cursor (feedback for the user)
+			//	Application.UseWaitCursor = false;
+			//}
 		}
 
 		private void PanCamera(MouseEventArgs me)
