@@ -97,8 +97,8 @@ namespace MapEditor
 			lvTilePalette.LargeImageList.ColorDepth = ColorDepth.Depth24Bit;
 
 			///DEBUG
-			statusStrip.Items.Add("Item 2");
-			statusStrip.Items.Add("Item 3");
+			statusStrip.Items.Add("");
+			statusStrip.Items.Add("");
 		}
 
 		public void UpdateWindowTitlebar()
@@ -533,7 +533,7 @@ namespace MapEditor
 					selectedTile = GetSelectedTile(out int selectedIndex);
 
 					///DEBUG
-					statusStrip.Items[0].Text = "Selected Tile = " + selectedIndex;
+					statusStrip.Items[2].Text = "Selected Tile = " + selectedIndex;
 					return;
 				}
 			}
